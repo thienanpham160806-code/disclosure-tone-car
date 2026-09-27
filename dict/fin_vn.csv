@@ -1,0 +1,194 @@
+word,category
+lỗ,negative
+thua lỗ,negative
+lỗ ròng,negative
+lỗ lũy kế,negative
+lợi nhuận âm,negative
+tăng trưởng âm,negative
+dòng tiền âm,negative
+sụt giảm,negative
+suy giảm,negative
+giảm sút,negative
+giảm mạnh,negative
+doanh thu giảm,negative
+lợi nhuận giảm,negative
+nợ xấu,negative
+nợ quá hạn,negative
+nợ khó đòi,negative
+khó khăn,negative
+thách thức,negative
+bất lợi,negative
+suy thoái,negative
+khủng hoảng,negative
+biến động mạnh,negative
+tiêu cực,negative
+thất bại,negative
+chậm trễ,negative
+đình trệ,negative
+trì trệ,negative
+ảm đạm,negative
+không đạt,negative
+chưa đạt,negative
+không hoàn thành,negative
+chưa hoàn thành,negative
+thấp hơn kế hoạch,negative
+tổn thất,negative
+thiệt hại,negative
+suy yếu,negative
+lạm phát cao,negative
+tồn kho cao,negative
+thu hẹp,negative
+cắt giảm nhân sự,negative
+sa thải,negative
+đóng cửa,negative
+ngừng hoạt động,negative
+phá sản,negative
+mất khả năng thanh toán,negative
+trích lập dự phòng,negative
+áp lực,negative
+gián đoạn,negative
+đứt gãy,negative
+lao dốc,negative
+sụp đổ,negative
+bất ổn,negative
+căng thẳng,negative
+yếu kém,negative
+kém hiệu quả,negative
+hạn chế,negative
+tồn đọng,negative
+đóng băng,negative
+trầm lắng,negative
+u ám,negative
+giảm giá mạnh,negative
+thua kém,negative
+sai sót,negative
+gian lận,negative
+mất giá,negative
+tụt giảm,negative
+chững lại,negative
+trầm trọng,negative
+nghiêm trọng,negative
+xung đột,negative
+chiến tranh,negative
+dịch bệnh,negative
+đại dịch,negative
+thiên tai,negative
+hụt,negative
+thâm hụt,negative
+chậm lại,negative
+lo ngại,negative
+quan ngại,negative
+bất cập,negative
+vướng mắc,negative
+ách tắc,negative
+khan hiếm,negative
+mất cân đối,negative
+kém khả quan,negative
+tăng trưởng,positive
+tăng trưởng mạnh,positive
+tăng trưởng ấn tượng,positive
+tăng mạnh,positive
+vượt kế hoạch,positive
+vượt chỉ tiêu,positive
+hoàn thành vượt,positive
+hoàn thành,positive
+đạt được,positive
+kỷ lục,positive
+cao nhất,positive
+thành công,positive
+thành tựu,positive
+thành quả,positive
+hiệu quả,positive
+tích cực,positive
+khả quan,positive
+ấn tượng,positive
+vững chắc,positive
+bền vững,positive
+vững mạnh,positive
+dẫn đầu,positive
+hàng đầu,positive
+cải thiện,positive
+phục hồi,positive
+khởi sắc,positive
+bứt phá,positive
+đột phá,positive
+lành mạnh,positive
+ổn định,positive
+thuận lợi,positive
+lợi thế,positive
+cơ hội,positive
+mở rộng,positive
+nâng cao,positive
+tối ưu,positive
+vượt bậc,positive
+xuất sắc,positive
+giải thưởng,positive
+uy tín,positive
+tin tưởng,positive
+niềm tin,positive
+tự hào,positive
+thịnh vượng,positive
+vượt trội,positive
+nổi bật,positive
+tiên phong,positive
+đổi mới,positive
+sáng tạo,positive
+phát triển mạnh,positive
+tăng tốc,positive
+hiệu quả cao,positive
+an toàn,positive
+minh bạch,positive
+chủ động,positive
+linh hoạt,positive
+vượt qua,positive
+khắc phục,positive
+đà tăng,positive
+triển vọng,positive
+lạc quan,positive
+ghi nhận,positive
+chinh phục,positive
+củng cố,positive
+gia tăng,positive
+tăng cao,positive
+bất định,uncertainty
+không chắc chắn,uncertainty
+chưa chắc chắn,uncertainty
+khó lường,uncertainty
+khó dự báo,uncertainty
+khó đoán,uncertainty
+khó lường trước,uncertainty
+chưa lường trước,uncertainty
+biến động,uncertainty
+rủi ro,uncertainty
+có thể,uncertainty
+có khả năng,uncertainty
+dự kiến,uncertainty
+ước tính,uncertainty
+tiềm ẩn,uncertainty
+chưa rõ,uncertainty
+phụ thuộc vào,uncertainty
+tùy thuộc,uncertainty
+dao động,uncertainty
+kịch bản,uncertainty
+dường như,uncertainty
+chưa xác định,uncertainty
+chưa thể,uncertainty
+giả định,uncertainty
+thận trọng,uncertainty
+nhiều ẩn số,uncertainty
+khởi kiện,litigious
+kiện,litigious
+tranh chấp,litigious
+tố tụng,litigious
+bồi thường,litigious
+xử phạt,litigious
+phạt,litigious
+vi phạm,litigious
+thanh tra,litigious
+điều tra,litigious
+khiếu nại,litigious
+truy thu,litigious
+bản án,litigious
+tòa án,litigious
+trọng tài,litigious
+cưỡng chế,litigious

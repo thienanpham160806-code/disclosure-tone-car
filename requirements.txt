@@ -1,0 +1,25 @@
+# lõi
+pandas>=2.0
+numpy>=1.24
+scipy>=1.11
+statsmodels>=0.14
+pyyaml>=6.0
+tqdm>=4.66
+requests>=2.31
+tenacity>=8.2          # retry cho EDGAR client
+matplotlib>=3.8
+pytest>=8.0
+# Mỹ
+yfinance>=0.2.40
+pysentiment2>=0.1.1    # chỉ dùng file từ điển Harvard IV-4 đóng gói sẵn
+# Việt Nam
+vnstock>=3.2
+pymupdf>=1.24
+pytesseract>=0.3.10    # + cài Tesseract và gói ngôn ngữ 'vie'
+pillow>=10.0
+# notebook
+jupyter>=1.0
+# tùy chọn (bật khi cần)
+# anthropic>=0.40      # định vị thông điệp HĐQT bằng LLM khi regex thất bại
+# transformers>=4.40   # FinBERT (a05_finbert.py)
+# torch>=2.2

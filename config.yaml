@@ -1,0 +1,40 @@
+# ===================== Đề án 05 – cấu hình chung (Mỹ + Việt Nam) =====================
+contact_email: "your_email@st.uel.edu.vn"   # BẮT BUỘC sửa: SEC yêu cầu User-Agent có email
+seed: 42
+
+us:
+  tickers: [AAPL, MSFT, AMZN, GOOGL, META, NVDA, INTC, CSCO, ORCL, IBM, CRM,
+            JPM, BAC, WFC, GS, AXP, V, MA, TRV,
+            JNJ, PFE, MRK, UNH, AMGN,
+            PG, KO, PEP, WMT, COST, HD, LOW, MCD, NKE, DIS, NFLX, CMCSA,
+            CVX, XOM, CAT, BA, HON, MMM, UPS, F, GM, VZ, T, DUK, NEE, SO]
+  filing_years: [2015, 2024]        # năm NỘP 10-K
+  forms: ["10-K"]
+  max_rps: 8                        # SEC cho phép ≤10 request/giây
+  market_symbol: "^GSPC"
+  price_start: "2013-06-01"
+  mdna_min_words: 250
+
+vn:
+  tickers_file: data/vn/tickers.csv # tạo tự động từ vnstock (VN30 + VN100)
+  years: [2016, 2025]               # năm của BCTN (công bố năm sau)
+  prefer_lang: vi                   # vi | en
+  sleep: 0.6
+  price_source: vnstock             # vnstock | cafef_csv
+  cafef_csv_dir: data/vn/raw/prices_cafef
+  market_symbol: VNINDEX
+  price_start: "2015-01-01"
+  extract:
+    max_scan_pages: 40
+    max_letter_pages: 6
+    ocr_lang: vie
+    ocr_dpi: 300
+    use_llm_fallback: false         # true → Claude API định vị trang khi regex thất bại (cần ANTHROPIC_API_KEY)
+
+event:                              # dùng chung cho 2 thị trường
+  est_window: [-150, -11]
+  min_est_obs: 80
+  windows: [[0, 3], [0, 1], [-1, 1], [0, 5], [0, 10]]
+  main_window: [0, 3]               # T → T+3 (như Loughran & McDonald 2011)
+  placebo_shift: -60
+  caar_path: [-10, 10]              # đường CAAR theo ngày cho hình vẽ
