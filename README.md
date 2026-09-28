@@ -1,15 +1,17 @@
-# Đề án 05 – Phân tích văn bản báo cáo tài chính (Mỹ + Việt Nam)
+# Đồ án 05 – Phân tích văn bản báo cáo tài chính (Mỹ + Việt Nam)
 
 **Câu hỏi nghiên cứu:** Giọng điệu văn bản công bố có tác động **tích cực hay tiêu cực** lên lợi suất bất thường
 tích lũy **CAR[T, T+3]** quanh ngày công bố không, tức là văn bản có mang thông tin cho thị trường không?
 
+> **Mới làm quen với đồ án? Đọc [`HUONG_DAN_CHAY.md`](HUONG_DAN_CHAY.md)** – hướng dẫn từng bước từ cài đặt tới chạy lại toàn bộ kết quả.
+
 | | Mỹ | Việt Nam |
 |---|---|---|
-| Văn bản | 10-K (toàn văn; MD&A để kiểm tra độ vững) | Thông điệp Chủ tịch HĐQT trong BCTN |
+| Văn bản | 10-K (toàn văn; MD&A để kiểm tra độ vững) | Thông điệp của ban lãnh đạo trong BCTN (ưu tiên thư Chủ tịch HĐQT; nếu không có thì thư chung Chủ tịch + TGĐ / Ban lãnh đạo / TGĐ) |
 | Mẫu | 50 công ty lớn, 10-K nộp 2015–2024 (~500) | Toàn bộ VN30 + VN100, BCTN 2016–2025 |
-| Nguồn | SEC EDGAR submissions API + XBRL companyfacts, yfinance | CafeF (PDF BCTN + tin công bố thông tin), vnstock |
+| Nguồn | SEC EDGAR submissions API + XBRL companyfacts, yfinance | CafeF (PDF BCTN, giá điều chỉnh), `data/vn/tickers.csv` |
 | Từ điển tài chính / tổng quát | Loughran–McDonald / Harvard GI IV-4 | `dict/fin_vn.csv` (Việt hóa LM) / VietSentiWordNet |
-| T=0 | `acceptanceDateTime` (sau 16:00 ET → phiên sau) | Tin CBTT → Last-Modified PDF → tài liệu ĐHĐCĐ |
+| T=0 | `acceptanceDateTime` (sau 16:00 ET → phiên sau) | Tin CBTT → Last-Modified → **ModDate trong PDF** (nguồn thực tế dùng được) → tài liệu ĐHĐCĐ |
 
 ## Cài đặt
 ```bash
@@ -52,9 +54,9 @@ Kết quả đầy đủ: **`RESULTS.md`**; nhật ký sửa code/cấu hình/t�
 
 | | Mỹ | Việt Nam |
 |---|---|---|
-| Văn bản | 500 10-K (50 công ty × 10 năm nộp 2015–2024), 457 có MD&A | 803 BCTN (mã–năm) → 591 Thông điệp HĐQT |
-| Có CAR[0,3] | 500 | 493 (525 có ngày T=0 = ModDate PDF) |
-| Hồi quy chính | N = 470 | N = 493 |
+| Văn bản | 500 10-K (50 công ty × 10 năm nộp 2015–2024), 457 có MD&A | 813 BCTN (mã–năm) → 617 thông điệp ban lãnh đạo |
+| Có CAR[0,3] | 500 | 514 (548 có ngày T=0 = ModDate PDF) |
+| Hồi quy chính | N = 470 | N = 514 |
 
 Thời gian (laptop 12 luồng, Windows; bước tải phụ thuộc mạng, lần chạy lại dùng cache):
 
@@ -91,9 +93,13 @@ Muốn thêm thị trường mới chỉ cần viết bước tạo `docs.csv` v
 | Tái lập, QC | `validate_vs_lm.csv` (Mỹ), `qc_mdna_sample.csv` (Mỹ), `qc_sample.csv` (VN), `pytest` |
 
 ## Human-in-the-loop (nhánh VN)
-1. `data/vn/processed/qc_sample.csv`: đối chiếu 10% văn bản với PDF gốc.
-2. File có `flag = not_found`: ghi trang vào `data/vn/processed/manual_pages.csv` (`ticker,year,start_page,end_page`),
-   rồi chạy `python src/vn/v03_extract_letter.py --manual`.
+1. `data/vn/processed/qc_sample.csv`: đối chiếu 10% văn bản với PDF gốc (đã điền: 49/59 đúng, 10 sai đã sửa).
+2. File có `flag = not_found` hoặc cắt sai trang: ghi vào `data/vn/processed/manual_pages.csv`
+   (`ticker,year,start_page,end_page,force_ocr,ghi_chu`), rồi chạy `python src/vn/v03_extract_letter.py --manual`.
+   - `force_ocr = 1`: bỏ lớp chữ của PDF (font mã hóa sai) và OCR lại trang.
+   - `start_page = 0`: xác nhận KHÔNG có thư của ban lãnh đạo → loại văn bản (`flag = excluded_manual`).
+   - `python src/vn/v03_extract_letter.py --new`: chỉ trích các BCTN mới (chưa có trong `letters_meta.csv`),
+     giữ nguyên kết quả cũ và file QC đã điền.
 3. `outputs/vn/candidate_terms.csv`: gán nhóm cho các cụm từ hay gặp, chép vào `dict/fin_vn.csv`, rồi chạy lại `--from 5`.
 
 ## Hạn chế cần ghi trong báo cáo

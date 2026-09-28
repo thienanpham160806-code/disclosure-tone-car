@@ -13,7 +13,7 @@ pytest>=8.0
 yfinance>=0.2.40
 pysentiment2>=0.1.1    # chỉ dùng file từ điển Harvard IV-4 đóng gói sẵn
 # Việt Nam
-vnstock>=3.2
+# vnstock>=3.2        # TÙY CHỌN, không cần: PyPI cách ly gói này (27/09/2026); pipeline dùng tickers.csv + giá CafeF
 pymupdf>=1.24
 pytesseract>=0.3.10    # + cài Tesseract và gói ngôn ngữ 'vie'
 pillow>=10.0
