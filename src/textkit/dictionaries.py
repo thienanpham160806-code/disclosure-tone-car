@@ -2,7 +2,7 @@
 
 Tiếng Anh (Mỹ)
   • Loughran–McDonald Master Dictionary (SRAF, Notre Dame) – từ điển TÀI CHÍNH.
-    Quy tắc chọn cờ theo lm2011-replication (MIT): "nonzero" (mặc định) hoặc "positive"
+    Quy tắc chọn cờ theo lm2011-replication (MIT): "positive" (mặc định từ 27/09/2026) hoặc "nonzero"
     (loại các từ bị LM gỡ năm 2020, khớp với LM 10X Summaries). master = mọi từ trong từ điển,
     dùng làm mẫu số N_words đúng phụ lục LM (không đếm tên riêng, mã, lỗi chính tả).
   • Harvard General Inquirer IV-4 – từ điển TỔNG QUÁT (đối chứng ở Mục tiêu 2), lấy file tĩnh
@@ -21,13 +21,13 @@ VSWN_URL = ("https://raw.githubusercontent.com/sonvx/VietSentiWordNet/master/"
             "VietSentiWordNet/dicts/VietSentiWordnet_Ver1.3.5.txt")
 
 
-def load_lm(rule: str = "nonzero") -> dict[str, set]:
+def load_lm(rule: str = "positive") -> dict[str, set]:   # "positive": người dùng duyệt 27/09/2026 (CHANGELOG_RUN #12)
     fs = sorted(glob.glob(str(P("dict", "Loughran-McDonald_MasterDictionary*.csv"))) +
                 glob.glob(str(P("dict", "LoughranMcDonald_MasterDictionary*.csv"))))
     if not fs:
         raise SystemExit("Thiếu từ điển LM: tải CSV tại https://sraf.nd.edu/loughranmcdonald-master-dictionary/ "
                          "và đặt vào thư mục dict/")
-    d = pd.read_csv(fs[-1])
+    d = pd.read_csv(fs[-1], keep_default_na=False, na_values=[])   # để từ "NULL" không bị đọc thành NaN
     d["Word"] = d["Word"].astype(str).str.upper()
     out = {"master": set(d.Word)}
     for c in CATS:
