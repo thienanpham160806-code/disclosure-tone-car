@@ -1,0 +1,9 @@
+Số văn bản: 500
+Tỷ lệ 'nhiễu' của từ điển tổng quát (tần suất từ tiêu cực tổng quát không nằm trong danh sách tiêu cực tài chính): 73.9%
+
+Tương quan:
+         fin_neg  gen_neg  fin_net  gen_net
+fin_neg    1.000    0.570   -0.644   -0.461
+gen_neg    0.570    1.000   -0.387   -0.787
+fin_net   -0.644   -0.387    1.000    0.332
+gen_net   -0.461   -0.787    0.332    1.000

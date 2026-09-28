@@ -8,6 +8,10 @@ us:
             JNJ, PFE, MRK, UNH, AMGN,
             PG, KO, PEP, WMT, COST, HD, LOW, MCD, NKE, DIS, NFLX, CMCSA,
             CVX, XOM, CAT, BA, HON, MMM, UPS, F, GM, VZ, T, DUK, NEE, SO]
+  predecessor_ciks:                 # company_tickers.json chỉ cho CIK HIỆN TẠI; tái cấu trúc holding → 10-K cũ nằm ở CIK tiền nhiệm
+    XOM: ["0000034088"]             # Exxon Mobil Corp → ExxonMobil Holdings Corp (CIK 2115436, chưa nộp 10-K nào)
+    DIS: ["0001001039"]             # Walt Disney Co cũ (TWDC Enterprises 18) → holding mới 2019
+    GOOGL: ["0001288776"]           # Google Inc. → Alphabet (10/2015)
   filing_years: [2015, 2024]        # năm NỘP 10-K
   forms: ["10-K"]
   max_rps: 8                        # SEC cho phép ≤10 request/giây
@@ -20,7 +24,7 @@ vn:
   years: [2016, 2025]               # năm của BCTN (công bố năm sau)
   prefer_lang: vi                   # vi | en
   sleep: 0.6
-  price_source: vnstock             # vnstock | cafef_csv
+  price_source: cafef_hybrid        # vnstock | cafef_csv | cafef_hybrid  (xem CHANGELOG_RUN #15, #19)
   cafef_csv_dir: data/vn/raw/prices_cafef
   market_symbol: VNINDEX
   price_start: "2015-01-01"

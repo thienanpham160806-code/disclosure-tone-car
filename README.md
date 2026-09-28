@@ -13,15 +13,26 @@ tích lũy **CAR[T, T+3]** quanh ngày công bố không, tức là văn bản c
 
 ## Cài đặt
 ```bash
+py -3.11 -m venv .venv && .venv\Scriptsctivate        # (macOS/Linux: python3.11 -m venv .venv && source .venv/bin/activate)
 pip install -r requirements.txt
 ```
-1. Sửa `contact_email` trong `config.yaml`. SEC bắt buộc User-Agent có email.
+1. **Email cho SEC** (bắt buộc trong User-Agent): KHÔNG sửa `config.yaml` (repo công khai). Đặt biến môi trường
+   `CONTACT_EMAIL=...` hoặc tạo `config.local.yaml` (đã có trong `.gitignore`) với dòng `contact_email: "..."`.
 2. Tải **Loughran–McDonald Master Dictionary** (CSV) tại https://sraf.nd.edu/loughranmcdonald-master-dictionary/
-   rồi đặt vào `dict/`. Nên tải thêm **LM 10X Summaries** để chạy bước đối chiếu `u04`.
+   rồi đặt vào `dict/`. Nên tải thêm **LM 10X Summaries** để chạy bước đối chiếu `u04`. (Link là Google Drive → tải tay.)
 3. Nhánh VN cần **Tesseract + gói tiếng Việt** (chỉ dùng cho PDF scan):
-   - Windows: bản UB-Mannheim, tick *Vietnamese*
+   - Windows: bản UB-Mannheim (`winget install UB-Mannheim.TesseractOCR`), tick *Vietnamese*. Không có quyền admin:
+     chép `eng/osd.traineddata` + `vie.traineddata` (github.com/tesseract-ocr/tessdata) vào một thư mục riêng, đặt
+     `TESSDATA_PREFIX` trỏ tới đó và thêm `C:\Program Files\Tesseract-OCR` vào `PATH`.
    - macOS: `brew install tesseract tesseract-lang`
    - Ubuntu: `sudo apt install tesseract-ocr tesseract-ocr-vie`
+4. **vnstock** (ngày 27/09/2026 PyPI để dự án ở trạng thái *quarantined*, không cài được) → pipeline không bắt buộc
+   vnstock: tự cung cấp `data/vn/tickers.csv` (`ticker,group`) và dùng `price_source: cafef_hybrid` (mặc định):
+   tải 2 file "Đã điều chỉnh – Upto" tại https://cafef.vn/du-lieu/du-lieu-download.chn (`CafeF.SolieuGD.Upto*.zip`,
+   `CafeF.Index.Upto*.zip`), giải nén vào `data/vn/raw/prices_cafef/`; lịch sử trước khi chuyển sàn được tự bù từ
+   trang "Lịch sử giá" của CafeF. Xem `CHANGELOG_RUN.md` #15, #19.
+5. Tùy chọn FinBERT: `pip install torch --index-url https://download.pytorch.org/whl/cpu` + `pip install transformers`.
+6. Windows: đặt `PYTHONUTF8=1` (console mặc định cp1252 không in được tiếng Việt).
 
 ## Chạy
 ```bash
@@ -36,13 +47,34 @@ jupyter notebook notebooks/main.ipynb    # chạy lại phân tích và xem toà
 Tùy chọn: `python src/analysis/a05_finbert.py --market us` chấm tone bằng FinBERT để so với từ điển
 (cần `transformers` và `torch`). Bước a03 sẽ tự thêm mô hình M8.
 
+## Mẫu thực tế và thời gian chạy (lần chạy 27–28/09/2026)
+Kết quả đầy đủ: **`RESULTS.md`**; nhật ký sửa code/cấu hình/từ điển: **`CHANGELOG_RUN.md`**.
+
+| | Mỹ | Việt Nam |
+|---|---|---|
+| Văn bản | 500 10-K (50 công ty × 10 năm nộp 2015–2024), 457 có MD&A | 803 BCTN (mã–năm) → 591 Thông điệp HĐQT |
+| Có CAR[0,3] | 500 | 493 (525 có ngày T=0 = ModDate PDF) |
+| Hồi quy chính | N = 470 | N = 493 |
+
+Thời gian (laptop 12 luồng, Windows; bước tải phụ thuộc mạng, lần chạy lại dùng cache):
+
+| Bước | Mỹ | | Bước | Việt Nam |
+|---|---|---|---|---|
+| u01_edgar | ~5 phút (cache: 10 giây) | | v01_universe | < 1 giây (`tickers.csv` có sẵn) |
+| u02_text | ~1 phút | | v02_crawl_bctn | ~4 giờ (≈ 8 GB PDF; 3,5 giờ + 40 phút tải bù từ host cũ) |
+| u03_market | ~15 giây | | v03_extract_letter | ~3 giờ (OCR, 4 tiến trình) + rà trang thủ công |
+| a01_tone | ~1 phút | | v04_prices | ~2 giờ (55 mã cần bù lịch sử từ web; cache: 2 phút) |
+| u04_validate_lm | ~1,5 phút (40 hồ sơ .txt đầy đủ) | | a01_tone | ~15 giây |
+| a02_event / a03 / a04 / a06 | ~20 giây / 2 / 2 / 5 giây | | a02 / a03 / a04 / a06 | ~20 giây / 2 / 2 / 5 giây |
+| a05_finbert (tùy chọn, CPU, 100 câu/văn bản) | nhiều giờ (lần chạy này ~14 giờ, tranh CPU với OCR) | | notebook `main.ipynb` | ~2 phút (cả 2 thị trường) |
+
 ## Cấu trúc
 ```
 src/
   textkit/   us_clean.py (làm sạch 10-K, MD&A, Item 1A) · dictionaries.py · scoring.py (EN/VI, tf-idf)
   us/        edgar_client.py · u01_edgar · u02_text · u03_market · u04_validate_lm
   vn/        http.py · v01_universe · v02_crawl_bctn · v03_extract_letter · v04_prices
-  analysis/  a01_tone · a02_event · a03_regress · a04_figures · a05_finbert (tùy chọn)
+  analysis/  a01_tone · a02_event · a03_regress · a04_figures · a05_finbert (tùy chọn) · a06_summary
 data/<us|vn>/{raw,interim,processed}/     outputs/<us|vn>/   (bảng .csv + hình .png)
 ```
 Mọi bước phân tích đọc cùng một bảng chuẩn `data/<mkt>/processed/docs.csv`

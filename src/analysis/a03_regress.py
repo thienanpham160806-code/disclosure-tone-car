@@ -81,9 +81,9 @@ def main(mkt):
 
     # (a) nhóm tone
     df["tone_grp"] = pd.qcut(df.fin_net.rank(method="first"), 3, labels=["T1 Tiêu cực", "T2 Trung tính", "T3 Tích cực"])
-    g = df.groupby("tone_grp", observed=True)[Y].agg(N="size", mean_pct=lambda x: 100 * x.mean(),
-                                                     p_t=lambda x: stats.ttest_1samp(x, 0).pvalue)
-    t3, t1 = df.loc[df.tone_grp == "T3 Tích cực", Y], df.loc[df.tone_grp == "T1 Tiêu cực", Y]
+    g = df.groupby("tone_grp", observed=True)[Y].agg(N="count", mean_pct=lambda x: 100 * x.mean(),
+                                                     p_t=lambda x: stats.ttest_1samp(x.dropna(), 0).pvalue)
+    t3, t1 = df.loc[df.tone_grp == "T3 Tích cực", Y].dropna(), df.loc[df.tone_grp == "T1 Tiêu cực", Y].dropna()
     g.loc["T3 − T1"] = [len(t3) + len(t1), 100 * (t3.mean() - t1.mean()), stats.ttest_ind(t3, t1, equal_var=False).pvalue]
     g.round(4).to_csv(O(mkt, "car_by_tone.csv")); print(g.round(4).to_string())
     df.to_csv(D(mkt, "processed", "analysis_panel.csv"), index=False)

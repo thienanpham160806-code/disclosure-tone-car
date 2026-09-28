@@ -9,9 +9,9 @@ import sys, argparse, importlib, time
 sys.path.insert(0, "src")
 STEPS = {
     "us": ["us.u01_edgar", "us.u02_text", "us.u03_market", "analysis.a01_tone", "us.u04_validate_lm",
-           "analysis.a02_event", "analysis.a03_regress", "analysis.a04_figures"],
+           "analysis.a02_event", "analysis.a03_regress", "analysis.a04_figures", "analysis.a06_summary"],
     "vn": ["vn.v01_universe", "vn.v02_crawl_bctn", "vn.v03_extract_letter", "vn.v04_prices",
-           "analysis.a01_tone", "analysis.a02_event", "analysis.a03_regress", "analysis.a04_figures"],
+           "analysis.a01_tone", "analysis.a02_event", "analysis.a03_regress", "analysis.a04_figures", "analysis.a06_summary"],
 }
 
 

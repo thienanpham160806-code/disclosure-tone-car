@@ -177,7 +177,6 @@ giả định,uncertainty
 thận trọng,uncertainty
 nhiều ẩn số,uncertainty
 khởi kiện,litigious
-kiện,litigious
 tranh chấp,litigious
 tố tụng,litigious
 bồi thường,litigious
@@ -192,3 +191,12 @@ bản án,litigious
 tòa án,litigious
 trọng tài,litigious
 cưỡng chế,litigious
+thử thách,negative
+diễn biến phức tạp,uncertainty
+dịch covid,negative
+lớn nhất,positive
+sức mạnh,positive
+giữ vững,positive
+vụ kiện,litigious
+bị kiện,litigious
+kiện tụng,litigious

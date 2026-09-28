@@ -9,10 +9,18 @@ JSON: {"Data":[{id,Type,Quarter,Year,Time,Name,IconFile,Link}], "Success":..., "
 Ngày sự kiện (T=0) – thứ tự ưu tiên, lưu hết để kiểm tra tay:
   d_cbtt   : ngày tin CBTT có chữ "báo cáo thường niên" trên CafeF Type=4 (năm Y+1)
   d_lastmod: header Last-Modified của file PDF BCTN (ngày upload lên CDN) nếu rơi vào 01/01–31/07 năm Y+1
+  d_pdf    : ngày ModDate (dự phòng CreationDate) trong metadata của file PDF – thay Last-Modified vì CDN CafeF
+             không gửi header này (kiểm tra 27/09/2026); cùng điều kiện 01/01–31/07 năm Y+1 và không muộn hơn
+             ngày Nghị quyết ĐHĐCĐ thường niên (người dùng duyệt 27/09/2026, CHANGELOG_RUN #14)
   d_agm_doc: ngày sớm nhất của tài liệu/thông báo họp ĐHĐCĐ thường niên năm Y+1 (BCTN thường nằm trong bộ tài liệu này)
+  d_agm_res: ngày Nghị quyết ĐHĐCĐ thường niên năm Y+1 – CHỈ dùng làm cận trên để kiểm tra, không làm T=0
 Chạy lại an toàn: file đã tải sẽ bỏ qua (cache).
 """
+import sys, pathlib
+_SRC = pathlib.Path(__file__).resolve().parents[1]   # chạy trực tiếp: thêm src/, bỏ src/vn (vn/http.py che module http chuẩn)
+sys.path[:] = [str(_SRC)] + [p for p in sys.path if pathlib.Path(p or ".").resolve() != _SRC / "vn"]
 import re, json, argparse
+import fitz
 import pandas as pd
 from tqdm import tqdm
 from email.utils import parsedate_to_datetime
@@ -54,7 +62,18 @@ def pick_dates(t4, year):
     cbtt = [dt for dt, n in rows if "thường niên" in n and "báo cáo" in n]
     agm = [dt for dt, n in rows if re.search(r"(đại hội|đhđcđ|đhcđ).*thường niên|thường niên.*(đại hội|đhđcđ|đhcđ)", n)
            and re.search(r"tài liệu|mời họp|thông báo|chương trình", n)]
-    return (min(cbtt) if cbtt else pd.NaT), (min(agm) if agm else pd.NaT)
+    res = [dt for dt, n in rows if "nghị quyết" in n and "thường niên" in n and re.search(r"đại hội|đhđcđ|đhcđ|cổ đông", n)]
+    return (min(cbtt) if cbtt else pd.NaT), (min(agm) if agm else pd.NaT), (min(res) if res else pd.NaT)
+
+
+def pdf_dates(f):
+    """(ModDate, CreationDate) trong metadata PDF, dạng 'D:YYYYMMDDhhmmss+07'00''."""
+    try:
+        m = fitz.open(f).metadata or {}
+    except Exception:
+        return pd.NaT, pd.NaT
+    conv = lambda v: pd.to_datetime(re.sub(r"^D:", "", v or "")[:8], format="%Y%m%d", errors="coerce")
+    return conv(m.get("modDate")), conv(m.get("creationDate"))
 
 
 def main(limit=None):
@@ -77,15 +96,19 @@ def main(limit=None):
             lastmod = pd.NaT
             if not f.exists():
                 r = polite_get(s, link)
+                if (r is None or not r.content.startswith(b"%PDF")) and "cafefnew.mediacdn.vn" in link:
+                    # CDN mới trả 404 cho nhiều file 2016–2021; bản gốc còn trên host cũ (CHANGELOG_RUN #17)
+                    r = polite_get(s, link.replace("cafefnew.mediacdn.vn", "cafef1.mediacdn.vn"))
                 if r is None or not r.content.startswith(b"%PDF"):
                     rows.append(dict(ticker=tk, group=grp, year=yr, lang=lg, url=link, file=None, status="download_fail")); continue
                 f.write_bytes(r.content)
                 lm = r.headers.get("Last-Modified")
                 if lm: lastmod = pd.Timestamp(parsedate_to_datetime(lm)).tz_localize(None).normalize()
-            d_cbtt, d_agm = pick_dates(t4, yr)
+            d_cbtt, d_agm, d_res = pick_dates(t4, yr)
+            d_mod, d_cre = pdf_dates(f)
             rows.append(dict(ticker=tk, group=grp, year=yr, lang=lg, name=name, url=link, file=f.name,
                              size_mb=round(f.stat().st_size / 1e6, 2), d_cbtt=d_cbtt, d_lastmod=lastmod,
-                             d_agm_doc=d_agm, status="ok"))
+                             d_pdf_mod=d_mod, d_pdf_create=d_cre, d_agm_doc=d_agm, d_agm_res=d_res, status="ok"))
     meta = pd.DataFrame(rows)
     old = D("vn", "processed", "bctn_meta.csv")
     if old.exists():  # giữ Last-Modified đã ghi ở lần chạy trước
@@ -94,8 +117,12 @@ def main(limit=None):
         meta["d_lastmod"] = meta["d_lastmod"].fillna(meta.pop("d_lastmod_old"))
     # chọn ngày sự kiện theo thứ tự ưu tiên
     ok_lm = meta.d_lastmod.where((meta.d_lastmod.dt.year == meta.year + 1) & (meta.d_lastmod.dt.month <= 7))
-    meta["event_date"] = meta.d_cbtt.fillna(ok_lm).fillna(meta.d_agm_doc)
+    ok_date = lambda d: d.where((d.dt.year == meta.year + 1) & (d.dt.month <= 7) &
+                                (meta.d_agm_res.isna() | (d <= meta.d_agm_res)))
+    ok_pdf = ok_date(meta.d_pdf_mod).fillna(ok_date(meta.d_pdf_create))
+    meta["event_date"] = meta.d_cbtt.fillna(ok_lm).fillna(ok_pdf).fillna(meta.d_agm_doc)
     meta["event_src"] = (meta.d_cbtt.notna().map({True: "cbtt"}).fillna(ok_lm.notna().map({True: "lastmod"}))
+                         .fillna(ok_pdf.notna().map({True: "pdf_meta"}))
                          .fillna(meta.d_agm_doc.notna().map({True: "agm_doc", False: "missing"})))
     meta.to_csv(old, index=False)
     print(meta.groupby(["status", "lang"]).size().to_string())

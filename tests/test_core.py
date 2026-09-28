@@ -48,3 +48,20 @@ def test_tfidf_matches_lm_equation():
 def test_indices_and_column_names():
     x = indices("fin", 100, {"positive": 3, "negative": 1})
     assert math.isclose(x["fin_net"], 0.5) and K("car", -1, 1) == "car_m1_1"
+
+
+def test_sgml_wrapped_html_uses_html_cleaner():
+    raw = ("<DOCUMENT>\n<TYPE>10-K\n<SEQUENCE>1\n<FILENAME>x.htm\n<TEXT>\n<html><body>"
+           "<div><span>B</span><span>USINESS</span></div><div>Overview</div></body></html>\n</TEXT>\n</DOCUMENT>")
+    c = ux.clean_primary_html(raw)
+    assert "BUSINESS" in c and "\n" in c
+
+
+def test_mdna_ignores_cross_references_and_continued_headers():
+    body = "REVENUE DECLINED. " * 300
+    text = ("ITEM 1. BUSINESS\nSEE ITEM 7 OF PART II, \"MANAGEMENT'S DISCUSSION AND ANALYSIS\" FOR DETAILS. " + "X " * 400 +
+            f"\nITEM 7. MANAGEMENT'S DISCUSSION AND ANALYSIS\n{body}\n"
+            "ITEM 7. MANAGEMENT'S DISCUSSION AND ANALYSIS (CONTINUED)\nMORE TEXT HERE. " + "Y " * 300 +
+            "\nITEM 7A. QUANTITATIVE AND QUALITATIVE DISCLOSURES")
+    m, st = ux.extract_mdna(text)
+    assert st.startswith("ok") and m.startswith("ITEM 7. MANAGEMENT'S DISCUSSION AND ANALYSIS\nREVENUE") and m.count("REVENUE") == 300

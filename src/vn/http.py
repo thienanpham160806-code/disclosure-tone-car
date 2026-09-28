@@ -17,6 +17,8 @@ def polite_get(s, url, retries=3, **kw):
             time.sleep(CFG["vn"]["sleep"])
             if r.status_code == 200:
                 return r
+            if r.status_code == 404:          # không tồn tại → không thử lại (đỡ tải cho máy chủ)
+                return None
         except requests.RequestException:
             pass
         time.sleep(2 * (i + 1))
