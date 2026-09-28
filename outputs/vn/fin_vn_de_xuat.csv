@@ -1,0 +1,13 @@
+hanh_dong,cum_tu,nhom,tan_suat,so_van_ban,ly_do
+THEM,thử thách,negative,190,121,"Đồng nghĩa 'thách thức' (đã là negative); LM: CHALLENGING/CHALLENGES là negative"
+THEM,diễn biến phức tạp,uncertainty,66,59,"Mô tả bối cảnh khó đoán; cùng loại 'khó lường', 'khó dự báo' (đã là uncertainty)"
+THEM,dịch covid,negative,208,118,"Nhất quán với 'dịch bệnh', 'đại dịch' (đã là negative) – xem lưu ý trùng với năm 2020–2021"
+THEM,lớn nhất,positive,362,181,"So sánh bậc nhất kiểu 'cao nhất', 'hàng đầu' (đã là positive)"
+THEM,sức mạnh,positive,218,149,"LM: STRENGTH/STRENGTHS là positive"
+THEM,giữ vững,positive,231,176,"'giữ vững vị thế/đà tăng trưởng' – cùng nghĩa 'củng cố', 'vững chắc' (đã là positive)"
+CAN_NHAC,dấu ấn,positive,217,125,"Hay đi với thành tích ('dấu ấn quan trọng') nhưng cũng dùng trung tính ('dấu ấn năm 2023') – nghiêng về KHÔNG thêm"
+KHONG_THEM,kiên định,,248,162,"Diễn tả cam kết/chiến lược, không phải kết quả tài chính – LM không có tương đương"
+KHONG_THEM,tiềm năng,,196,145,"Trung tính (LM không xếp POTENTIAL vào nhóm nào)"
+KHONG_THEM,đối mặt,,195,151,"Thường đi kèm từ đã tiêu cực ('đối mặt với khó khăn') → đếm trùng"
+KHONG_THEM,lạm phát,,196,140,"Thuật ngữ vĩ mô trung tính; từ điển đã có 'lạm phát cao'"
+SUA_LOI,kiện,litigious,548,262,"BỎ từ đơn 'kiện': khớp nhầm 'điều kiện' (207), 'sự kiện' (239), 'kiện toàn', 'linh kiện' → gần như toàn bộ fin_lit là nhiễu. Thay bằng 'vụ kiện' (2), 'bị kiện', 'kiện tụng'"
