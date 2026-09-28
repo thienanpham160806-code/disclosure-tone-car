@@ -8,7 +8,10 @@ lớp chữ; (3) một số file có lớp chữ nhưng lỗi font (TCVN3/VNI) �
            → rất ít token; không gửi cả PDF.
 Sau đó: human check trên mẫu 10% (file qc_sample.csv để điền tay).
 """
-import re, os, json, argparse
+import sys, pathlib
+_SRC = pathlib.Path(__file__).resolve().parents[1]   # chạy trực tiếp: thêm src/, bỏ src/vn (vn/http.py che module http chuẩn)
+sys.path[:] = [str(_SRC)] + [p for p in sys.path if pathlib.Path(p or ".").resolve() != _SRC / "vn"]
+import re, os, json, argparse, unicodedata
 import fitz, pytesseract, pandas as pd
 from PIL import Image
 from tqdm import tqdm
@@ -21,13 +24,21 @@ _WARNED = False
 OUT_TXT = D("vn", "interim", "text", "x").parent
 VN_CHARS = set("ăâđêôơưáàảãạắằẳẵặấầẩẫậéèẻẽẹếềểễệíìỉĩịóòỏõọốồổỗộớờởỡợúùủũụứừửữựýỳỷỹỵ")
 
-START = re.compile(r"th[ôo]ng\s*đi[ệe]p|thư\s*(gửi|của)\s*(quý\s*)?(cổ\s*đông|chủ\s*tịch)|lời\s*(ngỏ|mở\s*đầu|chào)"
-                   r"|phát\s*biểu\s*của\s*chủ\s*tịch|message\s+from|letter\s+(to|from)|chairman.?s\s+(message|statement|letter)")
-END_HEAD = re.compile(r"^(.{0,40})(thông tin chung|tổng quan|giới thiệu|lịch sử hình thành|quá trình hình thành|"
-                      r"tình hình hoạt động|báo cáo của ban (giám đốc|tổng giám đốc)|báo cáo của hội đồng quản trị|"
+# So khớp trên văn bản ĐÃ BỎ DẤU (fold): OCR hay đọc sai dấu thanh ("phát biếu của chủ tịch hội đòng", "quý cô đông")
+# → regex có dấu bỏ sót trang tiêu đề (CHANGELOG_RUN #16). Nội dung mẫu giữ nguyên, chỉ viết dạng không dấu.
+START = re.compile(r"\bthong\s*diep\b|\bthu\s*(gui|cua)\s*(quy\s*)?(co\s*dong|chu\s*tich)|\bloi\s*(ngo|mo\s*dau|chao)\b"
+                   r"|\bphat\s*bieu\s*cua\s*chu\s*tich|message\s+from|letter\s+(to|from)|chairman.?s\s+(message|statement|letter)")
+END_HEAD = re.compile(r"^(.{0,40})(thong tin chung|tong quan|gioi thieu|lich su hinh thanh|qua trinh hinh thanh|"
+                      r"tinh hinh hoat dong|bao cao cua ban (giam doc|tong giam doc)|bao cao cua hoi dong quan tri|"
                       r"general information|overview|corporate profile|history|business performance)")
-SIGN = re.compile(r"(tm\.?|thay mặt)\s*hội đồng quản trị|trân trọng|on behalf of the board|sincerely|best regards")
-TOC = re.compile(r"mục lục|nội dung chính|table of contents|\bcontents\b")
+SIGN = re.compile(r"(tm\.?|thay mat)\s*hoi dong quan tri|tran trong|on behalf of the board|sincerely|best regards")
+TOC = re.compile(r"muc luc|noi dung chinh|table of contents|\bcontents\b")
+
+
+def fold(t):
+    """norm_vi + bỏ dấu tiếng Việt (đ→d) để so khớp tiêu đề chịu được lỗi dấu của OCR."""
+    t = unicodedata.normalize("NFD", norm(t).replace("đ", "d"))
+    return "".join(c for c in t if unicodedata.category(c) != "Mn")
 
 
 def quality(t):
@@ -48,11 +59,15 @@ def page_text(doc, i, lang):
     q, vn = quality(t)
     if q == "ok" and (lang == "en" or vn > 0.04):
         return t, "text"
-    pix = pg.get_pixmap(dpi=X["ocr_dpi"])
+    # trang khổ rất lớn (poster, trang đôi) ở 300 dpi → ảnh khổng lồ, tesseract gần như treo (CHANGELOG_RUN #20)
+    dpi = X["ocr_dpi"]; area = pg.rect.width * pg.rect.height / 72 ** 2          # inch²
+    if area * dpi ** 2 > 40e6:
+        dpi = max(100, int((40e6 / area) ** .5))
+    pix = pg.get_pixmap(dpi=dpi)
     img = Image.frombytes("RGB", (pix.width, pix.height), pix.samples)
     ocr_lang = "eng" if lang == "en" else X["ocr_lang"]
     try:
-        return pytesseract.image_to_string(img, lang=ocr_lang, config="--psm 3"), "ocr"
+        return pytesseract.image_to_string(img, lang=ocr_lang, config="--psm 3", timeout=180), "ocr"
     except Exception as e:                  # thiếu gói ngôn ngữ / chưa cài Tesseract → không làm sập cả pipeline
         global _WARNED
         if not _WARNED:
@@ -63,7 +78,7 @@ def page_text(doc, i, lang):
 def find_start(heads):
     """heads: list[(i, text)] – bỏ trang mục lục, chọn trang đầu tiên có tiêu đề thông điệp ở nửa trên."""
     for i, t in heads:
-        n = norm(t)
+        n = fold(t)
         if TOC.search(n[:400]) or len(re.findall(r"\s\d{1,3}\s", n)) > 15:
             continue
         m = START.search(n)
@@ -112,7 +127,7 @@ def extract(row):
     parts = []
     last = min(len(doc) - 1, start + X["max_letter_pages"] - 1) if end is None else end
     for i in range(start, last + 1):
-        t = get(i); nt = norm(t)
+        t = get(i); nt = fold(t)
         if i > start and END_HEAD.search(nt[:200]) and how == "regex":
             break
         parts.append(t); methods.append(cache[i][1])

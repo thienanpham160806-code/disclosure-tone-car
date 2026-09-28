@@ -5,6 +5,8 @@ thành positive/negative/neutral; finbert_net = trung bình (P(pos) − P(neg)) 
 Cần: pip install transformers torch  (CPU chạy được nhưng chậm; giới hạn max_sentences để tiết kiệm).
 Kết quả: data/<mkt>/processed/finbert.csv → a03 tự thêm mô hình M8 và tương quan với fin_net.
 """
+import sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))   # chạy trực tiếp: thêm src/
 import argparse, gzip, re
 import pandas as pd
 from tqdm import tqdm
