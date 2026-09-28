@@ -51,13 +51,13 @@ def quality(t):
     return ("garbled" if weird > 0.02 else "ok"), vn
 
 
-def page_text(doc, i, lang):
+def page_text(doc, i, lang, force_ocr=False):
     """Lấy text trang i; tự OCR nếu rỗng/rác. Trả về (text, method)."""
     pg = doc[i]
     blocks = sorted(pg.get_text("blocks"), key=lambda b: (round(b[1] / 20), b[0]))  # trên→dưới, trái→phải
     t = "\n".join(b[4] for b in blocks if b[6] == 0)
     q, vn = quality(t)
-    if q == "ok" and (lang == "en" or vn > 0.04):
+    if q == "ok" and (lang == "en" or vn > 0.04) and not force_ocr:
         return t, "text"
     # trang khổ rất lớn (poster, trang đôi) ở 300 dpi → ảnh khổng lồ, tesseract gần như treo (CHANGELOG_RUN #20)
     dpi = X["ocr_dpi"]; area = pg.rect.width * pg.rect.height / 72 ** 2          # inch²
@@ -142,18 +142,27 @@ def extract(row):
             "vn_ratio": round(quality(text)[1], 3), "flag": flag}
 
 
-def main(workers=4):
+def main(workers=4, only_new=False):
     meta = pd.read_csv(D("vn", "processed", "bctn_meta.csv"))
     meta = meta[meta.status == "ok"]
     # ưu tiên bản ngôn ngữ trong config; nếu không có thì lấy bản còn lại
     meta["pri"] = (meta.lang != V["prefer_lang"]).astype(int)
     meta = meta.sort_values("pri").drop_duplicates(["ticker", "year"])
+    old = D("vn", "processed", "letters_meta.csv")
+    if only_new and old.exists():   # --new: chỉ trích mã–năm chưa có, giữ kết quả cũ + QC đã điền (CHANGELOG_RUN #27)
+        prev = pd.read_csv(old)
+        meta = meta[~meta.set_index(["ticker", "year"]).index.isin(prev.set_index(["ticker", "year"]).index)]
+        print(f"--new: {len(meta)} văn bản mới")
     with Pool(workers) as pool:
         res = list(tqdm(pool.imap_unordered(extract, meta.to_dict("records")), total=len(meta), desc="Trích xuất"))
     out = pd.DataFrame(res)
-    out.to_csv(D("vn", "processed", "letters_meta.csv"), index=False)
+    if only_new and old.exists():
+        out = pd.concat([prev, out], ignore_index=True)
+    out.to_csv(old, index=False)
     build_docs(out)
     print(out.flag.value_counts().to_string()); print(out.get("method", pd.Series()).value_counts().to_string())
+    if only_new:
+        return
     # Human check: mẫu 10% (tối thiểu 20 văn bản) để đối chiếu tay với PDF gốc
     ok = out[out.flag.isin(["ok", "too_long", "too_short"])]
     qc = ok.sample(n=min(len(ok), max(20, len(ok) // 10)), random_state=CFG["seed"])
@@ -166,11 +175,16 @@ def main(workers=4):
 def apply_manual():
     """Human-in-the-loop: trích lại các file đã được người kiểm tra ghi trang thủ công."""
     man = pd.read_csv(D("vn", "processed", "manual_pages.csv"))
+    if "force_ocr" not in man:        # cột tùy chọn: 1 = bỏ lớp chữ (font mã hóa sai một phần), OCR lại (CHANGELOG_RUN #26)
+        man["force_ocr"] = 0
     lm = pd.read_csv(D("vn", "processed", "letters_meta.csv"))
     for r in man.itertuples():
         row = lm[(lm.ticker == r.ticker) & (lm.year == r.year)].iloc[0]
+        if r.start_page == 0:         # người kiểm tra xác nhận KHÔNG có thư của ban lãnh đạo → loại
+            lm.loc[(lm.ticker == r.ticker) & (lm.year == r.year), ["locate", "flag"]] = ["manual", "excluded_manual"]
+            continue
         doc = fitz.open(D("vn", "raw", "bctn", row.file))
-        txt = "\n".join(page_text(doc, i, row.lang)[0] for i in range(r.start_page - 1, r.end_page))
+        txt = "\n".join(page_text(doc, i, row.lang, force_ocr=r.force_ocr == 1)[0] for i in range(r.start_page - 1, r.end_page))
         (OUT_TXT / f"{r.ticker}_{r.year}_{row.lang}.txt").write_text(txt, encoding="utf-8")
         lm.loc[(lm.ticker == r.ticker) & (lm.year == r.year), ["start_page", "end_page", "locate", "flag", "n_syllables"]] = \
             [r.start_page, r.end_page, "manual", "ok", len(txt.split())]
@@ -193,5 +207,6 @@ def build_docs(lm):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--workers", type=int, default=4); ap.add_argument("--manual", action="store_true")
+    ap.add_argument("--new", action="store_true", help="chỉ trích các BCTN chưa có trong letters_meta.csv")
     a = ap.parse_args()
-    apply_manual() if a.manual else main(a.workers)
+    apply_manual() if a.manual else main(a.workers, a.new)
