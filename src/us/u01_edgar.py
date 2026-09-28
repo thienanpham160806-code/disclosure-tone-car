@@ -58,15 +58,16 @@ def main():
         cik = cm.get(tk.upper().replace(".", "-"))
         if not cik:
             print(f"  ! không tìm thấy CIK cho {tk}"); continue
-        s = submissions(cik); fl = s["filings"]
-        for acc, form, fd, acpt, doc, rd in zip(*[fl[k] for k in ["accessionNumber", "form", "filingDate",
-                                                                    "acceptanceDateTime", "primaryDocument", "reportDate"]]):
-            if form in C["forms"] and y0 <= int(fd[:4]) <= y1 and doc:
-                a = acc.replace("-", "")
-                rows.append(dict(ticker=tk, cik=cik, sic=s["sic"], accession=acc, form=form, filing_date=fd,
-                                 acceptance=acpt, period=rd, file=f"{tk}_{a}.htm",
-                                 url=f"https://www.sec.gov/Archives/edgar/data/{int(cik)}/{a}/{doc}"))
-        companyfacts(cik)
+        for cik in [cik] + C.get("predecessor_ciks", {}).get(tk, []):     # + pháp nhân tiền nhiệm (nếu có)
+            s = submissions(cik); fl = s["filings"]
+            for acc, form, fd, acpt, doc, rd in zip(*[fl[k] for k in ["accessionNumber", "form", "filingDate",
+                                                                        "acceptanceDateTime", "primaryDocument", "reportDate"]]):
+                if form in C["forms"] and y0 <= int(fd[:4]) <= y1 and doc:
+                    a = acc.replace("-", "")
+                    rows.append(dict(ticker=tk, cik=cik, sic=s["sic"], accession=acc, form=form, filing_date=fd,
+                                     acceptance=acpt, period=rd, file=f"{tk}_{a}.htm",
+                                     url=f"https://www.sec.gov/Archives/edgar/data/{int(cik)}/{a}/{doc}"))
+            companyfacts(cik)
     man = pd.DataFrame(rows).drop_duplicates("accession")
     raw = D("us", "raw", "10k", "x").parent
     ok = []

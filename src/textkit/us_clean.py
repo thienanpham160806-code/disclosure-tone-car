@@ -206,6 +206,43 @@ _END_PATTERNS = [
 MIN_MDNA_WORDS = 250
 MAX_MDNA_WORDS = 100_000  # sanity ceiling
 
+# ---- BỔ SUNG CỦA NHÓM (sửa lỗi khi chạy dữ liệu thật, xem CHANGELOG_RUN.md #6) ----
+# File HTML chính của 10-K hiện đại có rất nhiều câu DẪN CHIẾU giữa đoạn, vd
+#   'SEE ITEM 7 OF PART II, "MANAGEMENT'S DISCUSSION ..."'  hoặc tiêu đề lặp đầu trang '... (CONTINUED)'.
+# Pattern tier 1 gốc (.{0,400}? giữa ITEM 7 và cụm MD&A) + quy tắc "chọn điểm bắt đầu cuối cùng" bắt trúng
+# chính các dẫn chiếu này (AMZN, CAT, HD, F, TRV, PEP...). Với file HTML (có xuống dòng theo khối) ta yêu cầu:
+#   • tiêu đề và mốc kết thúc ĐỨNG ĐẦU DÒNG;
+#   • bỏ dòng tiêu đề có dấu nháy / "(CONTINUED)" / theo sau là dòng chỉ có số trang (mục lục);
+#   • chọn đoạn DÀI NHẤT trong các điểm bắt đầu hợp lệ (tiêu đề lặp đầu trang cho đoạn ngắn hơn).
+_T1_10K_LINE = re.compile(rf"(?:^|\n)[ \t]*(?:PART\s+II[\s,\.\-]*)?ITEM\s*7\s*[\.\-:\)]*\s*{_MD_PHRASE}", re.IGNORECASE)
+_T3_BARE_LINE = re.compile(rf"(?:^|\n)[ \t]*(?:COMBINED\s+)?{_MD_PHRASE}", re.IGNORECASE)   # SO: "COMBINED MANAGEMENT'S..."
+_END_PATTERNS_LINE = [re.compile(r"\n[ \t]*" + p.pattern, p.flags) for p in _END_PATTERNS]
+_BAD_HEADING = re.compile(r"[\"']|\(CONTINUED\)|\bSEE\b|\bREFER\b|\bPAGES?\s*\d")
+_TOC_NEXT = re.compile(r"^[^\n]*\n(?:[ \t]*\n)*(?:[^\n]*\n(?:[ \t]*\n)*)?[ \t]*(?:[IVX]{1,4}-)?\d{1,3}[ \t]*\n")
+
+
+def _is_heading(cleaned: str, sm: re.Match) -> bool:
+    rest = cleaned[sm.end():sm.end() + 300]
+    line = re.sub(r"\(\s*[\"']?MD&A[\"']?\s*\)", "", rest.split("\n", 1)[0])   # '... ("MD&A")' là tiêu đề thật
+    return not _BAD_HEADING.search(line) and not _TOC_NEXT.match(rest)
+
+
+def _try_tier_lines(start_pat: re.Pattern, cleaned: str) -> tuple[int, int] | None:
+    best = None
+    for sm in start_pat.finditer(cleaned):
+        if not _is_heading(cleaned, sm):
+            continue
+        s = sm.start()
+        for end_pat in _END_PATTERNS_LINE:
+            em = end_pat.search(cleaned, s + 100)
+            if not em:
+                continue
+            n = len(cleaned[s:em.start()].split())
+            if MIN_MDNA_WORDS <= n <= MAX_MDNA_WORDS and (best is None or em.start() - s > best[1] - best[0]):
+                best = (s, em.start())
+            break                                   # chỉ dùng mốc kết thúc ưu tiên cao nhất tìm thấy
+    return best
+
 
 def _try_tier(start_pat: re.Pattern, cleaned: str) -> tuple[int, int] | None:
     """Try a start pattern, return (start_idx, end_idx) for the longest valid span, else None."""
@@ -247,8 +284,10 @@ def extract_mdna(cleaned: str, form_type: str = "10-K") -> tuple[str | None, str
         tiers.append(("t2_roman", _T2_ROMAN))
     tiers.append(("t3_bare", _T3_BARE))
 
+    if not is_ksb:   # 10-K: bản đứng-đầu-dòng (xem _try_tier_lines); 10-KSB giữ nguyên logic gốc
+        tiers = [("t1_10k_item7", _T1_10K_LINE), ("t3_bare", _T3_BARE_LINE)]
     for tier_name, pat in tiers:
-        hit = _try_tier(pat, cleaned)
+        hit = (_try_tier(pat, cleaned) if is_ksb else _try_tier_lines(pat, cleaned))
         if hit is not None:
             s, e = hit
             return cleaned[s:e].strip(), f"ok_{tier_name}"
@@ -283,7 +322,13 @@ def clean_primary_html(raw: str) -> str:
     """Làm sạch file HTML/iXBRL chính của 10-K theo cùng quy tắc LM.
     Nếu là file .txt đầy đủ (có <DOCUMENT>) thì dùng clean_text() gốc."""
     if re.search(r"<DOCUMENT>\s*<TYPE>", raw, re.IGNORECASE):
-        return clean_text(raw)
+        # File HTML chính trước ~2020 được EDGAR bọc SGML (<DOCUMENT><TYPE>10-K...<TEXT>). Nếu phần thân là HTML thì
+        # phải làm sạch theo đường HTML bên dưới – clean_text() thay mọi thẻ bằng khoảng trắng → cắt đôi từ và mất
+        # xuống dòng (CHANGELOG_RUN.md #7). Chỉ file .txt thuần mới dùng clean_text().
+        m = DOC10K_RE.search(raw)
+        if not m or not re.search(r"<(?:html|body|div|p|font|table)\b", m.group("body"), re.IGNORECASE):
+            return clean_text(raw)
+        raw = m.group("body")
     body = STYLE_SCRIPT.sub(" ", raw)
     body = IX_HIDDEN_RE.sub(" ", body)
     body = html.unescape(body)
