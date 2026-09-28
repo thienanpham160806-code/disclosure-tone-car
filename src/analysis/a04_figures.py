@@ -9,6 +9,7 @@ kèm nhãn trực tiếp và kiểu nét khác nhau để không phụ thuộc m
 import argparse
 import numpy as np, pandas as pd
 import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
 from common import D, O
 
 BLUE, ORANGE, RED, GRAY, INK, MUTED = "#2a78d6", "#eb6834", "#e34948", "#8a8984", "#1d1d1b", "#6b6a66"
@@ -25,7 +26,8 @@ def main(mkt):
         ax.plot(y.index, y[c], color=col, marker="o", ms=4, label=lab)
         ax.annotate(lab, (y.index[-1], y[c].iloc[-1]), xytext=(6, 0), textcoords="offset points", color=INK, va="center")
     ax.set_ylabel("Tỷ lệ từ tiêu cực (%)"); ax.set_title("Giọng điệu tiêu cực theo năm", loc="left", color=INK)
-    ax.legend(frameon=False, loc="upper left"); fig.tight_layout(); fig.savefig(O(mkt, "fig1_tone_by_year.png"), dpi=200); plt.close(fig)
+    ax.xaxis.set_major_locator(MaxNLocator(integer=True))   # nhãn trực tiếp ở cuối đường → bỏ chú thích (từng đè lên đường)
+    fig.tight_layout(); fig.savefig(O(mkt, "fig1_tone_by_year.png"), dpi=200); plt.close(fig)
 
     mc = pd.read_csv(O(mkt, "misclassified_general_neg.csv")).head(15).iloc[::-1]
     fig, ax = plt.subplots(figsize=(6.4, 4.2))
@@ -41,16 +43,25 @@ def main(mkt):
         cum = ar.cumsum(axis=1) * 100
         p0 = -(ar.shape[1] // 2); days = np.arange(p0, p0 + ar.shape[1])
         fig, ax = plt.subplots(figsize=(6.4, 3.6))
+        ends = []
         for grp, col, ls in [("T1 Tiêu cực", RED, "-"), ("T2 Trung tính", GRAY, "--"), ("T3 Tích cực", BLUE, "-")]:
             ids = ap.index[ap.tone_grp == grp].intersection(cum.index)
             if len(ids):
                 m = cum.loc[ids].mean()
                 ax.plot(days, m.values, color=col, ls=ls, label=f"{grp} (n={len(ids)})")
-                ax.annotate(grp.split(" ", 1)[1], (days[-1], m.iloc[-1]), xytext=(6, 0), textcoords="offset points", color=INK, va="center")
+                ends.append([m.iloc[-1], grp.split(" ", 1)[1]])
+        # nhãn trực tiếp ở cuối đường, giãn theo chiều dọc để không chồng nhau khi các đường kết thúc gần nhau
+        lo_, hi_ = ax.get_ylim(); gap = .07 * (hi_ - lo_)
+        ends.sort()
+        for k in range(1, len(ends)):
+            ends[k][0] = max(ends[k][0], ends[k - 1][0] + gap)
+        for yv, lab in ends:
+            ax.annotate(lab, (days[-1], yv), xytext=(6, 0), textcoords="offset points", color=INK, va="center")
         ax.axvline(0, color=MUTED, lw=1); ax.axvspan(0, 3, color="#f0efec", zorder=0)
-        ax.set_xlabel("Phiên so với ngày công bố (T)"); ax.set_ylabel("CAAR (%)")
+        ax.set_xlabel("Phiên so với ngày công bố (T)"); ax.set_ylabel("CAAR (%)"); ax.xaxis.set_major_locator(MaxNLocator(integer=True))
         ax.set_title("Lợi suất bất thường tích lũy theo nhóm giọng điệu (vùng xám: T→T+3)", loc="left", color=INK)
-        ax.legend(frameon=False, loc="upper left"); fig.tight_layout(); fig.savefig(O(mkt, "fig3_caar_by_tone.png"), dpi=200); plt.close(fig)
+        ax.legend(frameon=False, loc="upper center", bbox_to_anchor=(.5, -.2), ncol=3)   # dưới trục: không đè lên đường
+        fig.tight_layout(); fig.savefig(O(mkt, "fig3_caar_by_tone.png"), dpi=200); plt.close(fig)
 
 
 if __name__ == "__main__":
