@@ -1,0 +1,8 @@
+﻿buoc,so_van_ban
+Công ty trong mẫu,50
+Hồ sơ 10-K nộp 2015–2024 (submissions API),500
+Tải được file HTML chính,500
+Toàn văn ≥ 2.000 từ (flag = ok),500
+  trong đó cắt được MD&A,457
+"Có CAR[0,3] (đủ dữ liệu giá)",500
+Vào hồi quy M2 (đủ biến kiểm soát),470
