@@ -154,6 +154,26 @@ python run_all.py --market us --only a03         # a03 tự thêm M8 khi có dat
 ```
 Trên CPU, bước này mất nhiều giờ.
 
+### 6.4 Tùy chọn: tầng AI sửa OCR (nhánh VN)
+1. Lấy key Gemini miễn phí tại https://aistudio.google.com/apikey (đăng nhập Google → *Create API key*).
+2. Tạo file `.env` ở thư mục gốc repo (cùng chỗ với `config.yaml`), nội dung một dòng:
+   ```
+   GEMINI_API_KEY=dán_key_vào_đây
+   ```
+   File này đã bị `.gitignore` bỏ qua. **Không dán key vào code, notebook hay tin nhắn.**
+3. Khi `enabled: true` và có key, `v03` và `--manual` tự chạy tầng AI. Để chạy riêng trên các thư đã trích
+   (sau `v03` và `--manual`, trước `v04`):
+   ```powershell
+   python src/vn/v03_extract_letter.py --llm-dry     # xem có bao nhiêu trang sẽ gửi AI, không tốn lượt gọi
+   python src/vn/v03_extract_letter.py --llm         # gửi các trang OCR xấu cho AI, ghi lại văn bản thư
+   python run_all.py --market vn --from 5            # tính lại tone → CAR → hồi quy
+   ```
+   Chạy lại `--llm` lần hai gần như không tốn lượt gọi vì phản hồi đã được cache.
+4. Muốn tắt: đặt `enabled: false` ở khối `vn.extract.llm` trong `config.yaml`.
+5. Đánh giá độ chính xác: `python src/vn/v03b_eval_ocr.py` lần đầu sẽ chọn 15 trang và xuất ảnh vào
+   `data/vn/interim/gold_png/`. Gõ tay nguyên văn từng trang vào `data/vn/processed/gold/<MÃ>_<NĂM>_p<TRANG>.txt`
+   rồi chạy lại để có CER/WER trước/sau (`outputs/vn/ocr_eval.csv`).
+
 ---
 
 ## 7. Đọc và kiểm tra kết quả

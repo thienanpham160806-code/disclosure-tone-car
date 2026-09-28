@@ -15,7 +15,7 @@ tích lũy **CAR[T, T+3]** quanh ngày công bố không, tức là văn bản c
 
 ## Cài đặt
 ```bash
-py -3.11 -m venv .venv && .venv\Scriptsctivate        # (macOS/Linux: python3.11 -m venv .venv && source .venv/bin/activate)
+py -3.11 -m venv .venv && .venv\Scripts\activate        # (macOS/Linux: python3.11 -m venv .venv && source .venv/bin/activate)
 pip install -r requirements.txt
 ```
 1. **Email cho SEC** (bắt buộc trong User-Agent): KHÔNG sửa `config.yaml` (repo công khai). Đặt biến môi trường
@@ -35,6 +35,8 @@ pip install -r requirements.txt
    trang "Lịch sử giá" của CafeF. Xem `CHANGELOG_RUN.md` #15, #19.
 5. Tùy chọn FinBERT: `pip install torch --index-url https://download.pytorch.org/whl/cpu` + `pip install transformers`.
 6. Windows: đặt `PYTHONUTF8=1` (console mặc định cp1252 không in được tiếng Việt).
+7. Tùy chọn **tầng AI** cho nhánh VN (xem mục [Tầng AI](#tầng-ai-nhánh-vn-tùy-chọn)): tạo file `.env` ở thư mục gốc
+   với dòng `GEMINI_API_KEY=...` (và/hoặc `ANTHROPIC_API_KEY=...`). `.env` đã có trong `.gitignore` – **không commit key**.
 
 ## Chạy
 ```bash
@@ -101,6 +103,41 @@ Muốn thêm thị trường mới chỉ cần viết bước tạo `docs.csv` v
    - `python src/vn/v03_extract_letter.py --new`: chỉ trích các BCTN mới (chưa có trong `letters_meta.csv`),
      giữ nguyên kết quả cũ và file QC đã điền.
 3. `outputs/vn/candidate_terms.csv`: gán nhóm cho các cụm từ hay gặp, chép vào `dict/fin_vn.csv`, rồi chạy lại `--from 5`.
+
+## Tầng AI (nhánh VN, tùy chọn)
+OCR tiếng Việt trên BCTN scan hay sai dấu, bỏ sót chữ trên nền màu, còn một số PDF có lớp chữ lỗi font. Tầng AI
+(`src/textkit/llm_client.py`, gọi từ `v03`) chỉ can thiệp vào **những trang có điểm chất lượng thấp**:
+
+1. `src/textkit/ocr_quality.py` chấm mỗi trang thư một điểm `quality_score` ∈ [0,1] (tỷ lệ âm tiết tiếng Việt hợp lệ,
+   ký tự rác, từ vỡ). Trang < `quality_threshold` (0,85) mới được gửi đi, tối đa `max_pages_per_doc` trang/văn bản.
+2. Gửi **ảnh của đúng trang đó** (không gửi cả PDF) cho Gemini (mặc định) hoặc Claude (dự phòng), temperature = 0,
+   yêu cầu **chép nguyên văn** (không diễn đạt lại, không tóm tắt), trả JSON.
+3. Bản AI chỉ được nhận khi điểm chất lượng **không giảm**; ở chế độ `text_fix` còn phải giống bản OCR ≥ `similarity_min`
+   (nếu không thì bị coi là viết lại và bị loại). Mọi quyết định ghi ở `data/vn/processed/llm_pages.csv`; mỗi văn bản
+   có cột `method` (text / ocr / ocr+llm_fix / llm_vision / manual), `llm_provider`, `llm_model`,
+   `ocr_quality_before`, `ocr_quality_after` trong `letters_meta.csv`.
+4. Khi regex không tìm thấy thư, AI được hỏi trang đầu/cuối của thư (chỉ gửi 300 ký tự đầu mỗi trang).
+
+**Lấy key Gemini miễn phí:** đăng nhập Google AI Studio → https://aistudio.google.com/apikey → *Create API key* →
+chép vào `.env`: `GEMINI_API_KEY=...`. Gói miễn phí giới hạn số lượt gọi mỗi phút/ngày (xem trang *Rate limit* trong
+AI Studio) – `requests_per_minute: 10` trong `config.yaml` giữ nhịp dưới mức đó. Key Claude (tùy chọn, trả phí):
+https://console.anthropic.com → `ANTHROPIC_API_KEY=...`.
+
+**Bật/tắt:** `vn.extract.llm.enabled: true|false` trong `config.yaml`. Tắt, hoặc không có key → pipeline chạy như cũ
+(lớp chữ + Tesseract), không gọi API.
+```bash
+python src/vn/v03_extract_letter.py --llm-dry                    # chỉ chấm điểm, liệt kê trang sẽ gửi (không gọi API)
+python src/vn/v03_extract_letter.py --llm --only MWG_2019,BID_2023 # chạy thử vài văn bản
+python src/vn/v03_extract_letter.py --llm                        # toàn bộ; phản hồi được cache ở data/vn/interim/llm_cache/
+python src/vn/v03b_eval_ocr.py                                   # CER/WER so với trang chuẩn gõ tay (gold)
+python src/analysis/a07_llm_tone.py                              # tùy chọn: tone do LLM chấm → mô hình M9 ở a03
+python src/analysis/a08_llm_effect.py                            # thống kê tầng AI + hệ số trước/sau (outputs/vn/llm_ocr_*.csv)
+```
+**Chi phí thực tế (lần chạy 28/09/2026):** 617 thư, 1.444 trang thư → 131 trang dưới ngưỡng được gửi, 131 lượt gọi,
+khoảng 195 nghìn token đầu vào + 47 nghìn token đầu ra (≈ 1.500 + 360 token/trang), mất 48 phút ở nhịp 10 lượt/phút.
+Trên gói miễn phí: 0 đồng. Nếu trả phí theo giá `gemini-3.5-flash-lite` ($0,30 / $2,50 mỗi 1 triệu token): ≈ 0,18 USD
+[`outputs/vn/llm_ocr_summary.csv`]. Kết quả: 118 trang nhận bản AI, 81 văn bản thay đổi; kết luận chính không đổi
+(RESULTS.md mục 4.5).
 
 ## Hạn chế cần ghi trong báo cáo
 - Survivorship bias: danh sách mã là các công ty đang niêm yết.

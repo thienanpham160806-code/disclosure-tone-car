@@ -9,13 +9,13 @@
   - Hệ số của tone tiêu cực chuẩn hóa là −0,05 điểm % trên 1 độ lệch chuẩn, không có ý nghĩa.
   - Kết luận giữ nguyên trong mọi phép kiểm định độ vững, với LM tf-idf, MD&A và cả FinBERT.
 - **Việt Nam (thông điệp của ban lãnh đạo – chủ yếu Chủ tịch HĐQT – trong BCTN 2016–2025):**
-  - Ở cửa sổ chính [0,3], hệ số có dấu âm như kỳ vọng (−0,19 điểm % trên 1 độ lệch chuẩn) nhưng không có ý nghĩa.
-  - Ở cửa sổ [0,5] hệ số có ý nghĩa (−0,58 điểm %, p < 0,01), phù hợp với giả thuyết thị trường phản ứng chậm.
-  - Bằng chứng này yếu: [0,10] không có ý nghĩa, kết quả [0,5] không qua hiệu chỉnh Bonferroni, và bản thân CAR placebo cũng âm có ý nghĩa.
+  - Ở cửa sổ chính [0,3], hệ số có dấu âm như kỳ vọng (−0,24 điểm % trên 1 độ lệch chuẩn) nhưng không có ý nghĩa.
+  - Ở cửa sổ [0,5] hệ số có ý nghĩa (−0,63 điểm %, p = 0,005), phù hợp với giả thuyết thị trường phản ứng chậm.
+  - Bằng chứng này yếu: [0,10] không có ý nghĩa, kết quả [0,5] chỉ vừa qua hiệu chỉnh Bonferroni sau khi sửa OCR bằng AI (trước đó p = 0,008, không qua), và bản thân CAR placebo cũng âm có ý nghĩa.
 - **Từ điển tổng quát sai lệch rất nặng trong ngữ cảnh tài chính:**
-  - 73,9% số lần Harvard GI gắn nhãn "tiêu cực" rơi vào từ không tiêu cực trong tài chính (TAX, COST, CAPITAL…). Với VietSentiWordNet, tỷ lệ này là 92,9% ("cho", "thương", "bán"…).
+  - 73,9% số lần Harvard GI gắn nhãn "tiêu cực" rơi vào từ không tiêu cực trong tài chính (TAX, COST, CAPITAL…). Với VietSentiWordNet, tỷ lệ này là 92,8% ("cho", "thương", "bán"…).
 
-> Mọi con số trong tài liệu này lấy từ file trong `outputs/` (tên file ghi trong ngoặc vuông). Mọi thay đổi code, cấu hình và từ điển trong lần chạy này đều ghi trong `CHANGELOG_RUN.md`. Có ba quyết định phương pháp do nhóm duyệt: danh sách LM theo cờ > 0 (#12), mở rộng `fin_vn.csv` (#21), và chấp nhận thông điệp của **ban lãnh đạo** (Chủ tịch HĐQT, TGĐ, thư chung, HĐQT) khi BCTN không có thư riêng của Chủ tịch (#26). Ngoài ra có ba thay đổi về nguồn dữ liệu hoặc ngày sự kiện: dùng ngày ModDate của PDF làm T=0 (#14); nguồn giá VN là CafeF (#15, #19) do vnstock bị PyPI cách ly (quarantine).
+> Mọi con số trong tài liệu này lấy từ file trong `outputs/` (tên file ghi trong ngoặc vuông). Mọi thay đổi code, cấu hình và từ điển trong lần chạy này đều ghi trong `CHANGELOG_RUN.md`. Có ba quyết định phương pháp do nhóm duyệt: danh sách LM theo cờ > 0 (#12), mở rộng `fin_vn.csv` (#21), và chấp nhận thông điệp của **ban lãnh đạo** (Chủ tịch HĐQT, TGĐ, thư chung, HĐQT) khi BCTN không có thư riêng của Chủ tịch (#26). Ngoài ra có ba thay đổi về nguồn dữ liệu hoặc ngày sự kiện: dùng ngày ModDate của PDF làm T=0 (#14); nguồn giá VN là CafeF (#15, #19) do vnstock bị PyPI cách ly (quarantine). Các số liệu VN trong bản này dùng văn bản thư **đã qua tầng AI sửa OCR** (Gemini chép nguyên văn các trang OCR xấu, #33–#42); so sánh trước/sau ở mục 4.5.
 
 ---
 
@@ -91,12 +91,12 @@ Tone = số từ (âm tiết) thuộc từng nhóm / tổng số từ. Mẫu s�
 
 | Biến | Mỹ: trung bình | Mỹ: độ lệch chuẩn | VN: trung bình | VN: độ lệch chuẩn |
 |---|---:|---:|---:|---:|
-| fin_neg (tiêu cực, từ điển tài chính) | 1,905 | 0,489 | 0,519 | 0,474 |
-| fin_pos (tích cực) | 0,585 | 0,174 | 3,017 | 1,137 |
-| fin_unc (bất định) | 1,607 | 0,335 | 0,258 | 0,239 |
+| fin_neg (tiêu cực, từ điển tài chính) | 1,905 | 0,489 | 0,525 | 0,473 |
+| fin_pos (tích cực) | 0,585 | 0,174 | 3,060 | 1,097 |
+| fin_unc (bất định) | 1,607 | 0,335 | 0,263 | 0,242 |
 | fin_lit (pháp lý) | 1,301 | 0,433 | 0,002 | 0,010 |
-| gen_neg (tiêu cực, từ điển tổng quát) | 2,761 | 0,379 | 2,007 | 0,709 |
-| fin_net = (Pos−Neg)/(Pos+Neg) | −0,519 | 0,138 | +0,707 | 0,249 |
+| gen_neg (tiêu cực, từ điển tổng quát) | 2,761 | 0,379 | 2,024 | 0,700 |
+| fin_net = (Pos−Neg)/(Pos+Neg) | −0,519 | 0,138 | +0,709 | 0,245 |
 | finA_neg (MD&A, chỉ Mỹ) | 1,409 | 0,593 | – | – |
 
 - **Mỹ:** `fin_neg` trung bình 1,9% toàn văn, cùng bậc với con số khoảng 1,4% trong LM (2011). Đối chiếu độc lập với LM 10X Summaries trên 40 hồ sơ ngẫu nhiên cùng phạm vi văn bản cho tương quan N_Negative = 0,989 và N_Positive = 0,991, lệch trung vị +3,5% và −1,2% [`outputs/us/validate_vs_lm_fullsub.csv`]. Khâu làm sạch và đếm từ vì vậy tái lập được kết quả của LM. So với số liệu LM trên toàn bộ hồ sơ, tương quan chỉ 0,66 [`outputs/us/validate_vs_lm.csv`], vì LM đếm cả exhibit (EX-13…) còn biến chính của nhóm chỉ dùng file 10-K chính.
@@ -106,16 +106,16 @@ Tone = số từ (âm tiết) thuộc từng nhóm / tổng số từ. Mẫu s�
 
 | Năm | Mỹ fin_neg | Mỹ finA_neg (MD&A) | VN fin_neg | VN fin_pos | VN fin_net |
 |---|---:|---:|---:|---:|---:|
-| 2016 | 1,83 | 1,45 | 0,39 | 2,91 | 0,77 |
+| 2016 | 1,83 | 1,45 | 0,39 | 2,92 | 0,77 |
 | 2017 | 1,82 | 1,40 | 0,30 | 2,96 | 0,82 |
 | 2018 | 1,81 | 1,31 | 0,33 | 2,98 | 0,81 |
-| 2019 | 1,88 | 1,36 | 0,58 | 2,70 | 0,69 |
-| **2020** | **1,93** | **1,48** | **0,89** | 2,85 | **0,54** |
-| 2021 | 1,97 | 1,38 | 0,81 | 2,66 | 0,54 |
-| 2022 | 2,01 | 1,43 | 0,75 | 2,72 | 0,57 |
-| 2023 | 2,08 | 1,47 | 0,62 | 2,74 | 0,63 |
-| 2024 | 2,17 | 1,22 | 0,44 | 3,57 | 0,77 |
-| 2025 | – | – | 0,30 | 3,61 | 0,83 |
+| 2019 | 1,88 | 1,36 | 0,60 | 2,78 | 0,67 |
+| **2020** | **1,93** | **1,48** | **0,89** | 2,89 | **0,54** |
+| 2021 | 1,97 | 1,38 | 0,81 | 2,67 | 0,54 |
+| 2022 | 2,01 | 1,43 | 0,78 | 2,85 | 0,57 |
+| 2023 | 2,08 | 1,47 | 0,63 | 2,81 | 0,63 |
+| 2024 | 2,17 | 1,22 | 0,44 | 3,59 | 0,77 |
+| 2025 | – | – | 0,31 | 3,68 | 0,84 |
 
 **Năm 2020:**
 - **Việt Nam:** 2020 là **đỉnh** tỷ lệ từ tiêu cực, 0,89%, gấp khoảng 3 lần năm 2017 (0,30%). `fin_net` cũng xuống đáy (0,54, 2020–2021). Giọng điệu sau đó hồi dần về mức trước COVID vào 2024–2025.
@@ -127,32 +127,32 @@ Tone = số từ (âm tiết) thuộc từng nhóm / tổng số từ. Mẫu s�
 
 **Tỷ lệ nhiễu:** trong tổng số lần từ điển tổng quát gắn nhãn "tiêu cực", tỷ lệ rơi vào từ không nằm trong danh sách tiêu cực tài chính:
 - Mỹ (Harvard GI IV-4): **73,9%** [`outputs/us/dictionary_comparison.txt`]
-- Việt Nam (VietSentiWordNet 1.3.5): **92,9%** [`outputs/vn/dictionary_comparison.txt`]
+- Việt Nam (VietSentiWordNet 1.3.5): **92,8%** [`outputs/vn/dictionary_comparison.txt`]
 
-Tương quan giữa tỷ lệ từ tiêu cực đo bằng hai từ điển chỉ là 0,570 (Mỹ) và 0,440 (VN), nên hai thước đo đo những thứ khác nhau.
+Tương quan giữa tỷ lệ từ tiêu cực đo bằng hai từ điển chỉ là 0,570 (Mỹ) và 0,430 (VN), nên hai thước đo đo những thứ khác nhau.
 
 **Các từ bị gán sai hay gặp nhất** [`outputs/us/misclassified_general_neg.csv`, `outputs/vn/misclassified_general_neg.csv`; hình `fig2_misclassified.png`]
 
 | Mỹ – từ | % tần suất | Nghĩa trong tài chính | VN – từ | % tần suất | Nghĩa trong văn bản |
 |---|---:|---|---|---:|---|
-| TAX | 10,93 | thuế (trung tính, mục bắt buộc) | cho | 26,22 | giới từ "cho, đối với" |
+| TAX | 10,93 | thuế (trung tính, mục bắt buộc) | cho | 26,34 | giới từ "cho, đối với" |
 | COST | 5,73 | chi phí, giá vốn | thương | 9,09 | âm tiết trong "thương mại", "thương hiệu" |
-| CAPITAL | 5,42 | vốn | bán | 5,52 | "bán hàng", "bán lẻ" – hoạt động kinh doanh |
-| FOREIGN | 4,74 | nước ngoài (ngoại tệ, thị trường nước ngoài) | giảm | 4,32 | chiều biến động, không phải giọng điệu (LM cũng không xếp "decrease" vào tiêu cực) |
-| EXPENSE | 4,60 | chi phí | hạn | 4,11 | "ngắn hạn", "hạn mức", "kỳ hạn" |
-| SERVICE | 4,10 | dịch vụ; "debt service" = trả nợ | mạnh mẽ | 4,04 | mang nghĩa **tích cực** trong thư lãnh đạo |
-| LIABILITY | 2,45 | nợ phải trả (khoản mục kế toán) | xanh | 2,67 | "tăng trưởng xanh", "tín dụng xanh" |
-| BOARD | 1,74 | hội đồng quản trị | vàng | 1,52 | kim loại vàng, "thời kỳ vàng" |
-| VICE | 1,43 | "Vice President" (chức danh) | tệ | 1,09 | âm tiết trong "tiền tệ" |
+| CAPITAL | 5,42 | vốn | bán | 5,57 | "bán hàng", "bán lẻ" – hoạt động kinh doanh |
+| FOREIGN | 4,74 | nước ngoài (ngoại tệ, thị trường nước ngoài) | giảm | 4,29 | chiều biến động, không phải giọng điệu (LM cũng không xếp "decrease" vào tiêu cực) |
+| EXPENSE | 4,60 | chi phí | hạn | 4,10 | "ngắn hạn", "hạn mức", "kỳ hạn" |
+| SERVICE | 4,10 | dịch vụ; "debt service" = trả nợ | mạnh mẽ | 4,10 | mang nghĩa **tích cực** trong thư lãnh đạo |
+| LIABILITY | 2,45 | nợ phải trả (khoản mục kế toán) | xanh | 2,68 | "tăng trưởng xanh", "tín dụng xanh" |
+| BOARD | 1,74 | hội đồng quản trị | vàng | 1,51 | kim loại vàng, "thời kỳ vàng" |
+| VICE | 1,43 | "Vice President" (chức danh) | tệ | 1,10 | âm tiết trong "tiền tệ" |
 
-Từ tiêu cực thật cũng có mặt trong top: LOSS (5,19%), AGAINST, ADVERSE ở Mỹ; "khó khăn" (4,61%) ở VN. Nhưng chúng chỉ chiếm phần nhỏ. Ở VN, nhiễu còn bị khuếch đại vì từ điển tổng quát khớp **từng âm tiết** trong từ ghép ("tệ" trong "tiền tệ"). Khớp cụm dài nhất trong `fin_vn.csv` tránh được lỗi này.
+Từ tiêu cực thật cũng có mặt trong top: LOSS (5,19%), AGAINST, ADVERSE ở Mỹ; "khó khăn" (4,62%) ở VN. Nhưng chúng chỉ chiếm phần nhỏ. Ở VN, nhiễu còn bị khuếch đại vì từ điển tổng quát khớp **từng âm tiết** trong từ ghép ("tệ" trong "tiền tệ"). Khớp cụm dài nhất trong `fin_vn.csv` tránh được lỗi này.
 
 **Mô hình đối đầu M4:** đưa cả hai thước đo vào cùng một hồi quy CAR[0,3], với biến kiểm soát và hiệu ứng cố định (FE) [`outputs/*/regression_main.csv`].
 
 | | fin_neg_z (tài chính) | gen_neg_z (tổng quát) | N |
 |---|---|---|---:|
 | Mỹ | −0,0024 (0,0019) | **+0,0035\*\* (0,0016)** | 470 |
-| VN | −0,0022 (0,0023) | +0,0006 (0,0024) | 514 |
+| VN | −0,0024 (0,0023) | −0,0000 (0,0024) | 514 |
 
 Ở Mỹ, từ điển tổng quát cho hệ số **dương** và có ý nghĩa (M3: +0,0025\*; M4: +0,0035\*\*). Nếu đọc theo nghĩa đen thì "văn bản càng tiêu cực, giá càng tăng", điều vô lý về kinh tế. Giải thích hợp lý là `gen_neg` chủ yếu đo mật độ các từ như TAX, COST, CAPITAL, LIABILITY, tức đặc điểm ngành và cấu trúc 10-K chứ không phải tin xấu. Đây chính là loại suy luận sai mà LM (2011) cảnh báo khi dùng từ điển tổng quát. Từ điển tài chính cho dấu âm như kỳ vọng nhưng không có ý nghĩa. Ở VN, cả hai từ điển đều không có ý nghĩa.
 
@@ -184,10 +184,10 @@ Chia mẫu thành ba nhóm bằng nhau theo `fin_net` [`outputs/*/car_by_tone.cs
 | | T1 Tiêu cực | T2 Trung tính | T3 Tích cực | **T3 − T1 (p Welch)** |
 |---|---|---|---|---|
 | Mỹ | −0,06% (p 0,84) | −0,15% (p 0,53) | −0,26% (p 0,20) | **−0,21 điểm % (0,56)** |
-| VN | −0,68% (p 0,081) | −0,23% (p 0,46) | −0,04% (p 0,90) | **+0,64 điểm % (0,22)** |
+| VN | −0,74% (p 0,057) | −0,17% (p 0,59) | −0,04% (p 0,91) | **+0,70 điểm % (0,17)** |
 
 - **Mỹ:** không có phân hóa; chênh lệch còn ngược dấu kỳ vọng.
-- **VN:** đúng hướng kỳ vọng. Nhóm tone tiêu cực nhất có CAR[0,3] −0,68%, có ý nghĩa ở mức 10%, và đường CAAR tiếp tục đi xuống tới khoảng −2,2% ở T+6 (hình 3). Tuy vậy, chênh lệch T3 − T1 chưa đạt mức ý nghĩa thống kê.
+- **VN:** đúng hướng kỳ vọng. Nhóm tone tiêu cực nhất có CAR[0,3] −0,74%, có ý nghĩa ở mức 10%, và đường CAAR (cộng dồn từ T−10) tiếp tục đi xuống tới khoảng −2,2% ở T+6 (hình 3) [`outputs/vn/caar_by_tone.csv`]. Tuy vậy, chênh lệch T3 − T1 chưa đạt mức ý nghĩa thống kê.
 
 ### 4.3 Hồi quy: hệ số fin_neg_z và độ lớn kinh tế
 
@@ -199,10 +199,10 @@ OLS gộp, sai số chuẩn cluster theo mã, FE năm (Mỹ thêm FE ngành SIC 
 
 | Mô hình | Mỹ: hệ số (SE) | Mỹ: Δ CAR khi +1 SD | VN: hệ số (SE) | VN: Δ CAR khi +1 SD |
 |---|---|---:|---|---:|
-| **M2 fin_neg_z** | −0,0005 (0,0016) | **−0,05 điểm %** | −0,0019 (0,0020) | **−0,19 điểm %** |
-| M5 fin_net_z | −0,0009 (0,0013) | −0,09 | +0,0020 (0,0024) | +0,20 |
-| M5 fin_unc_z | −0,0019 (0,0026) | −0,19 | −0,0029 (0,0021) | −0,29 |
-| M6 fin_neg_tfidf_z (LM eq. 1) | −0,0013 (0,0039) | −0,13 | −0,0007 (0,0022) | −0,07 |
+| **M2 fin_neg_z** | −0,0005 (0,0016) | **−0,05 điểm %** | −0,0024 (0,0020) | **−0,24 điểm %** |
+| M5 fin_net_z | −0,0009 (0,0013) | −0,09 | +0,0016 (0,0025) | +0,16 |
+| M5 fin_unc_z | −0,0019 (0,0026) | −0,19 | −0,0037\* (0,0020) | −0,37 |
+| M6 fin_neg_tfidf_z (LM eq. 1) | −0,0013 (0,0039) | −0,13 | −0,0019 (0,0023) | −0,19 |
 | M7 finA_neg_z (MD&A) | −0,0006 (0,0021) | −0,06 | – | – |
 | M8 finbert_net_z (FinBERT) | −0,0015 (0,0013) | −0,15 | – | – |
 
@@ -210,11 +210,11 @@ OLS gộp, sai số chuẩn cluster theo mã, FE năm (Mỹ thêm FE ngành SIC 
 
 **Câu trả lời trực tiếp:**
 - **Mỹ:** tăng 1 độ lệch chuẩn tone tiêu cực làm CAR[0,3] thay đổi −0,05 điểm %. Mức này **không khác 0** về thống kê và rất nhỏ về kinh tế: khoảng 1/75 độ lệch chuẩn của CAR[0,3], vốn là 3,72% [`outputs/us/event_study_diag.csv`]. Không mô hình nào, kể cả FinBERT (tương quan với `fin_net` là 0,44 [`outputs/us/event_study_diag.csv`]), tìm thấy thông tin trong giọng điệu 10-K.
-- **VN:** tăng 1 độ lệch chuẩn tone tiêu cực làm CAR[0,3] giảm 0,19 điểm %, khoảng 1/26 độ lệch chuẩn của CAR[0,3] (4,85%). Kết quả đúng dấu kỳ vọng nhưng **không có ý nghĩa** (t ≈ −0,9).
+- **VN:** tăng 1 độ lệch chuẩn tone tiêu cực làm CAR[0,3] giảm 0,24 điểm %, khoảng 1/20 độ lệch chuẩn của CAR[0,3] (4,85%). Kết quả đúng dấu kỳ vọng nhưng **không có ý nghĩa** (p = 0,23 [`outputs/vn/llm_ocr_effect.csv`]). Tone bất định `fin_unc_z` chỉ có ý nghĩa ở mức 10% (p = 0,069), trước khi sửa OCR là p = 0,17.
 
 **Fama–MacBeth** [`outputs/*/regression_fama_macbeth.csv`]:
 - Mỹ: `fin_neg_z` = −0,0011 (t = −0,98), trên 10 kỳ cắt ngang. Chỉ quý 1 mỗi năm đủ quan sát, vì 10-K tập trung nộp vào tháng 2–3.
-- VN: `fin_neg_z` = −0,0008 (t = −0,35), trên 10 năm.
+- VN: `fin_neg_z` = −0,0009 (t = −0,43), trên 10 năm.
 
 Cả hai đều không có ý nghĩa.
 
@@ -224,19 +224,49 @@ Hệ số `fin_neg_z`, dùng cùng biến kiểm soát và FE [`outputs/*/regres
 
 | Biến phụ thuộc | Mỹ | VN |
 |---|---|---|
-| CAR market-adjusted [0,3] | +0,0005 (0,0018) | −0,0013 (0,0019) |
-| BHAR[0,3] (LM 2011) | +0,0006 (0,0018) | −0,0016 (0,0019) |
-| **Placebo −60 phiên** | +0,0008 (0,0012) | +0,0021 (0,0016) |
-| CAR[0,1] | +0,0002 (0,0014) | +0,0010 (0,0013) |
-| CAR[−1,1] | +0,0024 (0,0018) | +0,0013 (0,0016) |
-| CAR[0,5] | −0,0005 (0,0018) | **−0,0058\*\*\* (0,0022)** |
-| CAR[0,10] | −0,0019 (0,0025) | −0,0044 (0,0031) |
+| CAR market-adjusted [0,3] | +0,0005 (0,0018) | −0,0017 (0,0020) |
+| BHAR[0,3] (LM 2011) | +0,0006 (0,0018) | −0,0020 (0,0020) |
+| **Placebo −60 phiên** | +0,0008 (0,0012) | +0,0025 (0,0016) |
+| CAR[0,1] | +0,0002 (0,0014) | +0,0008 (0,0013) |
+| CAR[−1,1] | +0,0024 (0,0018) | +0,0014 (0,0016) |
+| CAR[0,5] | −0,0005 (0,0018) | **−0,0063\*\*\* (0,0023)** |
+| CAR[0,10] | −0,0019 (0,0025) | −0,0049 (0,0031) |
 
 - **Placebo** không có ý nghĩa ở cả hai thị trường, đúng như mong đợi.
-- **VN:** kết quả duy nhất có ý nghĩa là **CAR[0,5]**. Tăng 1 độ lệch chuẩn tone tiêu cực đi kèm CAR[0,5] thấp hơn 0,58 điểm % (t ≈ −2,6, p ≈ 0,008). Điều này khớp với hình 3, nơi đường nhóm tiêu cực tách ra rõ nhất ở T+3 đến T+6. Bằng chứng vẫn còn yếu, vì [0,10] không có ý nghĩa (−0,44 điểm %, p ≈ 0,16) và đây là 1 trong 7 cửa sổ được kiểm định. Với hiệu chỉnh Bonferroni cho 7 cửa sổ (α = 0,05/7 ≈ 0,007), kết quả **không qua** ngưỡng.
+- **VN:** kết quả duy nhất có ý nghĩa là **CAR[0,5]**. Tăng 1 độ lệch chuẩn tone tiêu cực đi kèm CAR[0,5] thấp hơn 0,63 điểm % (p = 0,005 [`outputs/vn/llm_ocr_effect.csv`]). Điều này khớp với hình 3, nơi đường nhóm tiêu cực tách ra rõ nhất ở T+3 đến T+6. Với hiệu chỉnh Bonferroni cho 7 cửa sổ (α = 0,05/7 ≈ 0,007), kết quả **vừa qua** ngưỡng, nhưng chỉ sau khi sửa OCR bằng AI (trước đó p = 0,008, không qua). Bằng chứng vẫn còn yếu: [0,10] không có ý nghĩa (−0,49 điểm %, p = 0,12), Bonferroni ở đây mới tính 7 cửa sổ chứ chưa tính nhiều mô hình, và việc vượt ngưỡng phụ thuộc vào một thay đổi nhỏ trong đo lường.
 - **Mỹ, kiểm tra bổ sung** (không thuộc thiết kế gốc) [`outputs/us/earnings_overlap.csv`, `outputs/us/regression_excl_earnings.csv`]:
   - 93/500 hồ sơ 10-K (18,6%) được nộp trong vòng ±3 ngày quanh 8-K công bố KQKD (mục 2.02). Nhóm này có |CAR[0,3]| trung bình 4,65%, so với 1,65% ở nhóm còn lại.
   - Sau khi loại các hồ sơ này, `fin_neg_z` = +0,0011 (0,0017), vẫn không có ý nghĩa.
+
+### 4.5 Tầng AI sửa OCR: có đổi kết luận không?
+
+Tầng AI (`src/textkit/llm_client.py`, gọi từ `v03 --llm`; CHANGELOG #33–#42) chấm điểm chất lượng chữ `quality_score` cho từng trang thư. Chỉ trang dưới ngưỡng 0,85 mới được gửi ảnh cho Gemini (`gemini-3.5-flash-lite`, temperature = 0) để **chép nguyên văn**. Bản AI chỉ được nhận khi điểm không giảm [`outputs/vn/llm_ocr_summary.csv`]:
+
+| | Số lượng |
+|---|---:|
+| Trang thuộc thư (617 văn bản) | 1.444 |
+| Trang gửi AI (dưới ngưỡng) | 131 |
+| Trang nhận bản AI | 118 (70 có điểm tăng; 46 là trang gần như trống ở cả hai bản) |
+| Trang loại bản AI | 13 (8 điểm không tăng, 4 AI trả rỗng, 1 nghi viết lại) |
+| Văn bản có ≥ 1 trang dùng bản AI | 81 |
+| Điểm chất lượng TB các văn bản đó (theo token) | 0,922 → 0,964 |
+| Token Gemini (đầu vào / đầu ra, gồm lượt chạy thử) | 195.526 / 47.489 |
+| Chi phí ước tính nếu dùng gói trả phí | ≈ 0,18 USD (gói miễn phí: 0) |
+
+Ví dụ: MWG 2019 có trang 6 OCR không đọc được (chữ trên nền màu). Bản AI bổ sung khoảng 490 từ, và điểm chất lượng cả thư tăng từ 0,69 lên 0,98. Với các trang số liệu hoặc biểu đồ (SBT 2019, VND 2020), bản AI bỏ các con số OCR vỡ, nên văn bản ngắn đi.
+
+Cùng mô hình, biến kiểm soát, FE và sai số chuẩn cluster, ước lượng trên panel trước và sau khi sửa [`outputs/vn/llm_ocr_effect.csv`]:
+
+| Hệ số (biến phụ thuộc) | Trước: hệ số (SE), p | Sau: hệ số (SE), p |
+|---|---|---|
+| fin_neg_z (CAR[0,3]) | −0,0019 (0,0020), 0,33 | −0,0024 (0,0020), 0,23 |
+| gen_neg_z (CAR[0,3]) | −0,0004 (0,0021), 0,87 | −0,0010 (0,0021), 0,64 |
+| fin_unc_z (CAR[0,3], M5) | −0,0029 (0,0021), 0,17 | −0,0037 (0,0020), 0,069 |
+| fin_neg_z (CAR[0,5]) | −0,0058 (0,0022), 0,0078 | −0,0063 (0,0023), 0,0051 |
+| fin_neg_z (CAR[0,10]) | −0,0044 (0,0031), 0,15 | −0,0049 (0,0031), 0,12 |
+| fin_neg_z (Placebo −60) | +0,0021 (0,0016), 0,20 | +0,0025 (0,0016), 0,12 |
+
+N không đổi (514; 499 với placebo), vì tầng AI chỉ thay văn bản chứ không thay mẫu. **Kết luận chính không đổi:** tone không có tác động có ý nghĩa lên CAR[0,3]. Mọi hệ số đều giữ dấu và tăng nhẹ về độ lớn, khớp với việc giảm sai số đo lường (attenuation bias). Thay đổi đáng kể duy nhất là CAR[0,5] vượt ngưỡng Bonferroni với cách biệt nhỏ, nên không coi đây là bằng chứng mới.
 
 ---
 
@@ -247,7 +277,7 @@ Hệ số `fin_neg_z`, dùng cùng biến kiểm soát và FE [`outputs/*/regres
 | Giọng điệu văn bản | Tiêu cực, mang tính pháp lý (fin_net −0,52) | Rất tích cực, mang tính quan hệ cổ đông (fin_net +0,71) |
 | CAR[0,3] | ≈ 0 | ≈ 0 (âm nhẹ) |
 | Tone → CAR[0,3] | Không | Đúng dấu, không có ý nghĩa |
-| Tone → CAR dài hơn | Không | Có ý nghĩa ở [0,5] (không qua Bonferroni), chưa vững |
+| Tone → CAR dài hơn | Không | Có ý nghĩa ở [0,5] (vừa qua Bonferroni cho 7 cửa sổ, sát ngưỡng), chưa vững |
 
 **Lập luận kinh tế:**
 1. **Hiệu quả thông tin và thời điểm:**
@@ -267,8 +297,8 @@ Hệ số `fin_neg_z`, dùng cùng biến kiểm soát và FE [`outputs/*/regres
 |---|---:|---:|---|
 | Breusch–Pagan (p) | 0,000 | 0,0009 | Phương sai sai số thay đổi → toàn bộ hồi quy dùng **sai số chuẩn cluster theo mã** (vững với phương sai thay đổi và tương quan trong cùng công ty); Fama–MacBeth dùng Newey–West |
 | Jarque–Bera (p) | 0,000 | 0,000 | Phần dư không chuẩn (đuôi dày, điển hình của lợi suất) → **winsorize 1%/99%** cho CAR và các biến tone; cỡ mẫu 470–514 đủ lớn để suy luận tiệm cận; bổ sung kiểm định **phi tham số** (Wilcoxon, sign test) và t BMP (chuẩn hóa theo phương sai ước lượng) |
-| VIF lớn nhất | 2,98 (log_turn); fin_neg_z 2,86 | 2,92 (log_tradeval); fin_neg_z 1,24 | < 5 → không có đa cộng tuyến đáng lo |
-| corr(fin_neg, gen_neg) | 0,570 | 0,452 | Đủ thấp để M4 tách được tác động riêng của hai thước đo |
+| VIF lớn nhất | 2,98 (log_turn); fin_neg_z 2,86 | 2,93 (log_tradeval); fin_neg_z 1,25 | < 5 → không có đa cộng tuyến đáng lo |
+| corr(fin_neg, gen_neg) | 0,570 | 0,443 | Đủ thấp để M4 tách được tác động riêng của hai thước đo |
 
 ---
 
@@ -294,7 +324,8 @@ Hệ số `fin_neg_z`, dùng cùng biến kiểm soát và FE [`outputs/*/regres
    - Mẫu QC 10% (`data/vn/processed/qc_sample.csv`, 59 văn bản, đối chiếu đầu/cuối văn bản và ảnh trang): 49 đúng (10 trong số đó lệch biên nhỏ), 10 sai trang. 9 văn bản sai đã sửa trang, 1 đã loại. Tỷ lệ sai trang khoảng 17% gợi ý phần chưa kiểm tra (khoảng 90% mẫu) cũng có tỷ lệ tương tự, chủ yếu là lẫn trang mục lục.
    - Lỗi OCR ước lượng (% âm tiết ngoài từ vựng): trung vị 0,5% với văn bản lấy từ lớp chữ, 1,2% với văn bản OCR.
    - Thư chung Chủ tịch + TGĐ và thư của TGĐ được dùng khi không có thư riêng của Chủ tịch. Người viết khác nhau có thể có giọng điệu khác nhau.
-   - OCR có lỗi dấu, và bố cục nhiều cột làm đảo thứ tự câu. Việc đếm từ theo túi từ (bag-of-words) chịu ảnh hưởng ít, nhưng vẫn có sai số đo lường. Sai số này kéo hệ số về 0 (attenuation bias).
+   - OCR có lỗi dấu, và bố cục nhiều cột làm đảo thứ tự câu. Việc đếm từ theo túi từ (bag-of-words) chịu ảnh hưởng ít, nhưng vẫn có sai số đo lường. Sai số này kéo hệ số về 0 (attenuation bias). Tầng AI (mục 4.5) đã chép lại 118 trang OCR xấu; các hệ số tone VN tăng nhẹ về độ lớn sau khi sửa, khớp với hướng của attenuation bias. Độ chính xác của bản AI chưa được đo bằng trang chuẩn gõ tay (CER/WER): `src/vn/v03b_eval_ocr.py` đã chọn sẵn 15 trang, chờ gõ tay.
+   - Bản AI là do mô hình ngôn ngữ chép lại. Dù đã khóa temperature = 0, bắt chép nguyên văn và loại bản nghi viết lại (độ tương đồng thấp hoặc chất lượng giảm), vẫn không loại trừ hoàn toàn lỗi chép sai hay bỏ sót dòng. Gemini đôi khi từ chối chép nguyên văn (RECITATION, 5 trang, chuyển sang chế độ chỉ sửa lỗi ký tự trên bản OCR).
    - 1 BCTN dạng .7z (SHB 2017) không giải nén được.
 6. **Dữ liệu giá VN:**
    - Giá điều chỉnh của CafeF có vài bước nhảy nghi chưa điều chỉnh sự kiện doanh nghiệp (MWG −33% ngày 30/08/2021, BSR −41% ngày 20/01/2025, VTP −35% ngày 13/03/2024…). Không bước nhảy nào rơi vào cửa sổ sự kiện; 1 bước (MWG) rơi vào cửa sổ ước lượng của MWG_2021.
@@ -302,7 +333,7 @@ Hệ số `fin_neg_z`, dùng cùng biến kiểm soát và FE [`outputs/*/regres
 7. **Mỹ:**
    - Biến chính chỉ dùng file 10-K chính, không gồm exhibit. Các công ty để MD&A và báo cáo tài chính ở Exhibit 13 (IBM, WFC…) có văn bản ngắn hơn hẳn.
    - V thiếu số cổ phiếu (10 quan sát bị loại khỏi hồi quy).
-8. **Kiểm định nhiều lần:** 7 cửa sổ × nhiều mô hình. Kết quả đơn lẻ có ý nghĩa (VN [0,5]) cần được đọc thận trọng.
+8. **Kiểm định nhiều lần:** 7 cửa sổ × nhiều mô hình. Kết quả đơn lẻ có ý nghĩa (VN [0,5]) cần được đọc thận trọng: nó chỉ vượt ngưỡng Bonferroni của 7 cửa sổ với cách biệt nhỏ (p = 0,005 so với 0,007) và không vượt trước khi sửa OCR.
 
 ---
 

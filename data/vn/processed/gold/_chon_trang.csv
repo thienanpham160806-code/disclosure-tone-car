@@ -1,0 +1,16 @@
+﻿ticker,year,page,source,q_before,file_gold
+HT1,2024,6,text,0.8253,HT1_2024_p6.txt
+ACB,2020,4,ocr,0.8353,ACB_2020_p4.txt
+GAS,2025,5,ocr,0.8402,GAS_2025_p5.txt
+LPB,2022,4,ocr,0.5421,LPB_2022_p4.txt
+FRT,2022,9,ocr,0.8207,FRT_2022_p9.txt
+HDB,2017,6,ocr,0.8153,HDB_2017_p6.txt
+CTS,2022,5,ocr,0.8201,CTS_2022_p5.txt
+VIB,2023,10,text,0.7016,VIB_2023_p10.txt
+BSI,2025,7,ocr,0.5785,BSI_2025_p7.txt
+DBC,2020,5,text,0.6677,DBC_2020_p5.txt
+BCM,2022,5,text,0.9777,BCM_2022_p5.txt
+HAG,2016,4,text,0.9974,HAG_2016_p4.txt
+PAN,2024,5,text,0.9948,PAN_2024_p5.txt
+HT1,2021,3,text,0.9888,HT1_2021_p3.txt
+VND,2024,3,ocr,0.9664,VND_2024_p3.txt
