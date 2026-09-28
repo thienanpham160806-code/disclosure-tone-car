@@ -70,6 +70,9 @@ def main(mkt):
     px = pd.read_csv(D(mkt, "processed", "prices.csv.gz"), parse_dates=["date"])
     close = px.pivot_table(index="date", columns="ticker", values="close").sort_index()
     vol = px.pivot_table(index="date", columns="ticker", values="volume").reindex(close.index)
+    # vốn hóa = giá CHỈ điều chỉnh chia tách × số CP quy về cùng gốc chia tách (Mỹ; CHANGELOG_RUN #8)
+    pxm = (px.pivot_table(index="date", columns="ticker", values="close_split").reindex(close.index)
+           if "close_split" in px else close)
     ret = close.pct_change(fill_method=None); rm = ret[C["market_symbol"]]
     docs = pd.read_csv(D(mkt, "processed", "docs.csv"), parse_dates=["event_date"])
     docs = docs[docs.flag.eq("ok") & docs.event_date.notna()]
@@ -95,8 +98,8 @@ def main(mkt):
         tv = (pc * pv).mean()
         res.update(doc_id=d.doc_id, day0=close.index[i0], log_tradeval=np.log(tv) if tv > 0 else np.nan)
         if fund is not None and d.doc_id in fund.index:
-            sh, be = fund.loc[d.doc_id, ["shares_out", "book_equity"]]
-            mcap = close[d.ticker].iloc[i0 - 1] * sh if pd.notna(sh) else np.nan
+            sh, be = fund.loc[d.doc_id, ["shares_adj" if "shares_adj" in fund else "shares_out", "book_equity"]]
+            mcap = pxm[d.ticker].iloc[i0 - 1] * sh if pd.notna(sh) else np.nan
             res["log_mcap"] = np.log(mcap) if mcap and mcap > 0 else np.nan
             res["bm"] = be / mcap if pd.notna(be) and mcap and mcap > 0 and be > 0 else np.nan
             v252 = vol[d.ticker].iloc[max(0, i0 - 252):i0 - 5]
