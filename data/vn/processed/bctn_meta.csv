@@ -1,6 +1,7 @@
 ticker,group,year,lang,name,url,file,size_mb,d_cbtt,d_lastmod,d_pdf_mod,d_pdf_create,d_agm_doc,d_agm_res,status,event_date,event_src
 ACB,VN30,2025,vi,Báo cáo thường niên năm 2025,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/ACB_25CN_BCTN.pdf,ACB_2025_vi.pdf,17.6,,,2026-03-19,2026-03-19,,2026-04-09,ok,2026-03-19,pdf_meta
 ACB,VN30,2024,vi,Báo cáo thường niên năm 2024,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/ACB_24CN_BCTN.pdf,ACB_2024_vi.pdf,18.84,,,2025-03-24,2025-03-24,,2025-04-08,ok,2025-03-24,pdf_meta
+ACB,VN30,2023,vi,Báo cáo thường niên năm 2023,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/ACB_23CN_BCTN.zip,ACB_2023_vi.pdf,10.89,,,2024-03-27,2024-03-27,,2024-04-04,ok,2024-03-27,pdf_meta
 ACB,VN30,2023,vi,Báo cáo thường niên năm 2023,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/ACB_23CN_BCTN.pdf,ACB_2023_vi.pdf,10.89,,,2024-03-27,2024-03-27,,2024-04-04,ok,2024-03-27,pdf_meta
 ACB,VN30,2022,vi,Báo cáo thường niên năm 2022,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/ACB_22CN_BCTN.pdf,ACB_2022_vi.pdf,10.65,,,2023-03-30,2023-03-30,,2023-04-14,ok,2023-03-30,pdf_meta
 ACB,VN30,2021,vi,Báo cáo thường niên năm 2021,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2021/ACB_21CN_BCTN.pdf,ACB_2021_vi.pdf,12.43,,,2022-04-04,2022-04-04,,2022-04-08,ok,2022-04-04,pdf_meta
@@ -90,6 +91,7 @@ CII,VN100,2017,vi,Báo cáo thường niên năm 2017,https://cafefnew.mediacdn.
 CII,VN100,2016,vi,Báo cáo thường niên năm 2016,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2016/CII_16CN_BCTN.PDF,CII_2016_vi.pdf,10.27,,,2017-04-05,2017-04-05,,2017-04-28,ok,2017-04-05,pdf_meta
 CMG,VN100,2024,vi,Báo cáo thường niên năm 2024,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/CMG_24CN_BCTN.pdf,CMG_2024_vi.pdf,5.49,,,2025-07-18,,,2025-07-29,ok,2025-07-18,pdf_meta
 CMG,VN100,2023,vi,Báo cáo thường niên năm 2023,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/CMG_23CN_BCTN.pdf,CMG_2023_vi.pdf,6.17,,,2024-07-22,2024-07-22,,2024-07-25,ok,2024-07-22,pdf_meta
+CMG,VN100,2021,vi,Báo cáo thường niên năm 2021,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2021/CMG_21CN_BCTN.rar,CMG_2021_vi.pdf,10.0,,,2022-07-20,2022-07-20,,2022-07-27,ok,2022-07-20,pdf_meta
 CMG,VN100,2020,vi,Báo cáo thường niên năm 2020,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2020/CMG_20CN_BCTN.pdf,CMG_2020_vi.pdf,18.01,,,2021-07-20,2021-07-19,,2021-07-21,ok,2021-07-20,pdf_meta
 CMG,VN100,2019,vi,Báo cáo thường niên năm 2019,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2019/CMG_19CN_BCTN.pdf,CMG_2019_vi.pdf,15.27,,,2020-07-14,2020-07-13,,2020-07-15,ok,2020-07-14,pdf_meta
 CMG,VN100,2017,vi,Báo cáo thường niên năm 2017,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2017/CMG_17CN_BCTN.pdf,CMG_2017_vi.pdf,14.07,,,2018-07-05,2018-07-05,,,ok,2018-07-05,pdf_meta
@@ -168,11 +170,15 @@ DPM,VN100,2021,vi,Báo cáo thường niên năm 2021,https://cafefnew.mediacdn.
 DPM,VN100,2020,vi,Báo cáo thường niên năm 2020,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2020/DPM_20CN_BCTN.pdf,DPM_2020_vi.pdf,13.36,,,2021-04-15,2021-04-15,,2021-05-27,ok,2021-04-15,pdf_meta
 DPM,VN100,2019,vi,Báo cáo thường niên năm 2019,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2019/DPM_19CN_BCTN.pdf,DPM_2019_vi.pdf,11.67,,,2020-04-20,2020-04-20,,2020-06-17,ok,2020-04-20,pdf_meta
 DPM,VN100,2018,vi,Báo cáo thường niên năm 2018,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2018/DPM_18CN_BCTN.pdf,DPM_2018_vi.pdf,11.5,,,2019-04-08,2019-04-08,,2019-04-18,ok,2019-04-08,pdf_meta
+DPM,VN100,2017,vi,Báo cáo thường niên năm 2017,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2017/DPM_17CN_BCTN.rar,DPM_2017_vi.pdf,12.75,,,2018-04-14,2018-04-14,,2018-04-27,ok,2018-04-14,pdf_meta
 DSE,VN100,2025,vi,Báo cáo thường niên năm 2025,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/DSE_25CN_BCTN.pdf,DSE_2025_vi.pdf,11.3,,,2026-03-23,,,2026-03-26,ok,2026-03-23,pdf_meta
 DSE,VN100,2024,vi,Báo cáo thường niên năm 2024,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/DSE_24CN_BCTN.pdf,DSE_2024_vi.pdf,13.37,,,2025-03-18,,,2025-03-19,ok,2025-03-18,pdf_meta
 DSE,VN100,2023,vi,Báo cáo thường niên năm 2023,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/DSE_23CN_BCTN.pdf,DSE_2023_vi.pdf,53.86,,,2024-03-18,2024-03-18,,,ok,2024-03-18,pdf_meta
 DSE,VN100,2022,vi,Báo cáo thường niên năm 2022,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/DSE_22CN_BCTN.pdf,DSE_2022_vi.pdf,12.77,,,2023-03-20,2023-03-16,,,ok,2023-03-20,pdf_meta
 DSE,VN100,2021,vi,Báo cáo thường niên năm 2021,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/DSE_21CN_BCTN.pdf,DSE_2021_vi.pdf,2.31,,,2022-03-23,,,,ok,2022-03-23,pdf_meta
+DSE,VN100,2018,vi,Báo cáo thường niên năm 2018,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2018/DNSE_18CN_BCTN.zip,DSE_2018_vi.pdf,6.71,,,,,,,ok,,missing
+DSE,VN100,2017,vi,Báo cáo thường niên năm 2017,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2017/DNSE_17CN_BCTN.zip,DSE_2017_vi.pdf,5.24,,,2018-04-17,2018-04-14,,,ok,2018-04-17,pdf_meta
+DSE,VN100,2016,vi,Báo cáo thường niên năm 2016,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2016/DNSE_16CN_BCTN.zip,DSE_2016_vi.pdf,6.1,,,,,,,ok,,missing
 DXG,VN100,2025,vi,Báo cáo thường niên năm 2025,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/DXG_25CN_BCTN.pdf,DXG_2025_vi.pdf,17.62,,,2026-05-05,2026-05-05,,2026-04-17,ok,,missing
 DXG,VN100,2024,vi,Báo cáo thường niên năm 2024,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/DXG_24CN_BCTN.pdf,DXG_2024_vi.pdf,13.32,,,2025-04-19,,,2025-05-09,ok,2025-04-19,pdf_meta
 DXG,VN100,2023,vi,Báo cáo thường niên năm 2023,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/DXG_23CN_BCTN.pdf,DXG_2023_vi.pdf,0.25,,,2024-04-01,2024-03-30,,2024-04-19,ok,2024-04-01,pdf_meta
@@ -233,6 +239,7 @@ GAS,VN30,2024,vi,Báo cáo thường niên năm 2024,https://cafefnew.mediacdn.v
 GAS,VN30,2023,vi,Báo cáo thường niên năm 2023,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/GAS_23CN_BCTN.pdf,GAS_2023_vi.pdf,7.43,,,2024-03-20,2024-03-20,,2024-05-29,ok,2024-03-20,pdf_meta
 GAS,VN30,2022,vi,Báo cáo thường niên năm 2022,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/GAS_22CN_BCTN.pdf,GAS_2022_vi.pdf,9.29,,,2023-03-30,2023-03-30,,2023-05-25,ok,2023-03-30,pdf_meta
 GAS,VN30,2018,vi,Báo cáo thường niên năm 2018,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2018/GAS_18CN_BCTN.pdf,GAS_2018_vi.pdf,11.73,,,2019-04-16,2019-04-16,,2019-04-10,ok,,missing
+GAS,VN30,2017,vi,Báo cáo thường niên năm 2017,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2017/GAS_17CN_BCTN.rar,GAS_2017_vi.pdf,7.88,,,2018-04-19,2018-04-19,,2018-04-27,ok,2018-04-19,pdf_meta
 GAS,VN30,2016,vi,Báo cáo thường niên năm 2016,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2016/GAS_16CN_BCTN.pdf,GAS_2016_vi.pdf,33.86,,,2017-04-07,2017-04-07,,2017-04-17,ok,2017-04-07,pdf_meta
 GEE,VN100,2025,vi,Báo cáo thường niên năm 2025,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/GEE_25CN_BCTN.pdf,GEE_2025_vi.pdf,7.48,,,2026-04-05,,,2026-04-08,ok,2026-04-05,pdf_meta
 GEE,VN100,2024,vi,Báo cáo thường niên năm 2024,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/GEE_24CN_BCTN.pdf,GEE_2024_vi.pdf,11.23,,,2025-03-24,,,2025-03-25,ok,2025-03-24,pdf_meta
@@ -285,9 +292,11 @@ HCM,VN100,2017,vi,Báo cáo thường niên năm 2017,https://cafefnew.mediacdn.
 HCM,VN100,2016,vi,Báo cáo thường niên năm 2016,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2016/HCM_16CN_BCTN.pdf,HCM_2016_vi.pdf,5.52,,,2017-04-20,2017-04-19,,2017-04-25,ok,2017-04-20,pdf_meta
 HDB,VN30,2025,vi,Báo cáo thường niên năm 2025,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/HDB_25CN_BCTN.pdf,HDB_2025_vi.pdf,21.61,,,2026-04-20,2026-04-20,,2026-04-24,ok,2026-04-20,pdf_meta
 HDB,VN30,2024,vi,Báo cáo thường niên năm 2024,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/HDB_24CN_BCTN.pdf,HDB_2024_vi.pdf,20.79,,,2025-05-16,2025-05-16,,2025-04-24,ok,,missing
+HDB,VN30,2023,vi,Báo cáo thường niên năm 2023,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/HDB_23CN_BCTN.zip,HDB_2023_vi.pdf,1.14,,,,,,2024-04-26,ok,,missing
 HDB,VN30,2022,vi,Báo cáo thường niên năm 2022,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/HDB_22CN_BCTN.pdf,HDB_2022_vi.pdf,33.95,,,2023-04-21,2023-04-21,,2023-04-27,ok,2023-04-21,pdf_meta
 HDB,VN30,2021,vi,Báo cáo thường niên năm 2021,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/HDB_21CN_BCTN.pdf,HDB_2021_vi.pdf,26.78,,,2022-04-19,,,2022-04-27,ok,2022-04-19,pdf_meta
 HDB,VN30,2020,vi,Báo cáo thường niên năm 2020,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2020/HDB_20CN_BCTN.pdf,HDB_2020_vi.pdf,12.77,,,,2021-04-28,,,ok,2021-04-28,pdf_meta
+HDB,VN30,2019,vi,Báo cáo thường niên năm 2019,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2019/HDB_19CN_BCTN.zip,HDB_2019_vi.pdf,14.42,,,,2020-04-11,,2020-06-13,ok,2020-04-11,pdf_meta
 HDB,VN30,2018,vi,Báo cáo thường niên năm 2018,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2018/HDB_18CN_BCTN.pdf,HDB_2018_vi.pdf,53.47,,,2019-04-19,2019-04-19,,2019-04-23,ok,2019-04-19,pdf_meta
 HDB,VN30,2017,vi,Báo cáo thường niên năm 2017,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2017/HDB_17CN_BCTN.pdf,HDB_2017_vi.pdf,14.33,,,2018-04-19,2018-04-18,,2018-04-21,ok,2018-04-19,pdf_meta
 HDB,VN30,2016,vi,Báo cáo thường niên năm 2016,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2016/HDB_16CN_BCTN.pdf,HDB_2016_vi.pdf,19.09,,,2017-06-01,2017-06-01,,,ok,2017-06-01,pdf_meta
@@ -479,6 +488,7 @@ NVL,VN100,2017,vi,Báo cáo thường niên năm 2017,https://cafefnew.mediacdn.
 NVL,VN100,2016,vi,Báo cáo thường niên năm 2016,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2016/NVL_16CN_BCTN.pdf,NVL_2016_vi.pdf,9.55,,,2017-04-03,2017-03-31,,2017-04-28,ok,2017-04-03,pdf_meta
 OCB,VN100,2025,vi,Báo cáo thường niên năm 2025,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/OCB_25CN_BCTN.pdf,OCB_2025_vi.pdf,42.28,,,2026-04-08,2026-04-08,,2026-04-15,ok,2026-04-08,pdf_meta
 OCB,VN100,2024,vi,Báo cáo thường niên năm 2024,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/OCB_24CN_BCTN.pdf,OCB_2024_vi.pdf,14.99,,,2025-04-04,2025-04-04,,2025-04-22,ok,2025-04-04,pdf_meta
+OCB,VN100,2023,vi,Báo cáo thường niên năm 2023,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/OCB_23CN_BCTN.zip,OCB_2023_vi.pdf,8.14,,,2024-03-25,2024-03-25,,2024-04-15,ok,2024-03-25,pdf_meta
 OCB,VN100,2022,vi,Báo cáo thường niên năm 2022,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/OCB_22CN_BCTN.pdf,OCB_2022_vi.pdf,19.45,,,2023-04-18,,,2023-04-28,ok,2023-04-18,pdf_meta
 OCB,VN100,2021,vi,Báo cáo thường niên năm 2021,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2021/OCB_21CN_BCTN.pdf,OCB_2021_vi.pdf,10.78,,,2022-04-01,2022-04-01,,2022-04-25,ok,2022-04-01,pdf_meta
 OCB,VN100,2020,vi,Báo cáo thường niên năm 2020,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2020/OCB_20CN_BCTN.pdf,OCB_2020_vi.pdf,16.55,,,2021-04-15,2021-04-15,,2021-04-28,ok,2021-04-15,pdf_meta
@@ -587,6 +597,7 @@ SHB,VN30,2024,vi,Báo cáo thường niên năm 2024,https://cafefnew.mediacdn.v
 SHB,VN30,2021,vi,Báo cáo thường niên năm 2021,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2021/SHB_21CN_BCTN.pdf,SHB_2021_vi.pdf,0.09,,,2022-04-05,2022-05-05,,,ok,2022-04-05,pdf_meta
 SHB,VN30,2020,vi,Báo cáo thường niên năm 2020,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2020/SHB_20CN_BCTN.pdf,SHB_2020_vi.pdf,8.82,,,2021-04-29,2021-04-29,,2021-04-22,ok,,missing
 SHB,VN30,2018,vi,Báo cáo thường niên năm 2018,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2018/SHB_18CN_BCTN.pdf,SHB_2018_vi.pdf,7.8,,,2019-05-30,2019-05-30,,2019-04-23,ok,,missing
+SHB,VN30,2017,vi,,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2017/SHB_17CN_BCTN.7z,,,,,,,,,archive_fail,,missing
 SHB,VN30,2016,vi,Báo cáo thường niên năm 2016,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2016/SHB_16CN_BCTN.pdf,SHB_2016_vi.pdf,5.78,,,2017-05-19,2017-05-18,,2017-04-27,ok,,missing
 SIP,VN100,2025,vi,Báo cáo thường niên năm 2025,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/SIP_25CN_BCTN.pdf,SIP_2025_vi.pdf,8.79,,,2026-04-20,2026-04-18,,2026-04-21,ok,2026-04-20,pdf_meta
 SIP,VN100,2024,vi,Báo cáo thường niên năm 2024,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/SIP_24CN_BCTN.pdf,SIP_2024_vi.pdf,9.5,,,2025-04-21,2025-04-21,,2025-04-25,ok,2025-04-21,pdf_meta
@@ -798,6 +809,7 @@ VSC,VN100,2017,vi,Báo cáo thường niên năm 2017,https://cafefnew.mediacdn.
 VSC,VN100,2016,vi,Báo cáo thường niên năm 2016,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2016/VSC_16CN_BCTN.pdf,VSC_2016_vi.pdf,0.77,,,2017-03-17,2017-03-17,,2017-03-24,ok,2017-03-17,pdf_meta
 VTP,VN100,2025,vi,Báo cáo thường niên năm 2025,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/VTP_25CN_BCTN.pdf,VTP_2025_vi.pdf,3.97,,,2026-04-20,,,2026-04-23,ok,2026-04-20,pdf_meta
 VTP,VN100,2024,vi,Báo cáo thường niên năm 2024,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/VTP_24CN_BCTN.pdf,VTP_2024_vi.pdf,5.07,,,2025-04-18,,,2025-04-23,ok,2025-04-18,pdf_meta
+VTP,VN100,2023,vi,Báo cáo thường niên năm 2023,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/VTP_23CN_BCTN.zip,VTP_2023_vi.pdf,11.22,,,2024-04-16,2024-04-15,,2024-04-27,ok,2024-04-16,pdf_meta
 VTP,VN100,2022,vi,Báo cáo thường niên năm 2022,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/BCTC/VTP_22CN_BCTN.pdf,VTP_2022_vi.pdf,4.69,,,2023-04-17,,,2023-04-19,ok,2023-04-17,pdf_meta
 VTP,VN100,2021,vi,Báo cáo thường niên năm 2021,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2021/VTP_21CN_BCTN.pdf,VTP_2021_vi.pdf,3.28,,,2022-04-19,2022-04-19,,2022-04-23,ok,2022-04-19,pdf_meta
 VTP,VN100,2020,vi,Báo cáo thường niên năm 2020,https://cafefnew.mediacdn.vn/Images/Uploaded/DuLieuDownload/2020/VTP_20CN_BCTN.pdf,VTP_2020_vi.pdf,7.31,,,2021-04-13,2021-04-12,,2021-04-24,ok,2021-04-13,pdf_meta
