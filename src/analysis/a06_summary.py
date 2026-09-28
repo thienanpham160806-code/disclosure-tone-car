@@ -38,7 +38,7 @@ def main(mkt):
         lm = pd.read_csv(D(mkt, "processed", "letters_meta.csv"))
         ok = docs[docs.flag.eq("ok")]
         steps = [("Mã VN30 + VN100", pd.read_csv(CFG["vn"]["tickers_file"]).ticker.nunique()),
-                 ("Mã–năm có BCTN PDF trên CafeF (2016–2025)", meta.drop_duplicates(["ticker", "year"]).shape[0]),
+                 ("Mã–năm có BCTN PDF trên CafeF (2016–2025)", meta[meta.status == "ok"].drop_duplicates(["ticker", "year"]).shape[0]),
                  ("Tìm được Thông điệp HĐQT (ok + too_long)", int(lm.flag.isin(["ok", "too_long"]).sum())),
                  ("  không tìm thấy thư (not_found)", int(lm.flag.eq("not_found").sum())),
                  ("  thư quá ngắn < 250 âm tiết (too_short)", int(lm.flag.eq("too_short").sum())),
