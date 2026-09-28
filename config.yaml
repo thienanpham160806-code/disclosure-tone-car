@@ -50,6 +50,10 @@ vn:
       max_retries: 4                # thử lại khi 429/5xx/mạng (backoff 2, 4, 8… giây)
       recitation_fallback: text_fix # Gemini chặn chép nguyên văn (RECITATION) → thử chế độ text_fix cho trang đó; "none" để tắt
       locate: true                  # regex không thấy thư → hỏi AI trang bắt đầu/kết thúc (chỉ gửi 300 ký tự đầu mỗi trang)
+      price_usd_per_1m:             # [đầu vào, đầu ra] – chỉ để ƯỚC TÍNH chi phí nếu dùng gói trả phí (a08); gói miễn phí = 0
+        gemini-3.5-flash-lite: [0.30, 2.50]
+        gemini-3.1-flash-lite: [0.25, 1.50]
+        claude-haiku-4-5: [1.00, 5.00]
 
 event:                              # dùng chung cho 2 thị trường
   est_window: [-150, -11]
