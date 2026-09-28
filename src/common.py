@@ -1,9 +1,15 @@
 """Tiện ích dùng chung: cấu hình, đường dẫn theo thị trường, tên cột CAR, winsorize."""
-import pathlib, re, unicodedata, yaml
+import os, pathlib, re, unicodedata, yaml
 import pandas as pd
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 CFG = yaml.safe_load(open(ROOT / "config.yaml", encoding="utf-8"))
+# Email KHÔNG ghi vào repo: ưu tiên biến môi trường CONTACT_EMAIL, rồi config.local.yaml (nằm trong .gitignore)
+_local = ROOT / "config.local.yaml"
+if _local.exists():
+    CFG.update(yaml.safe_load(open(_local, encoding="utf-8")) or {})
+if os.getenv("CONTACT_EMAIL"):
+    CFG["contact_email"] = os.environ["CONTACT_EMAIL"]
 
 
 def P(*a) -> pathlib.Path:

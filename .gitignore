@@ -1,0 +1,17 @@
+# dữ liệu thô / trung gian (không commit)
+data/*/raw/
+data/*/interim/
+# từ điển tải về từ nguồn ngoài (giấy phép riêng, không phân phối lại)
+dict/Loughran-McDonald_*.csv
+dict/LoughranMcDonald_*.csv
+dict/VietSentiWordnet_*.txt
+dict/HIV-4.csv
+# cấu hình cá nhân (email, khóa API)
+config.local.yaml
+.env
+# môi trường / cache
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
