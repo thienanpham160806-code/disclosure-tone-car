@@ -49,3 +49,83 @@ PDR,2021,9,10,1,too_short: Thông điệp Chủ tịch HĐQT; font mã hóa sai 
 VCG,2023,5,6,0,too_short: Thông điệp Chủ tịch HĐQT (v03 lấy trang mục lục)
 GAS,2017,6,7,0,BCTN từ file .rar: Thông điệp Chủ tịch HĐQT & TGĐ (thư chung)
 HDB,2019,4,4,0,"BCTN từ file .zip: Thông điệp cổ đông lớn – Phó Chủ tịch thường trực HĐQT (xem ảnh; trang đôi, OCR nhiễu)"
+ANV,2018,3,3,0,"Rà trần 6 trang (cách B): thư Chủ tịch 1 trang, ký cuối p3; p4-8 là tiêu điểm/tầm nhìn/mục lục/cơ cấu doanh thu/thông tin công ty"
+BAF,2021,10,10,0,"Rà trần 6 trang: regex bắt nhầm mục lục (p4); thư TGĐ ở p10 (trang đôi, có chữ ký)"
+BCM,2022,14,14,0,"Rà trần 6 trang: p3 là ""Thông điệp báo cáo"" (lời giới thiệu, không người ký), p4-8 dấu ấn/số liệu; thư Chủ tịch HĐQT thật ở p14"
+BCM,2021,5,5,0,Rà trần 6 trang: thư Chủ tịch HĐQT 1 trang p5; p6-10 thông tin chung/lịch sử/giải thưởng
+BID,2018,6,7,0,"Rà trần 6 trang: p2-5 mục lục/bìa mục ""Tiêu điểm""; thư HĐQT p6-7 (ký Chủ tịch)"
+BSI,2023,6,7,0,Rà trần 6 trang: p4-5 mục lục; thư TGĐ p6-7 (có chữ ký); p8-9 điểm nhấn
+BSI,2021,6,6,0,Rà trần 6 trang: thư TGĐ 1 trang đôi p6 (có chữ ký); p7-11 dấu ấn/thông tin DN
+BVH,2025,15,16,0,"Rà trần 6 trang: p2-3 ""Lời mở đầu"" (không người ký), p4-7 điểm nhấn/tổng quan chương; thư Q. Chủ tịch HĐQT p15-16 (p17-18 thư TGĐ)"
+BVH,2020,8,8,0,Rà trần 6 trang: p2-7 phần mở đầu/công văn; thư HĐQT 1 trang đôi p8 (p9 thư TGĐ)
+BVH,2018,11,12,0,"Rà trần 6 trang: p2-7 phần mở đầu/mục lục; thư Chủ tịch HĐQT p11 (ảnh, trích dẫn) - p12 (thân thư, ký)"
+CII,2017,3,4,0,Rà trần 6 trang: thư Chủ tịch HĐQT p3-4; p5-8 kết quả KD/tài chính/danh hiệu/thông tin chung
+CII,2016,3,4,0,Rà trần 6 trang: thư Chủ tịch HĐQT p3-4; p5-8 kết quả KD/tài chính/danh hiệu/thông tin chung
+CTD,2024,5,9,0,"Rà trần 6 trang: thông điệp Chủ tịch HĐQT dạng phỏng vấn p5-9 (kết ""Xin cảm ơn ông!""); p10 bức tranh tài chính"
+CMG,2016,0,0,0,"Rà trần 6 trang: BCTN không có thư của lãnh đạo (mục lục không có); regex khớp nhầm ""thông điệp"" trong đoạn về môi trường làm việc p26 -> loại"
+DCM,2018,6,7,0,Rà trần 6 trang: thông điệp ban lãnh đạo p6-7 (ký TGĐ + Chủ tịch HĐQT); p8-11 tổng quan công ty
+DSE,2023,4,4,0,"Rà trần 6 trang: regex khớp nhầm p36 (thiện nguyện); thư ngỏ Chủ tịch HĐQT p4 (p3 bìa mục, có chữ ký)"
+FPT,2023,5,7,0,Rà trần 6 trang: thư Chủ tịch HĐQT p5-7 (ký Trương Gia Bình); p8-10 là thư TGĐ - ưu tiên thư Chủ tịch
+EIB,2021,8,8,0,"Rà trần 6 trang: regex khớp nhầm p38 (hiến máu); ""Phát biểu của TGĐ"" p8 (p7 ảnh, có chữ ký TGĐ)"
+EVF,2023,0,0,0,"Rà trần 6 trang: BCTN theo mẫu biểu, mục lục không có thư lãnh đạo; regex khớp nhầm ""thông điệp Vững bước thành công"" trong danh sách sự kiện -> loại"
+FPT,2020,6,7,0,Rà trần 6 trang: thư Chủ tịch HĐQT p6-7 (ký Trương Gia Bình); p8-9 thư TGĐ - ưu tiên thư Chủ tịch
+FRT,2024,7,8,0,"Rà trần 6 trang: p5 bìa chương/mục lục, p6 chỉ tiêu KD; thư Chủ tịch HĐQT p7-8 (ký Nguyễn Bạch Điệp); p9-10 sự kiện/giải thưởng"
+FRT,2022,5,7,0,Rà trần 6 trang: thư Chủ tịch HĐQT p5-7 (ký Nguyễn Bạch Điệp); p8-10 con số/giải thưởng/thông tin chung
+GAS,2016,4,5,0,"Rà trần 6 trang: p2 mục lục, p3 tầm nhìn; thông điệp Chủ tịch HĐQT & TGĐ p4-5 (ký cả hai); p6-7 sự kiện nổi bật"
+HCM,2018,3,5,0,Rà trần 6 trang: thư TGĐ p3-5 (ký Johan Nyvene); p6-8 chỉ số tài chính/tổng quan
+HCM,2016,5,8,0,Rà trần 6 trang: thư TGĐ p5-8 (ký Johan Nyvene); p9-10 chỉ số tài chính
+HDB,2020,6,6,0,"Rà trần 6 trang: p4 bìa chương; p5 thư PCT thường trực, p6 thư Chủ tịch HĐQT (ký), p7 thư TGĐ - ưu tiên thư Chủ tịch"
+HDB,2017,5,5,0,"Rà trần 6 trang: p4 thư PCT thường trực, p5 thư Chủ tịch HĐQT (ký Lê Thị Băng Tâm), p6-7 thư TGĐ - ưu tiên thư Chủ tịch"
+MBB,2023,5,5,0,Rà trần 6 trang: p4 tầm nhìn/sứ mệnh; thư Chủ tịch HĐQT 1 trang đôi p5 (ký Lưu Trung Thái); p6 thư TGĐ - ưu tiên thư Chủ tịch
+MBB,2016,5,6,0,Rà trần 6 trang: thư Chủ tịch HĐQT p5-6 (ký Lê Hữu Đức); p7-10 chỉ số tài chính/giải thưởng/dấu ấn
+MCH,2025,14,14,0,Rà trần 6 trang: regex khớp nhầm p29 (kênh TMĐT); thư ngỏ Chủ tịch HĐQT 1 trang đôi p14 (ký Danny Le); p15 thư TGĐ - ưu tiên thư Chủ tịch
+MSN,2023,11,12,0,"Rà trần 6 trang: thư ngỏ Chủ tịch HĐQT p11-12 (ký Nguyễn Đăng Quang); p13 thư TGĐ Masan Consumer, p14-16 tài chính/câu chuyện Masan"
+MSN,2018,6,8,0,Rà trần 6 trang: thư ngỏ Chủ tịch HĐQT p6-8 (p5 chỉ ảnh + tiêu đề; ký p8); p9-11 ảnh minh họa
+MSN,2016,3,5,0,Rà trần 6 trang: regex bắt nhầm p12-17 (câu chuyện Masan/lịch sử); thư ngỏ Chủ tịch HĐQT p3-5 (ký Nguyễn Đăng Quang)
+MWG,2018,3,4,0,Rà trần 6 trang: thư Chủ tịch HĐQT p3-4 (ký Nguyễn Đức Tài); p5-8 con số nổi bật/tầm nhìn/thành quả/tổng quan
+NT2,2023,10,11,0,Rà trần 6 trang: thông điệp Chủ tịch HĐQT và Giám đốc p10-11 (ký cả hai); p12-15 tầm nhìn/tổng quan
+PDR,2017,7,9,0,"Rà trần 6 trang: ""Đối thoại với Chủ tịch HĐQT"" p7-9 (dạng hỏi-đáp); p10-12 bìa mục/lịch sử/sự kiện"
+POW,2023,4,4,0,Rà trần 6 trang: thông điệp ban lãnh đạo 1 trang đôi p4 (ký Chủ tịch HĐQT + TGĐ); p5-9 thông tin chung/lịch sử/dấu ấn
+PVD,2023,7,8,0,"Rà trần 6 trang: p5 bìa chương, p6 tầm nhìn; thư TGĐ p7-8 (ký Nguyễn Xuân Cường); p9-10 thông tin DN"
+PVD,2018,5,6,0,Rà trần 6 trang: p4 bìa; thư TGĐ p5-6 (ký Phạm Tiến Dũng); p7-9 thông tin DN/sơ đồ tổ chức
+PVD,2016,6,6,0,Rà trần 6 trang: p5 bìa chương; thư TGĐ 1 trang đôi p6 (ký Phạm Tiến Dũng); p7-10 giới thiệu HĐQT/BKS/BTGĐ
+PVD,2025,7,9,0,"Rà trần 6 trang: p5 bìa chương, p6 tầm nhìn; thư TGĐ p7-9 (tiếp theo); p10 thông tin DN"
+PVT,2019,6,8,0,Rà trần 6 trang: thư TGĐ p6-8 (ký Phạm Việt Anh); p9-11 phần giới thiệu/giải thưởng
+REE,2024,8,9,0,Rà trần 6 trang: p3-7 mục lục/con số; thông điệp ban lãnh đạo p8-9 (Chủ tịch + TGĐ); p10 bìa chương
+REE,2018,7,8,0,Rà trần 6 trang: p3-6 mục lục/kết quả nổi bật; thư Chủ tịch HĐQT p7-8 (ký Nguyễn Thị Mai Thanh); p9-11 tổng quan
+SBT,2023,8,8,0,"Rà trần 6 trang: p6 thông điệp Nhà sáng lập (không phải lãnh đạo đương nhiệm), thư Chủ tịch HĐQT 1 trang đôi p8 (ký Đặng Huỳnh Ức My); p9 thư TGĐ - ưu tiên thư Chủ tịch"
+SBT,2019,8,9,0,"Rà trần 6 trang: p3-7 điểm nhấn tài chính/hồ sơ năng lực; ""Thư gửi cổ đông"" p8 (nửa phải; nửa trái là hồ sơ HĐQT) - p9 (ký HĐQT)"
+SSB,2025,7,7,0,Rà trần 6 trang: p2-6 phần mở đầu; thông điệp HĐQT 1 trang đôi p7 (ký Chủ tịch Lê Văn Tần); p8 thư TGĐ - ưu tiên thư Chủ tịch
+SSI,2023,5,5,0,Rà trần 6 trang: p4 bìa mục; thư Chủ tịch HĐQT 1 trang đôi p5 (ký Nguyễn Duy Hưng); p6-9 con số/giá trị/giới thiệu
+TAL,2024,6,7,0,Rà trần 6 trang: p5 bìa chương; thư Chủ tịch HĐQT p6-7 (ký Phạm Ngọc Thanh); p8-10 tầm nhìn/giải thưởng/chỉ số
+SSI,2025,5,5,0,Rà trần 6 trang: regex bắt nhầm p24-29 (báo cáo hoạt động); thư Chủ tịch HĐQT 1 trang đôi p5 (ký Nguyễn Duy Hưng)
+TPB,2018,7,7,0,Rà trần 6 trang: thư Chủ tịch HĐQT 1 trang p7 (ký Đỗ Minh Phú); p8-12 cổ đông/tổng quan/HĐQT
+VCB,2023,5,6,0,Rà trần 6 trang: p4 bìa chương; thông điệp ban lãnh đạo p5-6 (Chủ tịch + TGĐ); p7-9 thông tin khái quát
+VCB,2019,4,5,0,Rà trần 6 trang: p3 bìa chương; thông điệp Chủ tịch HĐQT và TGĐ p4-5 (ký cả hai); p6-8 thông tin khái quát/lịch sử
+VCI,2017,5,5,0,Rà trần 6 trang: thư Chủ tịch HĐQT 1 trang đôi p5 (ký Nguyễn Thanh Phượng); p6-10 thông tin chung/chỉ số/lịch sử
+VHC,2017,9,11,0,"Rà trần 6 trang: regex lấy p5-10 (mục lục/bìa chương, thư bị cắt); thư Chủ tịch HĐQT p9 (trích dẫn) - p11 (ký Trương Thị Lệ Khanh); p12 bìa mục I.2"
+VHM,2025,13,14,0,Rà trần 6 trang: p3-8 bìa chương/tầm nhìn/ấn tượng năm; thư Chủ tịch HĐQT p13-14 (ký Phạm Thiếu Hoa); p15 bìa chương 2
+VHM,2024,13,14,0,Rà trần 6 trang: p5-10 mục lục/ấn tượng năm; thư Chủ tịch HĐQT p13-14 (ký Phạm Thiếu Hoa); p15 bìa chương 2
+VHM,2018,8,8,0,Rà trần 6 trang: p3-7 bìa chương/tầm nhìn/ấn tượng/chỉ tiêu; thư Chủ tịch HĐQT 1 trang đôi p8 (ký Nguyễn Diệu Linh)
+VIC,2022,12,13,0,Rà trần 6 trang: p5-10 tầm nhìn/điểm nhấn/sự kiện; thư TGĐ (Phó Chủ tịch HĐQT kiêm TGĐ) p12-13 (ký Nguyễn Việt Quang); p14 chỉ tiêu KD
+VIC,2021,12,13,0,Rà trần 6 trang: p5-10 tầm nhìn/điểm nhấn/sự kiện/giải thưởng; thư TGĐ (PCT HĐQT kiêm TGĐ) p12-13 (ký Nguyễn Việt Quang); p14 chỉ tiêu KD
+VIC,2018,0,0,0,"Rà trần 6 trang: mục lục ghi ""Thông điệp của Chủ tịch HĐQT"" nhưng file PDF không có thân thư (p4 chỉ câu trích dẫn; p5-10 tầm nhìn/điểm nhấn/sự kiện/giải thưởng/chỉ tiêu; không trang nào có lời chào) -> loại"
+VIC,2017,16,17,0,Rà trần 6 trang: p5-10 bìa chương/ảnh/tầm nhìn/điểm nhấn; thư Chủ tịch HĐQT p16-17 (ký Phạm Nhật Vượng); p18 chỉ tiêu KD
+VIX,2023,0,0,0,"Rà trần 6 trang: BCTN VIX/IBSC lập theo mẫu biểu (Thông tư 155), mục lục không có thư lãnh đạo; trang regex lấy là phần báo cáo/đánh giá HĐQT hoặc hoạt động -> loại"
+VIX,2021,0,0,0,"Rà trần 6 trang: BCTN VIX/IBSC lập theo mẫu biểu (Thông tư 155), mục lục không có thư lãnh đạo; trang regex lấy là phần báo cáo/đánh giá HĐQT hoặc hoạt động -> loại"
+VIX,2024,0,0,0,"Rà trần 6 trang: BCTN VIX/IBSC lập theo mẫu biểu (Thông tư 155), mục lục không có thư lãnh đạo; trang regex lấy là phần báo cáo/đánh giá HĐQT hoặc hoạt động -> loại"
+VIX,2022,0,0,0,"Rà trần 6 trang: BCTN VIX/IBSC lập theo mẫu biểu (Thông tư 155), mục lục không có thư lãnh đạo; trang regex lấy là phần báo cáo/đánh giá HĐQT hoặc hoạt động -> loại"
+VIX,2016,0,0,0,"Rà trần 6 trang: BCTN VIX/IBSC lập theo mẫu biểu (Thông tư 155), mục lục không có thư lãnh đạo; trang regex lấy là phần báo cáo/đánh giá HĐQT hoặc hoạt động -> loại"
+VND,2024,3,6,0,Rà trần 6 trang: thư Chủ tịch HĐQT p3 (sau phần công văn) - p6; p7-8 mục 1.2 điểm nhấn
+VND,2023,3,6,0,Rà trần 6 trang: thư Chủ tịch HĐQT p3 (sau phần công văn) - p6; p7-8 mục 1.2 điểm nhấn
+VNM,2021,8,8,0,Rà trần 6 trang: p7 bìa chương; thư Chủ tịch HĐQT 1 trang đôi p8 (ký Lê Thị Băng Tâm); p9 thư TGĐ - ưu tiên thư Chủ tịch
+VPL,2025,12,13,0,Rà trần 6 trang: p3-8 dấu ấn/tầm nhìn/chỉ tiêu; thư TGĐ p12-13 (ký Ngô Thị Hương); p14 bìa chương 2
+VPL,2024,7,8,0,Rà trần 6 trang: p2-6 bìa chương/dấu ấn; thư TGĐ p7-8 (ký Đặng Thanh Thủy); p9 chỉ tiêu KD
+VRE,2022,11,12,0,Rà trần 6 trang: p5-10 bìa chương/dấu ấn; thông điệp HĐQT p11-12 (ký Trần Mai Hoa); p13 chỉ tiêu KD
+VRE,2021,10,11,0,Rà trần 6 trang: p5-9 bìa chương/dấu ấn; thông điệp HĐQT p10-11 (ký Trần Mai Hoa); p12 chỉ tiêu KD
+VRE,2020,9,10,0,Rà trần 6 trang: p4-8 bìa chương/dấu ấn; thông điệp HĐQT p9-10 (ký Trần Mai Hoa); p11 chỉ tiêu KD
+VTP,2020,2,4,0,"Rà trần 6 trang: thông điệp CEO p2 (ảnh, trích dẫn) - p4 (ký Trần Trung Hưng); p5-7 sự kiện năm 2020"
+VTP,2019,5,6,0,"Rà trần 6 trang: p4 bìa chương; thông điệp TGĐ p5 (ảnh, trích dẫn) - p6 (ký Trần Trung Hưng); p7-9 con số/sự kiện"
+VIB,2025,7,11,0,"Rà trần 6 trang: p6 bìa ""Thông điệp""; thư Chủ tịch HĐQT p7-11 (ký Đặng Khắc Vỹ) - thư dài hơn 5 trang so với phần regex lấy (p6-11), đúng biên"
+VIB,2023,7,10,0,"Rà trần 6 trang: p6 bìa ""Thông điệp""; thông điệp Chủ tịch HĐQT và TGĐ p7-10 (ký cả hai); p11 bìa chiến lược"
+VIB,2020,0,0,0,"Rà trần 6 trang: BCTN không có thư lãnh đạo, chỉ có ""Báo cáo của Tổng Giám đốc"" (tổng kết + kế hoạch, không lời chào); regex lấy nhầm p17-22 (ngân hàng số) -> loại"

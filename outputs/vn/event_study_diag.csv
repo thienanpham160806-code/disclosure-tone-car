@@ -1,10 +1,10 @@
 ﻿,gia_tri
-so_su_kien,517.0
-beta_trung_vi,1.0625
-beta_p5,0.341
-beta_p95,1.8953
+so_su_kien,509.0
+beta_trung_vi,1.0604
+beta_p5,0.3402
+beta_p95,1.8723
 zero_ret_share_trung_vi,0.0786
-zero_ret_share_trung_binh,0.0938
+zero_ret_share_trung_binh,0.0935
 zero_ret_share_p90,0.1714
-CAR_0_3_do_lech_chuan_pct,4.8526
+CAR_0_3_do_lech_chuan_pct,4.797
 max_abs_CAR_0_3_pct,25.4618

@@ -114,7 +114,7 @@ CTR_2023,CTR,2023,2024-04-08,False,vi,CTR_2023_vi.txt,,,VN100,ok,pdf_meta
 CTR_2021,CTR,2021,,False,vi,CTR_2021_vi.txt,,,VN100,not_found,missing
 CTR_2020,CTR,2020,2021-04-20,False,vi,CTR_2020_vi.txt,,,VN100,ok,pdf_meta
 CTR_2022,CTR,2022,2023-04-01,False,vi,CTR_2022_vi.txt,,,VN100,ok,pdf_meta
-CMG_2016,CMG,2016,,False,vi,CMG_2016_vi.txt,,,VN100,ok,missing
+CMG_2016,CMG,2016,,False,vi,CMG_2016_vi.txt,,,VN100,excluded_manual,missing
 CTR_2019,CTR,2019,2020-04-29,False,vi,CTR_2019_vi.txt,,,VN100,ok,pdf_meta
 CTS_2025,CTS,2025,2026-03-27,False,vi,CTS_2025_vi.txt,,,VN100,ok,pdf_meta
 CTR_2018,CTR,2018,2019-04-03,False,vi,CTR_2018_vi.txt,,,VN100,not_found,pdf_meta
@@ -191,7 +191,7 @@ EIB_2017,EIB,2017,2018-04-17,False,vi,EIB_2017_vi.txt,,,VN100,ok,pdf_meta
 EIB_2016,EIB,2016,2017-04-18,False,vi,EIB_2016_vi.txt,,,VN100,ok,pdf_meta
 EIB_2018,EIB,2018,2019-04-18,False,vi,EIB_2018_vi.txt,,,VN100,ok,pdf_meta
 EIB_2022,EIB,2022,2023-04-06,False,vi,EIB_2022_vi.txt,,,VN100,not_found,pdf_meta
-EVF_2023,EVF,2023,2024-03-08,False,vi,EVF_2023_vi.txt,,,VN100,ok,pdf_meta
+EVF_2023,EVF,2023,2024-03-08,False,vi,EVF_2023_vi.txt,,,VN100,excluded_manual,pdf_meta
 EVF_2024,EVF,2024,2025-03-19,False,vi,EVF_2024_vi.txt,,,VN100,not_found,pdf_meta
 EVF_2025,EVF,2025,2026-03-04,False,vi,EVF_2025_vi.txt,,,VN100,not_found,pdf_meta
 EVF_2022,EVF,2022,,False,vi,EVF_2022_vi.txt,,,VN100,not_found,missing
@@ -707,7 +707,7 @@ VIB_2024,VIB,2024,2025-03-17,False,vi,VIB_2024_vi.txt,,,VN30,ok,pdf_meta
 VIB_2022,VIB,2022,2023-03-03,False,vi,VIB_2022_vi.txt,,,VN30,ok,pdf_meta
 VIB_2021,VIB,2021,2022-03-06,False,vi,VIB_2021_vi.txt,,,VN30,ok,pdf_meta
 VGC_2017,VGC,2017,2018-04-16,False,vi,VGC_2017_vi.txt,,,VN100,not_found,pdf_meta
-VIB_2020,VIB,2020,2021-02-23,False,vi,VIB_2020_vi.txt,,,VN30,ok,pdf_meta
+VIB_2020,VIB,2020,2021-02-23,False,vi,VIB_2020_vi.txt,,,VN30,excluded_manual,pdf_meta
 VIB_2019,VIB,2019,2020-03-14,False,vi,VIB_2019_vi.txt,,,VN30,not_found,pdf_meta
 VIC_2025,VIC,2025,2026-04-13,False,vi,VIC_2025_vi.txt,,,VN30,ok,pdf_meta
 VIC_2024,VIC,2024,2025-04-21,False,vi,VIC_2024_vi.txt,,,VN30,ok,pdf_meta
@@ -717,15 +717,15 @@ VIC_2021,VIC,2021,2022-04-19,False,vi,VIC_2021_vi.txt,,,VN30,ok,pdf_meta
 VIC_2020,VIC,2020,2021-04-18,False,vi,VIC_2020_vi.txt,,,VN30,ok,pdf_meta
 VIC_2019,VIC,2019,,False,vi,VIC_2019_vi.txt,,,VN30,ok,missing
 VIB_2017,VIB,2017,,False,vi,VIB_2017_vi.txt,,,VN30,not_found,missing
-VIC_2018,VIC,2018,2019-04-19,False,vi,VIC_2018_vi.txt,,,VN30,ok,pdf_meta
+VIC_2018,VIC,2018,2019-04-19,False,vi,VIC_2018_vi.txt,,,VN30,excluded_manual,pdf_meta
 VIC_2017,VIC,2017,2018-04-20,False,vi,VIC_2017_vi.txt,,,VN30,ok,pdf_meta
 VIC_2016,VIC,2016,2017-04-18,False,vi,VIC_2016_vi.txt,,,VN30,ok,pdf_meta
 VIB_2016,VIB,2016,2017-04-20,False,vi,VIB_2016_vi.txt,,,VN30,not_found,pdf_meta
-VIX_2023,VIX,2023,2024-03-25,False,vi,VIX_2023_vi.txt,,,VN100,ok,pdf_meta
+VIX_2023,VIX,2023,2024-03-25,False,vi,VIX_2023_vi.txt,,,VN100,excluded_manual,pdf_meta
 VIB_2018,VIB,2018,2019-03-20,False,vi,VIB_2018_vi.txt,,,VN30,not_found,pdf_meta
-VIX_2021,VIX,2021,2022-04-13,False,vi,VIX_2021_vi.txt,,,VN100,ok,pdf_meta
-VIX_2024,VIX,2024,2025-04-08,False,vi,VIX_2024_vi.txt,,,VN100,ok,pdf_meta
-VIX_2022,VIX,2022,2023-04-10,False,vi,VIX_2022_vi.txt,,,VN100,ok,pdf_meta
+VIX_2021,VIX,2021,2022-04-13,False,vi,VIX_2021_vi.txt,,,VN100,excluded_manual,pdf_meta
+VIX_2024,VIX,2024,2025-04-08,False,vi,VIX_2024_vi.txt,,,VN100,excluded_manual,pdf_meta
+VIX_2022,VIX,2022,2023-04-10,False,vi,VIX_2022_vi.txt,,,VN100,excluded_manual,pdf_meta
 VIX_2017,VIX,2017,2018-04-11,False,vi,VIX_2017_vi.txt,,,VN100,not_found,pdf_meta
 VIX_2025,VIX,2025,2026-04-08,False,vi,VIX_2025_vi.txt,,,VN100,not_found,pdf_meta
 VJC_2025,VJC,2025,,False,vi,VJC_2025_vi.txt,,,VN30,ok,missing
@@ -735,7 +735,7 @@ VJC_2021,VJC,2021,2022-05-11,False,vi,VJC_2021_vi.txt,,,VN30,ok,pdf_meta
 VJC_2019,VJC,2019,2020-05-28,False,vi,VJC_2019_vi.txt,,,VN30,ok,pdf_meta
 VJC_2018,VJC,2018,,False,vi,VJC_2018_vi.txt,,,VN30,ok,missing
 VJC_2017,VJC,2017,2018-04-26,False,vi,VJC_2017_vi.txt,,,VN30,ok,pdf_meta
-VIX_2016,VIX,2016,2017-04-20,False,vi,VIX_2016_vi.txt,,,VN100,ok,pdf_meta
+VIX_2016,VIX,2016,2017-04-20,False,vi,VIX_2016_vi.txt,,,VN100,excluded_manual,pdf_meta
 VIX_2019,VIX,2019,2020-03-31,False,vi,VIX_2019_vi.txt,,,VN100,not_found,pdf_meta
 VJC_2016,VJC,2016,2017-04-19,False,vi,VJC_2016_vi.txt,,,VN30,not_found,pdf_meta
 VND_2024,VND,2024,2025-04-18,False,vi,VND_2024_vi.txt,,,VN100,ok,pdf_meta

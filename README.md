@@ -48,17 +48,19 @@ python run_all.py --market us --only a03 # chạy riêng một bước
 pytest -q                                # kiểm thử các khối lõi (không cần mạng)
 jupyter notebook notebooks/main.ipynb    # chạy lại phân tích và xem toàn bộ bảng, hình
 ```
+Demo nhanh (chấm tone một câu bất kỳ bằng từ điển tài chính vs tổng quát): `python demo_tone.py "…"` (thêm `--en` cho tiếng Anh). Kịch bản trình bày cho giảng viên: `HUONG_DAN_CHAY.md` mục 10.
+
 Tùy chọn: `python src/analysis/a05_finbert.py --market us` chấm tone bằng FinBERT để so với từ điển
 (cần `transformers` và `torch`). Bước a03 sẽ tự thêm mô hình M8.
 
-## Mẫu thực tế và thời gian chạy (lần chạy 27–28/09/2026)
+## Mẫu thực tế và thời gian chạy (lần chạy 27–29/09/2026)
 Kết quả đầy đủ: **`RESULTS.md`**; nhật ký sửa code/cấu hình/từ điển: **`CHANGELOG_RUN.md`**.
 
 | | Mỹ | Việt Nam |
 |---|---|---|
-| Văn bản | 500 10-K (50 công ty × 10 năm nộp 2015–2024), 457 có MD&A | 813 BCTN (mã–năm) → 617 thông điệp ban lãnh đạo |
-| Có CAR[0,3] | 500 | 514 (548 có ngày T=0 = ModDate PDF) |
-| Hồi quy chính | N = 470 | N = 514 |
+| Văn bản | 500 10-K (50 công ty × 10 năm nộp 2015–2024), 457 có MD&A | 813 BCTN (mã–năm) → 608 thông điệp ban lãnh đạo (130 thư xác định trang bằng tay) |
+| Có CAR[0,3] | 500 | 506 (540 có ngày T=0 = ModDate PDF) |
+| Hồi quy chính | N = 470 | N = 506 |
 
 Thời gian (laptop 12 luồng, Windows; bước tải phụ thuộc mạng, lần chạy lại dùng cache):
 
@@ -66,11 +68,11 @@ Thời gian (laptop 12 luồng, Windows; bước tải phụ thuộc mạng, l�
 |---|---|---|---|---|
 | u01_edgar | ~5 phút (cache: 10 giây) | | v01_universe | < 1 giây (`tickers.csv` có sẵn) |
 | u02_text | ~1 phút | | v02_crawl_bctn | ~4 giờ (≈ 8 GB PDF; 3,5 giờ + 40 phút tải bù từ host cũ) |
-| u03_market | ~15 giây | | v03_extract_letter | ~3 giờ (OCR, 4 tiến trình) + rà trang thủ công |
+| u03_market | ~15 giây | | v03_extract_letter | ~3 giờ (OCR, 4 tiến trình) + rà trang thủ công; tầng AI `--llm` ~50 phút (131 lượt gọi) |
 | a01_tone | ~1 phút | | v04_prices | ~2 giờ (55 mã cần bù lịch sử từ web; cache: 2 phút) |
 | u04_validate_lm | ~1,5 phút (40 hồ sơ .txt đầy đủ) | | a01_tone | ~15 giây |
 | a02_event / a03 / a04 / a06 | ~20 giây / 2 / 2 / 5 giây | | a02 / a03 / a04 / a06 | ~20 giây / 2 / 2 / 5 giây |
-| a05_finbert (tùy chọn, CPU, 100 câu/văn bản) | nhiều giờ (lần chạy này ~14 giờ, tranh CPU với OCR) | | notebook `main.ipynb` | ~2 phút (cả 2 thị trường) |
+| a05_finbert (tùy chọn, CPU, 100 câu/văn bản) | nhiều giờ (lần chạy này ~14 giờ, tranh CPU với OCR) | | notebook `main.ipynb` | ~4 phút (cả 2 thị trường) |
 
 ## Cấu trúc
 ```
@@ -133,10 +135,10 @@ python src/vn/v03b_eval_ocr.py                                   # CER/WER so v�
 python src/analysis/a07_llm_tone.py                              # tùy chọn: tone do LLM chấm → mô hình M9 ở a03
 python src/analysis/a08_llm_effect.py                            # thống kê tầng AI + hệ số trước/sau (outputs/vn/llm_ocr_*.csv)
 ```
-**Chi phí thực tế (lần chạy 28/09/2026):** 617 thư, 1.444 trang thư → 131 trang dưới ngưỡng được gửi, 131 lượt gọi,
+**Chi phí thực tế (lần chạy 28/09/2026, trước khi rà lại trang thư ở CHANGELOG #44):** 617 thư, 1.444 trang thư → 131 trang dưới ngưỡng được gửi, 131 lượt gọi,
 khoảng 195 nghìn token đầu vào + 47 nghìn token đầu ra (≈ 1.500 + 360 token/trang), mất 48 phút ở nhịp 10 lượt/phút.
 Trên gói miễn phí: 0 đồng. Nếu trả phí theo giá `gemini-3.5-flash-lite` ($0,30 / $2,50 mỗi 1 triệu token): ≈ 0,18 USD
-[`outputs/vn/llm_ocr_summary.csv`]. Kết quả: 118 trang nhận bản AI, 81 văn bản thay đổi; kết luận chính không đổi
+[`outputs/vn/llm_ocr_summary_truoc_sua_trang.csv`, token cộng dồn ở `llm_ocr_summary.csv`]. Kết quả: 118 trang nhận bản AI, 81 văn bản thay đổi; kết luận chính không đổi
 (RESULTS.md mục 4.5).
 
 ## Hạn chế cần ghi trong báo cáo
