@@ -18,6 +18,7 @@ tích lũy **CAR[T, T+3]** quanh ngày công bố không, tức là văn bản c
 py -3.11 -m venv .venv && .venv\Scripts\activate        # (macOS/Linux: python3.11 -m venv .venv && source .venv/bin/activate)
 pip install -r requirements.txt
 ```
+Muốn dựng lại **đúng y** môi trường của lần chạy gốc (cùng phiên bản mọi thư viện): `pip install -r requirements-lock.txt`. Thư mục `.venv` không đưa lên git (chỉ chạy được trên đúng máy tạo ra nó, và có file > 100 MB).
 1. **Email cho SEC** (bắt buộc trong User-Agent): KHÔNG sửa `config.yaml` (repo công khai). Đặt biến môi trường
    `CONTACT_EMAIL=...` hoặc tạo `config.local.yaml` (đã có trong `.gitignore`) với dòng `contact_email: "..."`.
 2. Tải **Loughran–McDonald Master Dictionary** (CSV) tại https://sraf.nd.edu/loughranmcdonald-master-dictionary/
