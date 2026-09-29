@@ -132,7 +132,6 @@ python src/vn/v03_extract_letter.py --llm-dry                    # chỉ chấm 
 python src/vn/v03_extract_letter.py --llm --only MWG_2019,BID_2023 # chạy thử vài văn bản
 python src/vn/v03_extract_letter.py --llm                        # toàn bộ; phản hồi được cache ở data/vn/interim/llm_cache/
 python src/vn/v03b_eval_ocr.py                                   # CER/WER so với trang chuẩn gõ tay (gold)
-python src/analysis/a07_llm_tone.py                              # tùy chọn: tone do LLM chấm → mô hình M9 ở a03
 python src/analysis/a08_llm_effect.py                            # thống kê tầng AI + hệ số trước/sau (outputs/vn/llm_ocr_*.csv)
 ```
 **Chi phí thực tế (lần chạy 28/09/2026, trước khi rà lại trang thư ở CHANGELOG #44):** 617 thư, 1.444 trang thư → 131 trang dưới ngưỡng được gửi, 131 lượt gọi,

@@ -26,9 +26,6 @@ TRANSCRIBE_SCHEMA = {
 }
 LOCATE_SCHEMA = {"type": "object", "properties": {"start": {"type": ["integer", "null"]}, "end": {"type": ["integer", "null"]}},
                  "required": ["start", "end"]}
-TONE_SCHEMA = {"type": "object", "properties": {"tone": {"type": "number"}, "uncertainty": {"type": "number"},
-                                                  "rationale": {"type": "string"}},
-               "required": ["tone", "uncertainty", "rationale"]}
 
 _RULES = (
     "QUY TẮC BẮT BUỘC (văn bản dùng để đo giọng điệu trong một nghiên cứu khoa học):\n"
@@ -55,12 +52,6 @@ PROMPT_LOCATE = (
     "thông điệp/thư của lãnh đạo gửi cổ đông (ưu tiên thư của Chủ tịch HĐQT; nếu không có thì thư chung Chủ tịch + TGĐ, "
     "'Thông điệp Ban lãnh đạo' hoặc thư của TGĐ)? Không tính trang mục lục. "
     'Chỉ trả về JSON {"start": số trang, "end": số trang}, hoặc {"start": null, "end": null} nếu không có.\n\n')
-PROMPT_TONE = (
-    "Bạn là chuyên gia phân tích tài chính. Đọc thông điệp của lãnh đạo doanh nghiệp niêm yết Việt Nam gửi cổ đông dưới "
-    "đây và chấm: tone ∈ [-1, 1] = giọng điệu về tình hình và triển vọng TÀI CHÍNH – KINH DOANH của công ty (-1 rất tiêu "
-    "cực, 0 trung tính, +1 rất tích cực; bỏ qua lời chào, cảm ơn, khẩu hiệu mang tính nghi thức); uncertainty ∈ [0, 1] = mức "
-    "độ bất định/rủi ro được nhấn mạnh trong thư. rationale: tối đa 2 câu tiếng Việt.\n"
-    'Chỉ trả về JSON {"tone": số, "uncertainty": số, "rationale": "..."}.\n\nTHÔNG ĐIỆP:\n')
 
 
 class RetryableError(Exception):
@@ -220,7 +211,7 @@ class LLMClient:
                 self.sleep(min(60, 2 ** (i + 1)))
 
     def request(self, kind: str, prompt: str, image: bytes | None, schema: dict, max_tokens: int = 8192) -> dict:
-        """Gọi LLM (có cache). kind: 'vision' | 'text_fix' | 'locate' | 'tone'. Trả dict JSON + provider/model/cached."""
+        """Gọi LLM (có cache). kind: 'vision' | 'text_fix' | 'locate'. Trả dict JSON + provider/model/cached."""
         last = None
         for prov in self.providers():
             model = self.cfg[f"model_{prov}"]
@@ -260,9 +251,6 @@ class LLMClient:
 
     def locate(self, snippet: str) -> dict:
         return self.request("locate", PROMPT_LOCATE + snippet, None, LOCATE_SCHEMA, max_tokens=200)
-
-    def rate_tone(self, text: str) -> dict:
-        return self.request("tone", PROMPT_TONE + text, None, TONE_SCHEMA, max_tokens=600)
 
 
 def decide(mode: str, ocr_text: str, llm_text: str, q_before: float, q_after: float, cfg: dict) -> tuple[bool, str]:
