@@ -223,6 +223,8 @@ Toàn bộ kịch bản dưới đây chạy trên máy đã có dữ liệu (m�
 3. Chạy thử một lượt kịch bản bên dưới. Mở sẵn `RESULTS.md` và 3 hình trong `outputs/vn/`.
 4. Tắt chế độ ngủ của máy, cắm sạc.
 
+**Cách nhanh nhất:** `powershell -ExecutionPolicy Bypass -File demo.ps1`. Script chạy lần lượt các bước dưới đây, mỗi bước dừng chờ Enter, tự mở PDF/hình khi cần và có chỗ mời thầy tự gõ câu. Muốn kiểm tra trước buổi mà không phải bấm Enter: `$env:DEMO_AUTO = "1"` rồi chạy lệnh trên.
+
 **Kịch bản:**
 
 | Bước | Nói gì | Lệnh / thao tác |
