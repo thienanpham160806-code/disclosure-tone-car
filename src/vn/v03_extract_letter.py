@@ -228,9 +228,10 @@ def llm_pass(lm, only=None, dry=False):
             lm.at[idx, "flag"] = "too_short" if nw < 250 else ("too_long" if nw > 5000 else "ok")
     pl = pd.DataFrame(pages)
     out = D("vn", "processed", "llm_pages_dry.csv" if dry else "llm_pages.csv")
-    if not dry and out.exists() and only:          # chạy một phần → giữ log các văn bản khác
+    if not dry and out.exists() and only:          # chạy một phần → giữ log các văn bản khác (bỏ văn bản đã bị loại)
         old = pd.read_csv(out)
-        old = old[[(t, y) not in only for t, y in zip(old.ticker, old.year)]]
+        keep = set(zip(lm.ticker[lm.flag.isin(["ok", "too_long", "too_short"])], lm.year[lm.flag.isin(["ok", "too_long", "too_short"])]))
+        old = old[[(t, y) not in only and (t, y) in keep for t, y in zip(old.ticker, old.year)]]
         pl = pd.concat([old, pl], ignore_index=True)
     pl.to_csv(out, index=False, encoding="utf-8-sig")
     n_low = int((pl.q_before < L.get("quality_threshold", 0.85)).sum()) if len(pl) else 0

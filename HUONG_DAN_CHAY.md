@@ -139,7 +139,7 @@ python run_all.py --market vn --from 5           # a01 → a06
 ```
 
 **Bước kiểm tra tay (human-in-the-loop).** Cần đọc kỹ trước khi dùng kết quả:
-- `data/vn/processed/manual_pages.csv` đã chứa 50 văn bản được xác định trang bằng tay, có ghi chú từng ca. `--manual` áp lại các trang này sau `v03`. Để thêm ca mới, ghi thêm dòng `ticker,year,start_page,end_page,force_ocr,ghi_chu`:
+- `data/vn/processed/manual_pages.csv` đã chứa 130 văn bản được xác định trang bằng tay (50 ca đợt đầu + 80 thư bị bước trích tự động cắt ở trần 6 trang), có ghi chú từng ca. `--manual` áp lại các trang này sau `v03`. Để thêm ca mới, ghi thêm dòng `ticker,year,start_page,end_page,force_ocr,ghi_chu`:
   - `force_ocr = 1` khi lớp chữ PDF bị lỗi font.
   - `start_page = 0` khi xác nhận BCTN không có thư của ban lãnh đạo (văn bản sẽ bị loại).
 - `data/vn/processed/qc_sample.csv` là mẫu 10% đã đối chiếu (49/59 đúng). Nếu chạy lại `v03` toàn bộ, file này bị tạo lại và phải điền lại. Để chỉ trích các BCTN mới mà giữ kết quả cũ, dùng `python src/vn/v03_extract_letter.py --new`.
@@ -212,3 +212,30 @@ Trên CPU, bước này mất nhiều giờ.
 - Không commit dữ liệu thô (`data/*/raw`, `data/*/interim`), email, file `.env` hay API key. `.gitignore` đã chặn sẵn.
 - Mỗi lần sửa code, cấu hình hoặc từ điển, ghi một dòng vào `CHANGELOG_RUN.md`: sửa gì, vì sao, ảnh hưởng gì.
 - Làm trên nhánh riêng rồi tạo pull request, không push thẳng `main`.
+
+## 10. Demo trực tiếp cho giảng viên
+
+Toàn bộ kịch bản dưới đây chạy trên máy đã có dữ liệu (máy chạy gốc), **không cần mạng**, mất khoảng 10–15 phút.
+
+**Chuẩn bị trước buổi (tối hôm trước, khoảng 15 phút):**
+1. Mở PowerShell, làm đủ các bước ở mục 4 (activate `.venv`, `PYTHONUTF8`, Tesseract).
+2. `git checkout feat/llm-ocr` (hoặc `main` nếu đã merge), rồi `pytest -q`: mọi test phải `passed`.
+3. Chạy thử một lượt kịch bản bên dưới. Mở sẵn `RESULTS.md` và 3 hình trong `outputs/vn/`.
+4. Tắt chế độ ngủ của máy, cắm sạc.
+
+**Kịch bản:**
+
+| Bước | Nói gì | Lệnh / thao tác |
+|---|---|---|
+| 1. Bài toán | Câu hỏi nghiên cứu, hai mẫu Mỹ – VN, T=0, CAR[T,T+3] | Mở `README.md` (bảng đầu trang) |
+| 2. Đo giọng điệu (Mục tiêu 1–2) | Đếm từ theo từ điển tài chính vs từ điển tổng quát; từ điển tổng quát gắn nhãn sai | `python demo_tone.py "Năm 2023 ngân hàng gặp nhiều khó khăn, nợ xấu tăng và lợi nhuận suy giảm; tuy vậy chúng tôi vẫn tăng trưởng bền vững nhờ mảng thương mại và bán lẻ."` → VietSentiWordNet đếm "thương", "bán" là tiêu cực. Tiếng Anh: `python demo_tone.py --en "The company reported a net loss, higher tax expense and may face adverse litigation."` → Harvard GI đếm TAX, EXPENSE. Có thể mời thầy tự gõ câu |
+| 3. Từ PDF đến văn bản | Trích thư lãnh đạo từ BCTN; OCR; tầng AI chỉ chép lại trang OCR xấu | Mở PDF MWG 2019 (`data/vn/raw/bctn/`) ở trang thư, rồi `python demo_tone.py --file data/vn/interim/text/MWG_2019_vi.txt`. Tầng AI: `python src/vn/v03_extract_letter.py --llm --only MWG_2019` (dùng cache, vài giây, không tốn lượt gọi); nhật ký từng trang ở `data/vn/processed/llm_pages.csv` |
+| 4. Nghiên cứu sự kiện + hồi quy (Mục tiêu 3) | Market model, CAR, kiểm định, hồi quy cluster theo mã | `python run_all.py --market vn --from 6` (a02 → a06, khoảng 15 giây). Bảng CAR theo nhóm tone và hồi quy in ngay trên màn hình |
+| 5. Kết quả | Hình CAAR theo tone, hệ số và độ lớn kinh tế, so Mỹ – VN | Mở `outputs/vn/fig3_caar_by_tone.png`, `outputs/vn/regression_main.csv`, rồi `RESULTS.md` mục Tóm tắt và 4.3–4.6 |
+| 6. (Tùy chọn) Notebook | Mọi bảng và hình trong một chỗ | `jupyter notebook notebooks/main.ipynb` → Kernel → Change kernel → **Python (Đồ án 05)**. Notebook đã lưu sẵn kết quả, chỉ cần cuộn xem; không bấm Run All trong buổi demo (chạy cả nhánh Mỹ, lâu hơn) |
+
+**Nếu được hỏi:**
+- *Chạy lại từ đầu mất bao lâu?* Cách B, 10–12 giờ, chủ yếu là tải dữ liệu. Mọi thứ tải về đều được cache (mục 6).
+- *Kết quả có tái lập được không?* `seed: 42`, cache, `CHANGELOG_RUN.md` ghi mọi thay đổi, `RESULTS.md` ghi file nguồn cho từng con số.
+- *AI có sửa nội dung không?* Chỉ chép nguyên văn (temperature = 0). Bản AI bị loại nếu chất lượng giảm hoặc khác xa bản OCR. Mọi quyết định ghi ở `llm_pages.csv`. So sánh hệ số trước/sau ở `RESULTS.md` mục 4.5.
+- *Sao biết đúng trang thư?* Mẫu QC 10% và danh sách kiểm tra tay trong `data/vn/processed/manual_pages.csv` (mỗi dòng có ghi chú lý do).

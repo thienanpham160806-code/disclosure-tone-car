@@ -1,10 +1,10 @@
 ,0
-Breusch-Pagan p,0.0009
+Breusch-Pagan p,0.0011
 Jarque-Bera p,0.0
-"corr(fin_neg, gen_neg)",0.4425
-VIF fin_neg_z,1.2505
-VIF log_tradeval,2.9265
-VIF pre_ret,1.0445
-VIF log_len,1.1135
-VIF vn30,1.3152
-VIF beta,1.4609
+"corr(fin_neg, gen_neg)",0.4443
+VIF fin_neg_z,1.2418
+VIF log_tradeval,2.9643
+VIF pre_ret,1.0437
+VIF log_len,1.0989
+VIF vn30,1.3115
+VIF beta,1.4424

@@ -7,7 +7,7 @@ ngoài việc chạy lại đúng các mô hình của a03 trên hai panel.
                         cùng công thức, biến kiểm soát, FE và sai số chuẩn cluster như a03.
 
 Panel TRƯỚC mặc định lấy từ git: `git show results:data/vn/processed/analysis_panel.csv` (lần chạy trước tầng AI);
-có thể chỉ file khác bằng --before.
+có thể chỉ file khác bằng --before (và --out để ghi ra file khác, vd so sánh trước/sau sửa trang thư).
 """
 import sys, pathlib
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
@@ -30,10 +30,11 @@ SPECS = [  # (tên, biến phụ thuộc, biến tone)
 def summary():
     p = pd.read_csv(D("vn", "processed", "llm_pages.csv"))
     lm = pd.read_csv(D("vn", "processed", "letters_meta.csv"))
+    lm = lm[lm.flag.isin(["ok", "too_long", "too_short"])]          # chỉ các thư đang dùng (bỏ not_found / excluded_manual)
     s = p[p.decision.notna()]
     a = s[s.decision == "accepted"]
     used = lm[lm.llm_pages_used.fillna(0) > 0]
-    rows = [("Trang thuộc thư (617 văn bản)", len(p)), (f"Trang có quality_score < {THR}", int((p.q_before < THR).sum())),
+    rows = [(f"Trang thuộc thư ({len(lm)} văn bản)", len(p)), (f"Trang có quality_score < {THR}", int((p.q_before < THR).sum())),
             ("Trang gửi AI", len(s))]
     rows += [(f"  chế độ {k}", v) for k, v in s["mode"].value_counts().items()]
     rows += [("Trang nhận bản AI", len(a)),
@@ -78,7 +79,7 @@ def estimate(df):
     return res
 
 
-def effect(before):
+def effect(before, out_name="llm_ocr_effect.csv"):
     if before:
         old = pd.read_csv(before)
     else:
@@ -91,12 +92,15 @@ def effect(before):
                  p_truoc=round(b[k][2], 4), he_so_sau=round(a[k][0], 4), se_sau=round(a[k][1], 4), p_sau=round(a[k][2], 4),
                  N_truoc=b[k][3], N_sau=a[k][3]) for k in a if k in b]
     out = pd.DataFrame(rows)
-    out.to_csv(O("vn", "llm_ocr_effect.csv"), index=False, encoding="utf-8-sig")
+    out.to_csv(O("vn", out_name), index=False, encoding="utf-8-sig")
     print(out.to_string(index=False))
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(); ap.add_argument("--before", help="analysis_panel.csv của lần chạy không có tầng AI")
+    ap.add_argument("--out", default="llm_ocr_effect.csv", help="tên file kết quả trong outputs/vn/ (vd page_fix_effect.csv)")
+    ap.add_argument("--no-effect", action="store_true", help="chỉ cập nhật llm_ocr_summary.csv")
     a = ap.parse_args()
     summary()
-    effect(a.before)
+    if not a.no_effect:
+        effect(a.before, a.out)
