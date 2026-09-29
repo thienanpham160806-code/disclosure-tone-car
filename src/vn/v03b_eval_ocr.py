@@ -105,20 +105,28 @@ def evaluate(gold_files):
             if hyp.get(k) is None:
                 continue
             c, w = cer_wer(hyp[k], ref)
-            rows.append(dict(page=g.stem, method=k, cer=round(c, 4), wer=round(w, 4), n_chars_gold=len(_norm(ref))))
+            rows.append(dict(page=g.stem, method=k, cer=round(c, 4), wer=round(w, 4), n_chars_gold=len(_norm(ref)),
+                             n_words_gold=len(_norm(ref).split())))
             tones.append({"page": g.stem, "method": k, **tone(hyp[k])})
     ev, tn = pd.DataFrame(rows), pd.DataFrame(tones)
-    mean = ev.groupby("method")[["cer", "wer"]].mean().reset_index().assign(page="TRUNG BÌNH", n_chars_gold=ev.n_chars_gold.sum())
+    # Gộp: tổng số lỗi / tổng độ dài gold (trang ngắn không lấn át), chỉ trên các trang có ĐỦ mọi phương án (so sánh cặp)
+    full = ev.groupby("page").method.nunique().pipe(lambda x: x[x == ev.method.nunique()].index)
+    e = ev[ev.page.isin(full)].assign(err_c=lambda d: d.cer * d.n_chars_gold, err_w=lambda d: d.wer * d.n_words_gold)
+    g = e.groupby("method")[["err_c", "err_w", "n_chars_gold", "n_words_gold"]].sum()
+    mean = pd.DataFrame({"method": g.index, "cer": (g.err_c / g.n_chars_gold).round(4).values,
+                         "wer": (g.err_w / g.n_words_gold).round(4).values, "n_chars_gold": g.n_chars_gold.values,
+                         "n_words_gold": g.n_words_gold.values, "page": f"GỘP ({len(full)} trang đủ 3 phương án)"})
     ev = pd.concat([ev, mean], ignore_index=True)
     ev.to_csv(O("vn", "ocr_eval.csv"), index=False, encoding="utf-8-sig")
     # lệch giọng điệu so với gold, theo phương án
     t = tn.pivot_table(index="page", columns="method", values=["fin_neg", "fin_net"])
+    t = t[t.index.isin(full)]                                   # cùng tập trang với CER/WER
     dev = []
     for k in METHODS:
         if ("fin_neg", k) in t:
             dev.append(dict(method=k, mae_fin_neg_pp=100 * (t[("fin_neg", k)] - t[("fin_neg", "gold")]).abs().mean(),
                             mae_fin_net=(t[("fin_net", k)] - t[("fin_net", "gold")]).abs().mean(),
-                            corr_fin_net_vs_gold=t[("fin_net", k)].corr(t[("fin_net", "gold")])))
+                            corr_fin_net_vs_gold=t[("fin_net", k)].corr(t[("fin_net", "gold")]), n_pages=len(t)))
     pd.concat([tn, pd.DataFrame(dev)], ignore_index=True).round(5).to_csv(O("vn", "ocr_eval_tone.csv"), index=False, encoding="utf-8-sig")
     figure(mean)
     print(mean.round(4).to_string(index=False)); print(pd.DataFrame(dev).round(4).to_string(index=False))

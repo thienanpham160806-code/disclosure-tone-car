@@ -18,6 +18,7 @@ tích lũy **CAR[T, T+3]** quanh ngày công bố không, tức là văn bản c
 py -3.11 -m venv .venv && .venv\Scripts\activate        # (macOS/Linux: python3.11 -m venv .venv && source .venv/bin/activate)
 pip install -r requirements.txt
 ```
+Muốn dựng lại **đúng y** môi trường của lần chạy gốc (cùng phiên bản mọi thư viện): `pip install -r requirements-lock.txt`. Thư mục `.venv` không đưa lên git (chỉ chạy được trên đúng máy tạo ra nó, và có file > 100 MB).
 1. **Email cho SEC** (bắt buộc trong User-Agent): KHÔNG sửa `config.yaml` (repo công khai). Đặt biến môi trường
    `CONTACT_EMAIL=...` hoặc tạo `config.local.yaml` (đã có trong `.gitignore`) với dòng `contact_email: "..."`.
 2. Tải **Loughran–McDonald Master Dictionary** (CSV) tại https://sraf.nd.edu/loughranmcdonald-master-dictionary/
@@ -132,7 +133,6 @@ python src/vn/v03_extract_letter.py --llm-dry                    # chỉ chấm 
 python src/vn/v03_extract_letter.py --llm --only MWG_2019,BID_2023 # chạy thử vài văn bản
 python src/vn/v03_extract_letter.py --llm                        # toàn bộ; phản hồi được cache ở data/vn/interim/llm_cache/
 python src/vn/v03b_eval_ocr.py                                   # CER/WER so với trang chuẩn gõ tay (gold)
-python src/analysis/a07_llm_tone.py                              # tùy chọn: tone do LLM chấm → mô hình M9 ở a03
 python src/analysis/a08_llm_effect.py                            # thống kê tầng AI + hệ số trước/sau (outputs/vn/llm_ocr_*.csv)
 ```
 **Chi phí thực tế (lần chạy 28/09/2026, trước khi rà lại trang thư ở CHANGELOG #44):** 617 thư, 1.444 trang thư → 131 trang dưới ngưỡng được gửi, 131 lượt gọi,

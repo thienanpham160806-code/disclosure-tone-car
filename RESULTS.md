@@ -254,6 +254,16 @@ Tầng AI (`src/textkit/llm_client.py`, gọi từ `v03 --llm`; CHANGELOG #33–
 | Token Gemini (đầu vào / đầu ra, gồm lượt chạy thử) | 195.526 / 47.489 |
 | Chi phí ước tính nếu dùng gói trả phí | ≈ 0,18 USD (gói miễn phí: 0) |
 
+**Độ chính xác so với trang chuẩn** [`outputs/vn/ocr_eval.csv`, `outputs/vn/ocr_eval_tone.csv`; hình `fig_ocr_eval.png`]: 15 trang chọn ngẫu nhiên (seed 42; 10 trang dưới ngưỡng, 5 trang còn lại). Bản chuẩn do Claude chép từ ảnh trang, không xem bản OCR hay bản Gemini, rồi được người dò lại đối chiếu với ảnh. Tính gộp (tổng lỗi / tổng độ dài chuẩn) trên 13 trang có đủ cả ba phương án; 2 trang Gemini từ chối chép ở chế độ đọc ảnh (RECITATION):
+
+| Phương án | CER | WER | Sai lệch `fin_net` trung bình so với bản chuẩn |
+|---|---:|---:|---:|
+| Tesseract thuần | 31,3% | 45,2% | 0,257 |
+| OCR + LLM sửa lỗi ký tự | 7,2% | 8,4% | 0,003 |
+| LLM đọc ảnh (phương án mặc định) | 2,9% | 3,4% | 0,004 |
+
+Lưu ý: bản chuẩn cũng do một mô hình ngôn ngữ chép (dù đã có người dò lại), nên sai số của hai phương án dùng LLM có thể bị đánh giá thấp hơn thực tế.
+
 Ví dụ: MWG 2019 có trang 6 OCR không đọc được (chữ trên nền màu). Bản AI bổ sung khoảng 490 từ, và điểm chất lượng cả thư tăng từ 0,69 lên 0,98. Với các trang số liệu hoặc biểu đồ (SBT 2019, VND 2020), bản AI bỏ các con số OCR vỡ, nên văn bản ngắn đi.
 
 Cùng mô hình, biến kiểm soát, FE và sai số chuẩn cluster, ước lượng trên panel trước và sau khi sửa (cùng trang thư như lần chạy đầu) [`outputs/vn/llm_ocr_effect.csv`]:
@@ -341,7 +351,7 @@ Các hệ số hồi quy gần như không đổi. Thay đổi rõ nhất nằm 
    - Sau đó, toàn bộ 80 thư mà bước trích tự động cắt ở trần 6 trang được rà bằng ảnh (#44): 9 bị loại vì BCTN không có thư, 46 sai cả trang bắt đầu, và cả 71 thư còn lại đều lấy lố trang cuối. Nhóm này đã được sửa hết. Các thư ngắn hơn (1–5 trang, trích tự động) chưa được rà toàn bộ và vẫn có thể lẫn một phần trang không thuộc thư.
    - Lỗi OCR ước lượng (% âm tiết ngoài từ vựng): trung vị 0,5% với văn bản lấy từ lớp chữ, 1,2% với văn bản OCR.
    - Thư chung Chủ tịch + TGĐ và thư của TGĐ được dùng khi không có thư riêng của Chủ tịch. Người viết khác nhau có thể có giọng điệu khác nhau.
-   - OCR có lỗi dấu, và bố cục nhiều cột làm đảo thứ tự câu. Việc đếm từ theo túi từ (bag-of-words) chịu ảnh hưởng ít, nhưng vẫn có sai số đo lường. Sai số này kéo hệ số về 0 (attenuation bias). Tầng AI (mục 4.5) đã chép lại các trang OCR xấu (78 trang trong mẫu hiện tại); các hệ số tone VN tăng nhẹ về độ lớn sau khi sửa, khớp với hướng của attenuation bias. Độ chính xác của bản AI chưa được đo bằng trang chuẩn gõ tay (CER/WER): `src/vn/v03b_eval_ocr.py` đã chọn sẵn 15 trang, chờ gõ tay.
+   - OCR có lỗi dấu, và bố cục nhiều cột làm đảo thứ tự câu. Việc đếm từ theo túi từ (bag-of-words) chịu ảnh hưởng ít, nhưng vẫn có sai số đo lường. Sai số này kéo hệ số về 0 (attenuation bias). Tầng AI (mục 4.5) đã chép lại các trang OCR xấu (78 trang trong mẫu hiện tại); các hệ số tone VN tăng nhẹ về độ lớn sau khi sửa, khớp với hướng của attenuation bias. Trên 13 trang chuẩn, CER giảm từ 31,3% (Tesseract) xuống 2,9% (LLM đọc ảnh) (mục 4.5); bản chuẩn do Claude chép và người dò lại nên có thể thiên về phía các phương án dùng LLM.
    - Bản AI là do mô hình ngôn ngữ chép lại. Dù đã khóa temperature = 0, bắt chép nguyên văn và loại bản nghi viết lại (độ tương đồng thấp hoặc chất lượng giảm), vẫn không loại trừ hoàn toàn lỗi chép sai hay bỏ sót dòng. Gemini đôi khi từ chối chép nguyên văn (RECITATION, 3 trang trong mẫu hiện tại, chuyển sang chế độ chỉ sửa lỗi ký tự trên bản OCR).
    - 1 BCTN dạng .7z (SHB 2017) không giải nén được.
 6. **Dữ liệu giá VN:**

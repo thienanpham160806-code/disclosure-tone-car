@@ -63,9 +63,6 @@ def main(mkt):
     fb = D(mkt, "processed", "finbert.csv")          # tùy chọn: chạy a05_finbert.py trước
     if fb.exists():
         df = df.merge(pd.read_csv(fb), on="doc_id", how="left")
-    lt = D(mkt, "processed", "llm_tone.csv")         # tùy chọn: chạy a07_llm_tone.py trước (biến đối chứng, M9)
-    if lt.exists():
-        df = df.merge(pd.read_csv(lt)[["doc_id", "llm_tone", "llm_uncertainty"]], on="doc_id", how="left")
     for c in [c for c in df if c.startswith(("car_", "carma_", "bhar_", "placebo_"))] + ["pre_ret", "pre_alpha"]:
         df[c] = winsor(df[c])
     df["log_len"] = np.log(df.n_words.clip(lower=1))
@@ -73,7 +70,7 @@ def main(mkt):
     if "bm" in df: df["log_bm"] = np.log(df.bm)
     if "turnover" in df: df["log_turn"] = np.log(df.turnover.where(df.turnover > 0))
     df["period"] = df.day0.dt.to_period("Q" if mkt == "us" else "Y").astype(str)
-    for c in ["fin_neg", "gen_neg", "fin_net", "fin_unc", "fin_neg_tfidf", "finA_neg", "finbert_net", "llm_tone", "llm_uncertainty"]:
+    for c in ["fin_neg", "gen_neg", "fin_net", "fin_unc", "fin_neg_tfidf", "finA_neg", "finbert_net"]:
         if c in df and df[c].std() > 0: df[c + "_z"] = (df[c] - df[c].mean()) / df[c].std()
 
     cand = (["log_mcap", "log_bm", "log_turn", "pre_alpha", "log_len"] if mkt == "us"
@@ -99,8 +96,6 @@ def main(mkt):
         specs["M7 MD&A"] = f"{Y} ~ finA_neg_z + {ctrl}"
     if "finbert_net_z" in df and df.finbert_net_z.notna().sum() > 30:
         specs["M8 FinBERT"] = f"{Y} ~ finbert_net_z + {ctrl}"
-    if "llm_tone_z" in df and df.llm_tone_z.notna().sum() > 30:
-        specs["M9 LLM tone"] = f"{Y} ~ llm_tone_z + llm_uncertainty_z + {ctrl}"
     ok = lambda f: all(v in df for v in f.split("~")[1].replace(" ", "").split("+") if not v.startswith("C("))
     specs = {k: f for k, f in specs.items() if ok(f)}      # bỏ mô hình thiếu biến (vd tf-idf không biến thiên)
     ms = [fit(df, f) for f in specs.values()]
