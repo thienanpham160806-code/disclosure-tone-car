@@ -1,0 +1,23 @@
+TRANG CHUẨN (GOLD) – do Claude chép từ ẢNH trang (không xem bản OCR / bản Gemini); người dùng đã dò lại ngày 29/09/2026 (không cần sửa).
+
+Cách dò:
+  1. Mở ảnh trang ở data/vn/interim/gold_png/<TÊN>.png (hoặc PDF gốc) cạnh file .txt cùng tên trong thư mục này.
+  2. Sửa trực tiếp mọi chỗ sai (dấu, chữ, số, thiếu/thừa dòng).
+  3. Dò xong file nào thì CHUYỂN file đó ra thư mục cha (data/vn/processed/gold/). v03b chỉ đọc file ở thư mục cha.
+  4. Dò xong cả 15 file: python src/vn/v03b_eval_ocr.py
+
+Quy ước đã dùng (giữ nguyên khi sửa):
+  - GIỮ: tiêu đề của trang, lời chào, thân thư, câu trích dẫn nổi bật (pull quote), nơi/ngày ký, chức danh + tên người ký,
+    phần tiếng Anh của trang song ngữ (HT1_2024_p6) – vì OCR/AI chép cả trang.
+  - BỎ: tiêu đề chạy đầu/chân trang lặp lại (vd "BÁO CÁO THƯỜNG NIÊN 2024"), số trang, chú thích ảnh, chữ trong ảnh/logo,
+    con dấu, khối chữ ký số (VIB_2023_p10), chữ ký tay.
+  - Chính tả giữ như bản in (vd CTS dùng "kì", "kỉ lục", "quản lí"; ACB in dính "củaTập").
+  - Thứ tự: theo cột, trái → phải, trên → dưới; câu trích dẫn đặt ở vị trí nó xuất hiện (GAS: cuối trang).
+
+Cần dò KỸ (chữ nhỏ / scan mờ – chỗ mờ đã đoán theo ngữ cảnh):
+  HDB_2017_p6 (scan độ phân giải thấp, dấu mờ), CTS_2022_p5 (chữ rất nhỏ), VND_2024_p3 (scan công văn),
+  GAS_2025_p5 (chữ nhỏ), BSI_2025_p7 (trang số liệu – thứ tự các ô tùy ý).
+
+5 trang KHÔNG thuộc thư (lỗi xác định trang cuối/đầu của v03, vẫn dùng được để đo độ chính xác OCR):
+  LPB_2022_p4 (bìa chương), FRT_2022_p9 (giải thưởng), BSI_2025_p7 (dấu ấn hoạt động), DBC_2020_p5 (giới thiệu công ty),
+  BCM_2022_p5 (dấu ấn tiêu biểu).
