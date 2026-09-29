@@ -1,10 +1,10 @@
 ﻿buoc,so_van_ban
 Mã VN30 + VN100,100
-Mã–năm có BCTN PDF trên CafeF (2016–2025),803
-Tìm được Thông điệp HĐQT (ok + too_long),591
-  không tìm thấy thư (not_found),194
-  thư quá ngắn < 250 âm tiết (too_short),18
-Có ngày sự kiện T=0 (PDF ModDate hợp lệ),525
-"Có CAR (đủ dữ liệu giá, ≥ 80 phiên ước lượng)",495
-"Có CAR[0,3]",493
-Vào hồi quy M2 (đủ biến kiểm soát),493
+Mã–năm có BCTN PDF trên CafeF (2016–2025),813
+Tìm được Thông điệp HĐQT (ok + too_long),617
+  không tìm thấy thư (not_found),195
+  thư quá ngắn < 250 âm tiết (too_short),0
+Có ngày sự kiện T=0 (PDF ModDate hợp lệ),548
+"Có CAR (đủ dữ liệu giá, ≥ 80 phiên ước lượng)",517
+"Có CAR[0,3]",514
+Vào hồi quy M2 (đủ biến kiểm soát),514

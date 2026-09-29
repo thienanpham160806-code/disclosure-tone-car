@@ -13,7 +13,7 @@ from common import CFG
 EMAIL = CFG["contact_email"]
 if "your_email" in EMAIL:
     raise SystemExit("Sửa contact_email trong config.yaml trước khi tải dữ liệu SEC (SEC yêu cầu User-Agent có email).")
-HEADERS = {"User-Agent": f"UEL-DeAn05 research {EMAIL}", "Accept-Encoding": "gzip, deflate"}
+HEADERS = {"User-Agent": f"UEL-DoAn05 research {EMAIL}", "Accept-Encoding": "gzip, deflate"}
 
 
 class RateLimiter:

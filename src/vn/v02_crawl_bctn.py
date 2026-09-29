@@ -66,6 +66,32 @@ def pick_dates(t4, year):
     return (min(cbtt) if cbtt else pd.NaT), (min(agm) if agm else pd.NaT), (min(res) if res else pd.NaT)
 
 
+ARCHIVES = (".zip", ".rar", ".7z")
+BSDTAR = pathlib.Path("C:/Windows/System32/tar.exe")      # libarchive: giải nén được cả rar, 7z
+
+
+def pdf_from_archive(content, name):
+    """Lưu file nén vào data/vn/raw/bctn_archives/, trả về nội dung PDF lớn nhất bên trong (None nếu không được).
+    CHANGELOG_RUN #27: 14 BCTN trên CafeF là .zip/.rar/.7z và trước đây bị bỏ qua."""
+    import io, shutil, subprocess, tempfile, zipfile
+    arch = D("vn", "raw", "bctn_archives", name); arch.write_bytes(content)
+    try:
+        if content[:2] == b"PK":
+            with zipfile.ZipFile(io.BytesIO(content)) as z:
+                pdfs = [i for i in z.infolist() if i.filename.lower().endswith(".pdf")]
+                return z.read(max(pdfs, key=lambda i: i.file_size)) if pdfs else None
+        tool = str(BSDTAR) if BSDTAR.exists() else shutil.which("bsdtar")
+        if not tool:
+            return None
+        with tempfile.TemporaryDirectory() as tmp:
+            subprocess.run([tool, "-xf", str(arch), "-C", tmp], check=True, capture_output=True)
+            pdfs = sorted(pathlib.Path(tmp).rglob("*.pdf"), key=lambda q: q.stat().st_size)
+            return pdfs[-1].read_bytes() if pdfs else None
+    except Exception as e:
+        print(f"  ! giải nén {name}: {e}")
+        return None
+
+
 def pdf_dates(f):
     """(ModDate, CreationDate) trong metadata PDF, dạng 'D:YYYYMMDDhhmmss+07'00''."""
     try:
@@ -86,7 +112,7 @@ def main(limit=None):
         t3, t4 = list_docs(s, tk, 3), list_docs(s, tk, 4)
         for d in t3:
             name, link = d.get("Name", ""), d.get("Link", "")
-            if "thường niên" not in norm(name) or not link.lower().endswith(".pdf"):
+            if "thường niên" not in norm(name) or not link.lower().endswith((".pdf",) + ARCHIVES):
                 continue
             yr = int(d.get("Year") or 0)
             if not (y0 <= yr <= y1):
@@ -99,10 +125,16 @@ def main(limit=None):
                 if (r is None or not r.content.startswith(b"%PDF")) and "cafefnew.mediacdn.vn" in link:
                     # CDN mới trả 404 cho nhiều file 2016–2021; bản gốc còn trên host cũ (CHANGELOG_RUN #17)
                     r = polite_get(s, link.replace("cafefnew.mediacdn.vn", "cafef1.mediacdn.vn"))
-                if r is None or not r.content.startswith(b"%PDF"):
+                if r is not None and link.lower().endswith(ARCHIVES):   # BCTN nén (zip/rar/7z) → lấy PDF lớn nhất bên trong
+                    pdf = pdf_from_archive(r.content, f"{tk}_{yr}_{lg}{link[link.rfind('.'):]}")
+                    if pdf is None:
+                        rows.append(dict(ticker=tk, group=grp, year=yr, lang=lg, url=link, file=None, status="archive_fail")); continue
+                    f.write_bytes(pdf); r = None
+                elif r is None or not r.content.startswith(b"%PDF"):
                     rows.append(dict(ticker=tk, group=grp, year=yr, lang=lg, url=link, file=None, status="download_fail")); continue
-                f.write_bytes(r.content)
-                lm = r.headers.get("Last-Modified")
+                else:
+                    f.write_bytes(r.content)
+                lm = r.headers.get("Last-Modified") if r is not None else None
                 if lm: lastmod = pd.Timestamp(parsedate_to_datetime(lm)).tz_localize(None).normalize()
             d_cbtt, d_agm, d_res = pick_dates(t4, yr)
             d_mod, d_cre = pdf_dates(f)

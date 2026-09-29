@@ -43,11 +43,11 @@ def main(mkt):
         cum = ar.cumsum(axis=1) * 100
         p0 = -(ar.shape[1] // 2); days = np.arange(p0, p0 + ar.shape[1])
         fig, ax = plt.subplots(figsize=(6.4, 3.6))
-        ends = []
+        ends, path = [], {}
         for grp, col, ls in [("T1 Tiêu cực", RED, "-"), ("T2 Trung tính", GRAY, "--"), ("T3 Tích cực", BLUE, "-")]:
             ids = ap.index[ap.tone_grp == grp].intersection(cum.index)
             if len(ids):
-                m = cum.loc[ids].mean()
+                m = cum.loc[ids].mean(); path[f"{grp} (n={len(ids)})"] = m.values
                 ax.plot(days, m.values, color=col, ls=ls, label=f"{grp} (n={len(ids)})")
                 ends.append([m.iloc[-1], grp.split(" ", 1)[1]])
         # nhãn trực tiếp ở cuối đường, giãn theo chiều dọc để không chồng nhau khi các đường kết thúc gần nhau
@@ -62,6 +62,7 @@ def main(mkt):
         ax.set_title("Lợi suất bất thường tích lũy theo nhóm giọng điệu (vùng xám: T→T+3)", loc="left", color=INK)
         ax.legend(frameon=False, loc="upper center", bbox_to_anchor=(.5, -.2), ncol=3)   # dưới trục: không đè lên đường
         fig.tight_layout(); fig.savefig(O(mkt, "fig3_caar_by_tone.png"), dpi=200); plt.close(fig)
+        pd.DataFrame(path, index=pd.Index(days, name="phien")).round(3).to_csv(O(mkt, "caar_by_tone.csv"), encoding="utf-8-sig")  # số liệu của hình 3 (%)
 
 
 if __name__ == "__main__":

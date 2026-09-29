@@ -1,5 +1,5 @@
 # ===================== Đề án 05 – cấu hình chung (Mỹ + Việt Nam) =====================
-contact_email: "your_email@st.uel.edu.vn"   # BẮT BUỘC sửa: SEC yêu cầu User-Agent có email
+contact_email: "anpntk24414h@st.uel.edu.vn"   # BẮT BUỘC sửa: SEC yêu cầu User-Agent có email
 seed: 42
 
 us:
@@ -33,7 +33,27 @@ vn:
     max_letter_pages: 6
     ocr_lang: vie
     ocr_dpi: 300
-    use_llm_fallback: false         # true → Claude API định vị trang khi regex thất bại (cần ANTHROPIC_API_KEY)
+    llm:                            # tầng AI (v03 --llm) – xem src/textkit/llm_client.py; key: GEMINI_API_KEY / ANTHROPIC_API_KEY (.env)
+      enabled: true                 # false → pipeline chạy như cũ (lớp chữ + OCR), không gọi API
+      provider: gemini              # gemini | claude
+      fallback_provider: claude     # dùng khi provider chính lỗi liên tục (chỉ khi có key)
+      model_gemini: gemini-3.5-flash-lite   # docs 28/09/2026: Flash-Lite hỗ trợ ảnh, có gói miễn phí; paid $0,30/$2,50 per 1M token
+      model_claude: claude-haiku-4-5        # model Claude nhận temperature=0 (Opus 5/Sonnet 5 bỏ temperature → 400); $1/$5 per 1M
+      mode: vision                  # vision: gửi ảnh trang, chép nguyên văn | text_fix: gửi text OCR + ảnh, chỉ sửa lỗi ký tự/dấu
+      quality_threshold: 0.85       # trang có quality_score < ngưỡng → gửi AI
+      similarity_min: 0.8           # text_fix: tương đồng ký tự với bản OCR < ngưỡng → coi là "viết lại", loại
+      dpi: 200                      # độ phân giải ảnh trang gửi AI
+      requests_per_minute: 10       # nhịp gọi tối đa (gói miễn phí Gemini; xem giới hạn thật ở AI Studio)
+      max_pages_per_doc: 6
+      max_total_calls: 800          # trần số lượt gọi API thật mỗi lần chạy (cache không tính)
+      max_consecutive_failures: 3   # provider chính lỗi liên tiếp ≥ N → ưu tiên provider dự phòng
+      max_retries: 4                # thử lại khi 429/5xx/mạng (backoff 2, 4, 8… giây)
+      recitation_fallback: text_fix # Gemini chặn chép nguyên văn (RECITATION) → thử chế độ text_fix cho trang đó; "none" để tắt
+      locate: true                  # regex không thấy thư → hỏi AI trang bắt đầu/kết thúc (chỉ gửi 300 ký tự đầu mỗi trang)
+      price_usd_per_1m:             # [đầu vào, đầu ra] – chỉ để ƯỚC TÍNH chi phí nếu dùng gói trả phí (a08); gói miễn phí = 0
+        gemini-3.5-flash-lite: [0.30, 2.50]
+        gemini-3.1-flash-lite: [0.25, 1.50]
+        claude-haiku-4-5: [1.00, 5.00]
 
 event:                              # dùng chung cho 2 thị trường
   est_window: [-150, -11]

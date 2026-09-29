@@ -1,15 +1,51 @@
-ticker,year,start_page,end_page
-DIG,2020,4,4
-FRT,2020,6,6
-FRT,2021,7,7
-HPG,2018,12,13
-HPG,2019,10,11
-LPB,2024,4,4
-MBB,2017,4,5
-MSB,2017,5,6
-MWG,2023,5,6
-NKG,2024,6,6
-NKG,2025,6,6
-OCB,2024,8,9
-OCB,2025,6,7
-VCG,2016,4,5
+ticker,year,start_page,end_page,force_ocr,ghi_chu
+DIG,2020,4,4,0,Thông điệp Chủ tịch HĐQT
+FRT,2020,6,6,0,Thư Chủ tịch HĐQT
+FRT,2021,7,7,0,Thư Chủ tịch HĐQT
+HPG,2018,12,13,0,Thư Chủ tịch HĐQT
+HPG,2019,10,11,0,Thư Chủ tịch HĐQT
+LPB,2024,4,4,0,Thư Chủ tịch HĐQT
+MBB,2017,4,5,0,Thông điệp Chủ tịch HĐQT
+MSB,2017,5,6,0,Thư Chủ tịch HĐQT
+MWG,2023,5,6,0,Thông điệp Chủ tịch HĐQT
+NKG,2024,6,6,0,Thông điệp Chủ tịch HĐQT (v03 lấy nhầm trang mục lục)
+NKG,2025,6,6,0,Thông điệp Chủ tịch HĐQT (v03 lấy nhầm trang mục lục)
+OCB,2024,8,9,0,Thông điệp Chủ tịch HĐQT
+OCB,2025,6,7,0,Thông điệp Chủ tịch HĐQT
+VCG,2016,4,5,0,Thư ngỏ Chủ tịch HĐQT
+VCB,2016,4,5,0,Thông điệp Chủ tịch HĐQT & TGĐ (thư chung)
+VCB,2018,4,5,0,Thông điệp Chủ tịch HĐQT & TGĐ (thư chung)
+VCB,2024,5,6,0,Thông điệp Ban lãnh đạo
+VCB,2025,5,6,0,Thông điệp Ban lãnh đạo
+NLG,2023,6,6,0,Thông điệp Chủ tịch & TGĐ (thư chung)
+NLG,2024,6,7,0,Thông điệp Chủ tịch & TGĐ (thư chung)
+NLG,2025,6,7,0,Thông điệp Chủ tịch & TGĐ (thư chung)
+POW,2021,3,3,0,Thông điệp Ban lãnh đạo
+VRE,2018,9,9,0,Thông điệp của HĐQT
+KBC,2020,3,3,0,Lời giới thiệu gửi cổ đông – ký TGĐ (xem ảnh)
+TPB,2016,7,8,0,Thông điệp Chủ tịch HĐQT
+VHC,2018,8,9,1,Thông điệp Chủ tịch HĐQT (xem ảnh; lớp chữ hỏng → OCR)
+HDB,2021,5,5,0,Thông điệp Chủ tịch HĐQT (trang 6 là thư TGĐ – ưu tiên thư Chủ tịch)
+DXG,2018,9,9,0,Thông điệp Chủ tịch HĐQT
+VIC,2019,12,13,0,Thông điệp của TGĐ
+VIC,2020,13,14,0,Thông điệp của TGĐ
+VIC,2024,16,17,0,Thông điệp của TGĐ
+VIC,2025,15,16,1,Thông điệp của TGĐ (font mã hóa sai một phần → OCR)
+REE,2023,11,12,0,QC: v03 lấy từ trang mục lục
+VRE,2023,9,10,0,QC: v03 lấy từ mục lục chương
+VRE,2024,9,9,0,QC: v03 lấy từ mục lục chương; thư HĐQT (trang 10 là thư TGĐ)
+VCB,2020,5,6,0,QC: v03 lấy 4-9 (mục lục + lịch sử)
+DSE,2021,5,5,0,QC: Thư ngỏ Chủ tịch
+SSI,2016,4,5,1,QC: v03 lấy 4-9; font mã hóa sai → OCR
+CTS,2017,5,5,0,QC: thư Chủ tịch HĐQT (trang 6 là thư TGĐ)
+VCI,2024,8,9,1,QC: font mã hóa sai toàn bộ → OCR
+VPB,2023,8,9,0,QC: thư chung Chủ tịch HĐQT & TGĐ (v03 lấy từ mục lục)
+NKG,2020,6,6,0,QC: v03 lấy từ trang giới thiệu
+CTD,2021,0,0,0,QC: trang v03 lấy không phải thư; không tìm thấy thư ban lãnh đạo → loại
+BSR,2022,11,11,0,too_short: Thông điệp Ban lãnh đạo (v03 lấy trang mục lục chương)
+BSR,2020,10,10,0,too_short: Thông điệp của Ban lãnh đạo
+CTG,2016,3,4,0,too_short: Thông điệp Chủ tịch HĐQT (trang 3 là tiêu đề dạng ảnh)
+PDR,2021,9,10,1,too_short: Thông điệp Chủ tịch HĐQT; font mã hóa sai → OCR
+VCG,2023,5,6,0,too_short: Thông điệp Chủ tịch HĐQT (v03 lấy trang mục lục)
+GAS,2017,6,7,0,BCTN từ file .rar: Thông điệp Chủ tịch HĐQT & TGĐ (thư chung)
+HDB,2019,4,4,0,"BCTN từ file .zip: Thông điệp cổ đông lớn – Phó Chủ tịch thường trực HĐQT (xem ảnh; trang đôi, OCR nhiễu)"

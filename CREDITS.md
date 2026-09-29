@@ -15,6 +15,11 @@ Repo này gom điểm mạnh của các dự án mã nguồn mở dưới đây.
 | [sonvx/VietSentiWordNet](https://github.com/sonvx/VietSentiWordNet) | — | Dữ liệu từ điển tổng quát tiếng Việt, tải lúc chạy (không phân phối lại) | `load_vswn()` |
 | [thinh-vu/vnstock](https://github.com/thinh-vu/vnstock) | giấy phép riêng (phi thương mại) | Thư viện phụ thuộc: rổ VN30/VN100, giá | `src/vn/v01_universe.py`, `v04_prices.py` |
 | Notre Dame SRAF | dùng cho nghiên cứu, trích dẫn LM (2011) | Loughran–McDonald Master Dictionary, 10X Summaries | `dict/` (tự tải) |
+| [googleapis/python-genai](https://github.com/googleapis/python-genai) (`google-genai`) | Apache-2.0 | Thư viện phụ thuộc: gọi Gemini API (tầng AI đọc ảnh trang / sửa lỗi OCR, định vị thư, thước đo tone đối chứng) | `src/textkit/llm_client.py` |
+| [anthropics/anthropic-sdk-python](https://github.com/anthropics/anthropic-sdk-python) (`anthropic`) | MIT | Thư viện phụ thuộc: Claude API (provider dự phòng của tầng AI) | `src/textkit/llm_client.py` |
+| [rapidfuzz/RapidFuzz](https://github.com/rapidfuzz/RapidFuzz) | MIT | Thư viện phụ thuộc: độ tương đồng ký tự (kiểm tra LLM không "viết lại"), khoảng cách Levenshtein cho CER/WER | `llm_client.similarity`, `src/vn/v03b_eval_ocr.py` |
+| [theskumar/python-dotenv](https://github.com/theskumar/python-dotenv) | BSD-3-Clause | Thư viện phụ thuộc: đọc API key từ `.env` | `src/textkit/llm_client.py` |
+| Google Gemini API / Anthropic Claude API | điều khoản dịch vụ của nhà cung cấp | Dịch vụ: chỉ nhận ẢNH hoặc TEXT của từng trang thư lãnh đạo cần sửa (không gửi cả PDF); mọi phản hồi được cache trong `data/vn/interim/llm_cache/` | `src/vn/v03_extract_letter.py` (`--llm`) |
 
 ## Điểm nhóm tự bổ sung (không có trong các repo trên)
 1. **Hai thị trường, một pipeline**: bảng `docs.csv` chuẩn hóa → mọi bước phân tích dùng chung cho Mỹ và Việt Nam.
@@ -24,3 +29,4 @@ Repo này gom điểm mạnh của các dự án mã nguồn mở dưới đây.
 5. **Tiếng Việt**: từ điển tài chính Việt hóa theo LM, khớp cụm dài nhất ("nợ xấu" ≠ "nợ"), phủ định, file gợi ý mở rộng từ điển; đối chứng VietSentiWordNet.
 6. **Suy luận đầy đủ cho câu hỏi CAR[T,T+3]**: t, BMP, Wilcoxon, sign test; nhóm tone T3−T1; OLS cluster + Fama–MacBeth; placebo; market-adjusted và BHAR; kiểm định giả định (BP, JB, VIF).
 7. **Tái lập**: `run_all.py`, cache mọi tải xuống, `pytest` cho các khối lõi, notebook chạy trọn từ dữ liệu đã xử lý.
+8. **Tầng AI có kiểm soát cho OCR tiếng Việt**: chấm chất lượng từng trang (âm tiết hợp lệ, ký tự rác, token đứt), chỉ gửi trang dưới ngưỡng cho LLM với yêu cầu chép NGUYÊN VĂN, temperature 0, cache, trần lượt gọi, nhật ký nguồn gốc từng trang, đánh giá CER/WER so với trang chuẩn gõ tay.

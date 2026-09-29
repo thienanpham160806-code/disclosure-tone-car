@@ -1,60 +1,60 @@
 ﻿ticker,year,lang,file,start_page,end_page,locate,method,n_syllables,vn_ratio,flag,pages,dung_doan_thong_diep,loi_ocr_moi_100_tu,ghi_chu
-DGW,2024,vi,DGW_2024_vi.pdf,2.0,2.0,regex,text,453.0,0.283,ok,,,,
-REE,2023,vi,REE_2023_vi.pdf,6.0,11.0,regex,text,1357.0,0.276,ok,,,,
-VPB,2024,vi,VPB_2024_vi.pdf,4.0,6.0,regex,ocr,1403.0,0.271,ok,,,,
-CTG,2024,vi,CTG_2024_vi.pdf,5.0,6.0,regex,text,978.0,0.286,ok,,,,
-GEX,2025,vi,GEX_2025_vi.pdf,7.0,7.0,regex,text,1733.0,0.285,ok,,,,
-KOS,2017,vi,KOS_2017_vi.pdf,2.0,2.0,regex,ocr,312.0,0.286,ok,,,,
-ANV,2019,vi,ANV_2019_vi.pdf,2.0,2.0,regex,text,668.0,0.291,ok,,,,
-TCB,2016,vi,TCB_2016_vi.pdf,3.0,3.0,regex,text,637.0,0.279,ok,,,,
-CTG,2023,vi,CTG_2023_vi.pdf,5.0,5.0,regex,text,1154.0,0.288,ok,,,,
-NVL,2023,vi,NVL_2023_vi.pdf,5.0,6.0,regex,text,1264.0,0.279,ok,,,,
-BWE,2024,vi,BWE_2024_vi.pdf,3.0,3.0,regex,text,709.0,0.295,ok,,,,
-DIG,2025,vi,DIG_2025_vi.pdf,3.0,4.0,regex,text,1356.0,0.29,ok,,,,
-DCM,2018,vi,DCM_2018_vi.pdf,6.0,11.0,regex,ocr,2084.0,0.281,ok,,,,
-VRE,2023,vi,VRE_2023_vi.pdf,4.0,9.0,regex,text,1766.0,0.259,ok,,,,
-PC1,2025,vi,PC1_2025_vi.pdf,6.0,6.0,regex,text,542.0,0.288,ok,,,,
-HDG,2019,vi,HDG_2019_vi.pdf,3.0,3.0,regex,text,771.0,0.289,ok,,,,
-BMP,2018,vi,BMP_2018_vi.pdf,3.0,3.0,regex,text,633.0,0.275,ok,,,,
-HCM,2025,vi,HCM_2025_vi.pdf,4.0,4.0,regex,text,661.0,0.264,ok,,,,
-GEX,2023,vi,GEX_2023_vi.pdf,6.0,6.0,regex,text,889.0,0.293,ok,,,,
-CTR,2024,vi,CTR_2024_vi.pdf,5.0,5.0,regex,text,1154.0,0.266,ok,,,,
-ACB,2024,vi,ACB_2024_vi.pdf,7.0,8.0,regex,ocr,1175.0,0.285,ok,,,,
-VRE,2024,vi,VRE_2024_vi.pdf,4.0,9.0,regex,text,2634.0,0.252,ok,,,,
-VIC,2020,vi,VIC_2020_vi.pdf,1.0,1.0,regex,ocr,232.0,0.255,too_short,,,,
-VTP,2022,vi,VTP_2022_vi.pdf,4.0,4.0,regex,text,509.0,0.268,ok,,,,
-PAN,2017,vi,PAN_2017_vi.pdf,4.0,4.0,regex,text,1215.0,0.284,ok,,,,
-VIC,2016,vi,VIC_2016_vi.pdf,4.0,8.0,regex,text,5565.0,0.268,too_long,,,,
-CTD,2021,vi,CTD_2021_vi.pdf,9.0,9.0,regex,text,699.0,0.275,ok,,,,
-DXG,2021,vi,DXG_2021_vi.pdf,5.0,5.0,regex,text,1244.0,0.29,ok,,,,
-VND,2017,vi,VND_2017_vi.pdf,4.0,4.0,regex,text,1605.0,0.274,ok,,,,
-SHB,2020,vi,SHB_2020_vi.pdf,6.0,6.0,regex,text,979.0,0.284,ok,,,,
-VTP,2025,vi,VTP_2025_vi.pdf,3.0,3.0,regex,text,971.0,0.283,ok,,,,
-FTS,2023,vi,FTS_2023_vi.pdf,4.0,4.0,regex,text,968.0,0.28,ok,,,,
-CTD,2018,vi,CTD_2018_vi.pdf,3.0,4.0,regex,text,1287.0,0.271,ok,,,,
-HT1,2018,vi,HT1_2018_vi.pdf,5.0,5.0,regex,text,790.0,0.289,ok,,,,
-GEX,2020,vi,GEX_2020_vi.pdf,4.0,5.0,regex,ocr,735.0,0.273,ok,,,,
-SSI,2016,vi,SSI_2016_vi.pdf,4.0,9.0,regex,ocr,2879.0,0.231,ok,,,,
-DSE,2021,vi,DSE_2021_vi.pdf,4.0,5.0,regex,text,778.0,0.29,ok,,,,
-VHC,2019,vi,VHC_2019_vi.pdf,5.0,6.0,regex,text,754.0,0.283,ok,,,,
-NT2,2020,vi,NT2_2020_vi.pdf,10.0,11.0,regex,ocr,1259.0,0.3,ok,,,,
-KDH,2016,vi,KDH_2016_vi.pdf,4.0,4.0,regex,text,610.0,0.29,ok,,,,
-PAN,2023,vi,PAN_2023_vi.pdf,5.0,5.0,regex,text,1116.0,0.282,ok,,,,
-BMP,2019,vi,BMP_2019_vi.pdf,3.0,3.0,regex,text,637.0,0.268,ok,,,,
-VCI,2024,vi,VCI_2024_vi.pdf,10.0,15.0,regex,ocr,291.0,0.136,ok,,,,
-VPB,2018,vi,VPB_2018_vi.pdf,4.0,4.0,regex,text,814.0,0.272,ok,,,,
-BID,2017,vi,BID_2017_vi.pdf,4.0,7.0,regex,ocr,1758.0,0.291,ok,,,,
-GEX,2024,vi,GEX_2024_vi.pdf,7.0,7.0,regex,text,1048.0,0.298,ok,,,,
-TCH,2021,vi,TCH_2021_vi.pdf,3.0,3.0,regex,ocr,546.0,0.286,ok,,,,
-DBC,2016,vi,DBC_2016_vi.pdf,4.0,5.0,regex,text,796.0,0.279,ok,,,,
-CII,2023,vi,CII_2023_vi.pdf,6.0,6.0,regex,ocr,819.0,0.288,ok,,,,
-VCB,2020,vi,VCB_2020_vi.pdf,4.0,9.0,regex,text,2756.0,0.262,ok,,,,
-HSG,2023,vi,HSG_2023_vi.pdf,4.0,4.0,regex,text,911.0,0.268,ok,,,,
-HSG,2021,vi,HSG_2021_vi.pdf,4.0,5.0,regex,text,1038.0,0.283,ok,,,,
-CTS,2017,vi,CTS_2017_vi.pdf,4.0,9.0,regex,ocr,2995.0,0.262,ok,,,,
-VND,2019,vi,VND_2019_vi.pdf,5.0,5.0,regex,text,1668.0,0.274,ok,,,,
-VRE,2019,vi,VRE_2019_vi.pdf,3.0,7.0,regex,text,3038.0,0.261,ok,,,,
-NVL,2018,vi,NVL_2018_vi.pdf,5.0,6.0,regex,text,1836.0,0.277,ok,,,,
-HAG,2018,vi,HAG_2018_vi.pdf,3.0,3.0,regex,text,700.0,0.294,ok,,,,
-FRT,2018,vi,FRT_2018_vi.pdf,5.0,5.0,regex,text,638.0,0.274,ok,,,,
-DXG,2019,vi,DXG_2019_vi.pdf,9.0,9.0,regex,text,597.0,0.285,ok,,,,
+DGW,2024,vi,DGW_2024_vi.pdf,2.0,2.0,regex,text,453.0,0.283,ok,,đúng,11.2,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+REE,2023,vi,REE_2023_vi.pdf,6.0,11.0,regex,text,1357.0,0.276,ok,,sai → đã sửa (manual_pages: trang 11-12),0.6,QC: v03 lấy từ trang mục lục | kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+VPB,2024,vi,VPB_2024_vi.pdf,4.0,6.0,regex,ocr,1403.0,0.271,ok,,đúng,1.2,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+CTG,2024,vi,CTG_2024_vi.pdf,5.0,6.0,regex,text,978.0,0.286,ok,,đúng (lệch biên nhỏ),0.5,cuối văn bản lẫn mục lục phần sau | kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+GEX,2025,vi,GEX_2025_vi.pdf,7.0,7.0,regex,text,1733.0,0.285,ok,,đúng,0.5,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+KOS,2017,vi,KOS_2017_vi.pdf,2.0,2.0,regex,ocr,312.0,0.286,ok,,đúng,4.2,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+ANV,2019,vi,ANV_2019_vi.pdf,2.0,2.0,regex,text,668.0,0.291,ok,,đúng (lệch biên nhỏ),0.8,thứ tự câu xen cột (bố cục 2 cột) | kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+TCB,2016,vi,TCB_2016_vi.pdf,3.0,3.0,regex,text,637.0,0.279,ok,,đúng,0.5,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+CTG,2023,vi,CTG_2023_vi.pdf,5.0,5.0,regex,text,1154.0,0.288,ok,,đúng,0.0,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+NVL,2023,vi,NVL_2023_vi.pdf,5.0,6.0,regex,text,1264.0,0.279,ok,,đúng,0.1,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+BWE,2024,vi,BWE_2024_vi.pdf,3.0,3.0,regex,text,709.0,0.295,ok,,đúng,0.6,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+DIG,2025,vi,DIG_2025_vi.pdf,3.0,4.0,regex,text,1356.0,0.29,ok,,đúng,0.0,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+DCM,2018,vi,DCM_2018_vi.pdf,6.0,11.0,regex,ocr,2084.0,0.281,ok,,đúng,1.1,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+VRE,2023,vi,VRE_2023_vi.pdf,4.0,9.0,regex,text,1766.0,0.259,ok,,sai → đã sửa (manual_pages: trang 9-10),0.2,QC: v03 lấy từ mục lục chương | kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+PC1,2025,vi,PC1_2025_vi.pdf,6.0,6.0,regex,text,542.0,0.288,ok,,đúng,0.0,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+HDG,2019,vi,HDG_2019_vi.pdf,3.0,3.0,regex,text,771.0,0.289,ok,,đúng (lệch biên nhỏ),2.1,"thiếu tiêu đề (dạng ảnh), thân thư đúng, có chữ ký | kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)"
+BMP,2018,vi,BMP_2018_vi.pdf,3.0,3.0,regex,text,633.0,0.275,ok,,đúng,0.6,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+HCM,2025,vi,HCM_2025_vi.pdf,4.0,4.0,regex,text,661.0,0.264,ok,,đúng,0.3,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+GEX,2023,vi,GEX_2023_vi.pdf,6.0,6.0,regex,text,889.0,0.293,ok,,đúng,0.5,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+CTR,2024,vi,CTR_2024_vi.pdf,5.0,5.0,regex,text,1154.0,0.266,ok,,đúng,0.4,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+ACB,2024,vi,ACB_2024_vi.pdf,7.0,8.0,regex,ocr,1175.0,0.285,ok,,đúng,1.7,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+VRE,2024,vi,VRE_2024_vi.pdf,4.0,9.0,regex,text,2634.0,0.252,ok,,sai → đã sửa (manual_pages: trang 9-9),0.4,QC: v03 lấy từ mục lục chương; thư HĐQT (trang 10 là thư TGĐ) | kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+VIC,2020,vi,VIC_2020_vi.pdf,1.0,1.0,regex,ocr,232.0,0.255,too_short,,sai → đã sửa (manual_pages: trang 13-14),0.3,Thông điệp của TGĐ | kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+VTP,2022,vi,VTP_2022_vi.pdf,4.0,4.0,regex,text,509.0,0.268,ok,,đúng,0.2,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+PAN,2017,vi,PAN_2017_vi.pdf,4.0,4.0,regex,text,1215.0,0.284,ok,,đúng,0.7,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+VIC,2016,vi,VIC_2016_vi.pdf,4.0,8.0,regex,text,5565.0,0.268,too_long,,đúng,1.1,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+CTD,2021,vi,CTD_2021_vi.pdf,9.0,9.0,regex,text,699.0,0.275,ok,,sai → đã loại,2.5,QC: trang v03 lấy không phải thư; không tìm thấy thư ban lãnh đạo → loại | kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+DXG,2021,vi,DXG_2021_vi.pdf,5.0,5.0,regex,text,1244.0,0.29,ok,,đúng,0.5,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+VND,2017,vi,VND_2017_vi.pdf,4.0,4.0,regex,text,1605.0,0.274,ok,,đúng,0.8,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+SHB,2020,vi,SHB_2020_vi.pdf,6.0,6.0,regex,text,979.0,0.284,ok,,đúng (lệch biên nhỏ),0.3,đúng; cuối trang không có chữ ký | kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+VTP,2025,vi,VTP_2025_vi.pdf,3.0,3.0,regex,text,971.0,0.283,ok,,đúng (lệch biên nhỏ),0.0,"Thông điệp HĐQT, có ký tên | kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)"
+FTS,2023,vi,FTS_2023_vi.pdf,4.0,4.0,regex,text,968.0,0.28,ok,,đúng (lệch biên nhỏ),0.1,đúng; có thể thiếu phần cuối thư | kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+CTD,2018,vi,CTD_2018_vi.pdf,3.0,4.0,regex,text,1287.0,0.271,ok,,đúng (lệch biên nhỏ),1.2,đầu văn bản lẫn 1 dòng mục lục | kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+HT1,2018,vi,HT1_2018_vi.pdf,5.0,5.0,regex,text,790.0,0.289,ok,,đúng,0.1,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+GEX,2020,vi,GEX_2020_vi.pdf,4.0,5.0,regex,ocr,735.0,0.273,ok,,đúng (lệch biên nhỏ),0.7,đầu văn bản lẫn dòng mục lục; có thể thiếu phần cuối | kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+SSI,2016,vi,SSI_2016_vi.pdf,4.0,9.0,regex,ocr,2879.0,0.231,ok,,sai → đã sửa (manual_pages: trang 4-5),4.1,QC: v03 lấy 4-9; font mã hóa sai → OCR | kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+DSE,2021,vi,DSE_2021_vi.pdf,4.0,5.0,regex,text,778.0,0.29,ok,,sai → đã sửa (manual_pages: trang 5-5),2.7,QC: Thư ngỏ Chủ tịch | kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+VHC,2019,vi,VHC_2019_vi.pdf,5.0,6.0,regex,text,754.0,0.283,ok,,đúng (lệch biên nhỏ),0.7,đúng; cuối là số trang | kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+NT2,2020,vi,NT2_2020_vi.pdf,10.0,11.0,regex,ocr,1259.0,0.3,ok,,đúng,1.6,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+KDH,2016,vi,KDH_2016_vi.pdf,4.0,4.0,regex,text,610.0,0.29,ok,,đúng,0.7,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+PAN,2023,vi,PAN_2023_vi.pdf,5.0,5.0,regex,text,1116.0,0.282,ok,,đúng,0.5,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+BMP,2019,vi,BMP_2019_vi.pdf,3.0,3.0,regex,text,637.0,0.268,ok,,đúng,0.3,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+VCI,2024,vi,VCI_2024_vi.pdf,10.0,15.0,regex,ocr,291.0,0.136,ok,,sai → đã sửa (manual_pages: trang 8-9),0.3,QC: font mã hóa sai toàn bộ → OCR | kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+VPB,2018,vi,VPB_2018_vi.pdf,4.0,4.0,regex,text,814.0,0.272,ok,,đúng,0.4,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+BID,2017,vi,BID_2017_vi.pdf,4.0,7.0,regex,ocr,1758.0,0.291,ok,,đúng,0.4,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+GEX,2024,vi,GEX_2024_vi.pdf,7.0,7.0,regex,text,1048.0,0.298,ok,,đúng,0.5,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+TCH,2021,vi,TCH_2021_vi.pdf,3.0,3.0,regex,ocr,546.0,0.286,ok,,đúng,1.1,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+DBC,2016,vi,DBC_2016_vi.pdf,4.0,5.0,regex,text,796.0,0.279,ok,,đúng,0.7,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+CII,2023,vi,CII_2023_vi.pdf,6.0,6.0,regex,ocr,819.0,0.288,ok,,đúng (lệch biên nhỏ),5.6,"thư HĐQT & Ban lãnh đạo, có chữ ký | kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)"
+VCB,2020,vi,VCB_2020_vi.pdf,4.0,9.0,regex,text,2756.0,0.262,ok,,sai → đã sửa (manual_pages: trang 5-6),0.5,QC: v03 lấy 4-9 (mục lục + lịch sử) | kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+HSG,2023,vi,HSG_2023_vi.pdf,4.0,4.0,regex,text,911.0,0.268,ok,,đúng,0.1,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+HSG,2021,vi,HSG_2021_vi.pdf,4.0,5.0,regex,text,1038.0,0.283,ok,,đúng,0.1,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+CTS,2017,vi,CTS_2017_vi.pdf,4.0,9.0,regex,ocr,2995.0,0.262,ok,,sai → đã sửa (manual_pages: trang 5-5),22.2,QC: thư Chủ tịch HĐQT (trang 6 là thư TGĐ) | kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+VND,2019,vi,VND_2019_vi.pdf,5.0,5.0,regex,text,1668.0,0.274,ok,,đúng,0.7,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+VRE,2019,vi,VRE_2019_vi.pdf,3.0,7.0,regex,text,3038.0,0.261,ok,,đúng,0.7,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+NVL,2018,vi,NVL_2018_vi.pdf,5.0,6.0,regex,text,1836.0,0.277,ok,,đúng,0.9,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+HAG,2018,vi,HAG_2018_vi.pdf,3.0,3.0,regex,text,700.0,0.294,ok,,đúng,0.4,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+FRT,2018,vi,FRT_2018_vi.pdf,5.0,5.0,regex,text,638.0,0.274,ok,,đúng,0.2,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
+DXG,2019,vi,DXG_2019_vi.pdf,9.0,9.0,regex,text,597.0,0.285,ok,,đúng,0.3,kiểm tra: đầu/cuối văn bản + ảnh trang khi cần; lỗi OCR = % âm tiết ngoài từ vựng (ước lượng tự động)
