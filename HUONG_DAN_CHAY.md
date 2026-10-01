@@ -77,7 +77,7 @@ Kiểm tra nhanh: `pytest -q` phải báo tất cả test đều `passed`.
 
 ## 5. Cách A – Chạy nhanh từ dữ liệu có sẵn
 
-Repo đã có sẵn dữ liệu đã xử lý (`data/us/processed`, `data/vn/processed`: danh mục văn bản, tone, giá, CAR…). Văn bản thô và văn bản đã trích (`data/*/raw`, `data/*/interim`) **không** có trong git vì quá lớn. Vì vậy Cách A **bỏ qua bước a01 (chấm tone)** và dùng `tone_panel.csv` có sẵn.
+Repo đã có sẵn dữ liệu đã xử lý (`data/us/processed`, `data/vn/processed`: danh mục văn bản, tone, giá, CAR…). Văn bản đã trích (`data/*/interim`) **có** trong git; dữ liệu thô (`data/*/raw`: PDF báo cáo, 10-K, giá – khoảng 15 GB) thì **không**. Bước a01 (chấm tone) chạy được nếu có từ điển Loughran–McDonald trong `dict/` (mục 3.2); không có thì Cách A bỏ qua a01 và dùng `tone_panel.csv` có sẵn.
 
 ```powershell
 python run_all.py --market us --from 6    # a02 sự kiện → a03 hồi quy → a04 hình → a06 bảng tổng hợp
@@ -139,7 +139,7 @@ python run_all.py --market vn --from 5           # a01 → a06
 ```
 
 **Bước kiểm tra tay (human-in-the-loop).** Cần đọc kỹ trước khi dùng kết quả:
-- `data/vn/processed/manual_pages.csv` đã chứa 130 văn bản được xác định trang bằng tay (50 ca đợt đầu + 80 thư bị bước trích tự động cắt ở trần 6 trang), có ghi chú từng ca. `--manual` áp lại các trang này sau `v03`. Để thêm ca mới, ghi thêm dòng `ticker,year,start_page,end_page,force_ocr,ghi_chu`:
+- `data/vn/processed/manual_pages.csv` đã chứa 144 văn bản được xác định trang bằng tay (50 ca đợt đầu + 80 thư bị bước trích tự động cắt ở trần 6 trang + 24 thư không có lời chào/câu kết), có ghi chú từng ca. `--manual` áp lại các trang này sau `v03`. Để thêm ca mới, ghi thêm dòng `ticker,year,start_page,end_page,force_ocr,ghi_chu`:
   - `force_ocr = 1` khi lớp chữ PDF bị lỗi font.
   - `start_page = 0` khi xác nhận BCTN không có thư của ban lãnh đạo (văn bản sẽ bị loại).
 - `data/vn/processed/qc_sample.csv` là mẫu 10% đã đối chiếu (49/59 đúng). Nếu chạy lại `v03` toàn bộ, file này bị tạo lại và phải điền lại. Để chỉ trích các BCTN mới mà giữ kết quả cũ, dùng `python src/vn/v03_extract_letter.py --new`.
@@ -209,7 +209,7 @@ Trên CPU, bước này mất nhiều giờ.
 
 ## 9. Quy ước khi đóng góp
 
-- Không commit dữ liệu thô (`data/*/raw`, `data/*/interim`), email, file `.env` hay API key. `.gitignore` đã chặn sẵn.
+- Không commit dữ liệu thô (`data/*/raw`), từ điển có giấy phép riêng (LM, VietSentiWordNet), email, file `.env` hay API key. `.gitignore` đã chặn sẵn.
 - Mỗi lần sửa code, cấu hình hoặc từ điển, ghi một dòng vào `CHANGELOG_RUN.md`: sửa gì, vì sao, ảnh hưởng gì.
 - Làm trên nhánh riêng rồi tạo pull request, không push thẳng `main`.
 
@@ -223,7 +223,9 @@ Toàn bộ kịch bản dưới đây chạy trên máy đã có dữ liệu (m�
 3. Chạy thử một lượt kịch bản bên dưới. Mở sẵn `RESULTS.md` và 3 hình trong `outputs/vn/`.
 4. Tắt chế độ ngủ của máy, cắm sạc.
 
-**Cách nhanh nhất:** `powershell -ExecutionPolicy Bypass -File demo.ps1`. Script chạy lần lượt các bước dưới đây, mỗi bước dừng chờ Enter, tự mở PDF/hình khi cần và có chỗ mời thầy tự gõ câu. Muốn kiểm tra trước buổi mà không phải bấm Enter: `$env:DEMO_AUTO = "1"` rồi chạy lệnh trên.
+**Dashboard (giao diện web, nên dùng khi trình bày):** `powershell -ExecutionPolicy Bypass -File dashboard\run.ps1` – tự mở trình duyệt; chọn **Giao diện → Sáng** khi chiếu. Các trang Tổng quan → Giọng điệu → Phản ứng thị trường → Tra cứu văn bản → Thử một câu đi đúng thứ tự kịch bản dưới đây (xem `dashboard/README.md`).
+
+**Cách chạy trên terminal:** `powershell -ExecutionPolicy Bypass -File demo.ps1`. Script chạy lần lượt các bước dưới đây, mỗi bước dừng chờ Enter, tự mở PDF/hình khi cần và có chỗ mời thầy tự gõ câu. Muốn kiểm tra trước buổi mà không phải bấm Enter: `$env:DEMO_AUTO = "1"` rồi chạy lệnh trên.
 
 **Kịch bản:**
 
@@ -241,3 +243,7 @@ Toàn bộ kịch bản dưới đây chạy trên máy đã có dữ liệu (m�
 - *Kết quả có tái lập được không?* `seed: 42`, cache, `CHANGELOG_RUN.md` ghi mọi thay đổi, `RESULTS.md` ghi file nguồn cho từng con số.
 - *AI có sửa nội dung không?* Chỉ chép nguyên văn (temperature = 0). Bản AI bị loại nếu chất lượng giảm hoặc khác xa bản OCR. Mọi quyết định ghi ở `llm_pages.csv`. So sánh hệ số trước/sau ở `RESULTS.md` mục 4.5.
 - *Sao biết đúng trang thư?* Mẫu QC 10% và danh sách kiểm tra tay trong `data/vn/processed/manual_pages.csv` (mỗi dòng có ghi chú lý do).
+
+## 11. Đưa dashboard lên mạng
+
+Xem **`DEPLOY.md`**: Render chạy máy chủ API, Vercel chạy giao diện, cả hai miễn phí và tự cập nhật khi push.

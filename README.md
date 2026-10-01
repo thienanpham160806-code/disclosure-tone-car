@@ -49,6 +49,8 @@ python run_all.py --market us --only a03 # chạy riêng một bước
 pytest -q                                # kiểm thử các khối lõi (không cần mạng)
 jupyter notebook notebooks/main.ipynb    # chạy lại phân tích và xem toàn bộ bảng, hình
 ```
+**Dashboard:** `powershell -ExecutionPolicy Bypass -File dashboard\run.ps1` – đưa lên mạng: xem `DEPLOY.md` (6 trang: tổng quan, giọng điệu, phản ứng thị trường, tra cứu từng văn bản, thử một câu, dữ liệu & chất lượng – xem `dashboard/README.md`).
+
 Demo nhanh (chấm tone một câu bất kỳ bằng từ điển tài chính vs tổng quát): `python demo_tone.py "…"` (thêm `--en` cho tiếng Anh). Kịch bản trình bày cho giảng viên: `HUONG_DAN_CHAY.md` mục 10.
 
 Tùy chọn: `python src/analysis/a05_finbert.py --market us` chấm tone bằng FinBERT để so với từ điển
@@ -59,9 +61,9 @@ Kết quả đầy đủ: **`RESULTS.md`**; nhật ký sửa code/cấu hình/t�
 
 | | Mỹ | Việt Nam |
 |---|---|---|
-| Văn bản | 500 10-K (50 công ty × 10 năm nộp 2015–2024), 457 có MD&A | 813 BCTN (mã–năm) → 608 thông điệp ban lãnh đạo (130 thư xác định trang bằng tay) |
-| Có CAR[0,3] | 500 | 506 (540 có ngày T=0 = ModDate PDF) |
-| Hồi quy chính | N = 470 | N = 506 |
+| Văn bản | 500 10-K (50 công ty × 10 năm nộp 2015–2024), 457 có MD&A | 813 BCTN (mã–năm) → 605 thông điệp ban lãnh đạo (144 thư xác định trang bằng tay) |
+| Có CAR[0,3] | 500 | 505 (537 có ngày T=0 = ModDate PDF) |
+| Hồi quy chính | N = 470 | N = 505 |
 
 Thời gian (laptop 12 luồng, Windows; bước tải phụ thuộc mạng, lần chạy lại dùng cache):
 

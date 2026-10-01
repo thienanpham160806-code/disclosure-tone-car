@@ -1,0 +1,12 @@
+# Thu vien cho may chu dashboard (Render). Phien ban khop moi truong chay goc (requirements-lock.txt).
+# Khong gom PyMuPDF/Tesseract/Gemini: ban online khong co PDF goc nen khong chay OCR / 'Sua OCR bang AI'.
+fastapi==0.142.2
+uvicorn==0.54.0
+pandas==3.0.6
+numpy==2.4.6
+PyYAML==6.0.3
+requests==2.34.2
+python-dotenv==1.2.3
+pysentiment2==0.1.1
+nltk==3.10.3
+RapidFuzz==3.14.6

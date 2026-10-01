@@ -44,7 +44,7 @@ BMP_2019,BMP,2019,2020-06-17,False,vi,BMP_2019_vi.txt,,,VN100,ok,pdf_meta
 BMP_2018,BMP,2018,,False,vi,BMP_2018_vi.txt,,,VN100,ok,missing
 BID_2023,BID,2023,2024-04-17,False,vi,BID_2023_vi.txt,,,VN30,ok,pdf_meta
 BMP_2016,BMP,2016,2017-03-29,False,vi,BMP_2016_vi.txt,,,VN100,ok,pdf_meta
-BMP_2022,BMP,2022,2023-04-19,False,vi,BMP_2022_vi.txt,,,VN100,ok,pdf_meta
+BMP_2022,BMP,2022,2023-04-19,False,vi,BMP_2022_vi.txt,,,VN100,excluded_manual,pdf_meta
 BMP_2017,BMP,2017,2018-04-11,False,vi,BMP_2017_vi.txt,,,VN100,ok,pdf_meta
 BSI_2024,BSI,2024,2025-04-10,False,vi,BSI_2024_vi.txt,,,VN100,ok,pdf_meta
 BSI_2023,BSI,2023,2024-04-12,False,vi,BSI_2023_vi.txt,,,VN100,ok,pdf_meta
@@ -434,7 +434,7 @@ NAB_2023,NAB,2023,2024-03-27,False,vi,NAB_2023_vi.txt,,,VN100,not_found,pdf_meta
 NAB_2022,NAB,2022,,False,vi,NAB_2022_vi.txt,,,VN100,not_found,missing
 NAB_2020,NAB,2020,,False,vi,NAB_2020_vi.txt,,,VN100,not_found,missing
 NAB_2021,NAB,2021,2022-03-29,False,vi,NAB_2021_vi.txt,,,VN100,not_found,pdf_meta
-NAB_2019,NAB,2019,2020-03-24,False,vi,NAB_2019_vi.txt,,,VN100,ok,pdf_meta
+NAB_2019,NAB,2019,2020-03-24,False,vi,NAB_2019_vi.txt,,,VN100,excluded_manual,pdf_meta
 NKG_2025,NKG,2025,2026-04-13,False,vi,NKG_2025_vi.txt,,,VN100,ok,pdf_meta
 NKG_2024,NKG,2024,2025-04-12,False,vi,NKG_2024_vi.txt,,,VN100,ok,pdf_meta
 NKG_2023,NKG,2023,2024-04-10,False,vi,NKG_2023_vi.txt,,,VN100,ok,pdf_meta
@@ -483,7 +483,7 @@ OCB_2021,OCB,2021,2022-04-01,False,vi,OCB_2021_vi.txt,,,VN100,ok,pdf_meta
 OCB_2019,OCB,2019,2020-05-08,False,vi,OCB_2019_vi.txt,,,VN100,not_found,pdf_meta
 OCB_2017,OCB,2017,,False,vi,OCB_2017_vi.txt,,,VN100,ok,missing
 OCB_2016,OCB,2016,,False,vi,OCB_2016_vi.txt,,,VN100,ok,missing
-OCB_2018,OCB,2018,2019-04-19,False,vi,OCB_2018_vi.txt,,,VN100,ok,pdf_meta
+OCB_2018,OCB,2018,2019-04-19,False,vi,OCB_2018_vi.txt,,,VN100,excluded_manual,pdf_meta
 PAN_2025,PAN,2025,2026-04-20,False,vi,PAN_2025_vi.txt,,,VN100,ok,pdf_meta
 PAN_2024,PAN,2024,2025-04-18,False,vi,PAN_2024_vi.txt,,,VN100,ok,pdf_meta
 PAN_2023,PAN,2023,2024-04-18,False,vi,PAN_2023_vi.txt,,,VN100,ok,pdf_meta

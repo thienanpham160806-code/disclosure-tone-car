@@ -1,6 +1,6 @@
-# dữ liệu thô / trung gian (không commit)
+# dữ liệu thô (~15 GB, nhiều file > 100 MB – vượt giới hạn GitHub) – không commit.
+# data/*/interim (văn bản đã trích, cache AI) được commit từ 01/10/2026 theo yêu cầu người dùng (CHANGELOG #57).
 data/*/raw/
-data/*/interim/
 # từ điển tải về từ nguồn ngoài (giấy phép riêng, không phân phối lại)
 dict/Loughran-McDonald_*.csv
 dict/LoughranMcDonald_*.csv
