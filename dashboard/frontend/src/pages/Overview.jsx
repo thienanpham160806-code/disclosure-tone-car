@@ -58,7 +58,7 @@ export default function Overview({ go }) {
               <div>
                 <b>Kết luận:</b> ở Mỹ giọng điệu 10-K không mang thông tin cho giá. Ở Việt Nam hệ số đúng dấu kỳ vọng (tone tiêu cực ↔ CAR thấp hơn)
                 nhưng chỉ có ý nghĩa thống kê ở cửa sổ dài [0, 5] – phù hợp với phản ứng chậm, song bằng chứng còn yếu
-                (placebo cũng âm; chỉ vừa qua hiệu chỉnh Bonferroni).
+                (placebo cũng âm; không qua hiệu chỉnh Bonferroni cho 7 cửa sổ; nhạy với chất lượng trích văn bản – xem RESULTS.md mục 4.4–4.6).
               </div>
             </Card>
           </>

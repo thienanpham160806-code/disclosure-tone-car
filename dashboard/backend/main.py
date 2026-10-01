@@ -293,6 +293,199 @@ def analyze_text(req: AnalyzeRequest):
     return analyze(req.text, req.lang)
 
 
+# ----------------------------------------------------------------------------- sửa OCR bằng AI (tầng AI của pipeline)
+def _tesseract_env():
+    """Dashboard chạy độc lập với PowerShell của người dùng → tự tìm Tesseract và gói tiếng Việt nếu chưa cấu hình."""
+    import os, shutil
+    exe = pathlib.Path(r"C:\Program Files\Tesseract-OCR")
+    if not shutil.which("tesseract") and (exe / "tesseract.exe").exists():
+        os.environ["PATH"] = f"{exe}{os.pathsep}{os.environ.get('PATH', '')}"
+    if not os.environ.get("TESSDATA_PREFIX"):
+        for d in (pathlib.Path.home() / "tessdata", exe / "tessdata"):
+            if (d / "vie.traineddata").exists():
+                os.environ["TESSDATA_PREFIX"] = str(d)
+                break
+
+
+@functools.lru_cache(maxsize=1)
+def _v03():
+    _tesseract_env()
+    from vn import v03_extract_letter as v03          # page_text, render_png, cấu hình vn.extract
+    return v03
+
+
+@functools.lru_cache(maxsize=1)
+def _llm():
+    from common import CFG
+    from textkit.llm_client import LLMClient
+    return LLMClient(CFG["vn"]["extract"]["llm"])      # 1 client cho cả phiên: cache, trần lượt gọi, nhịp gọi dùng chung
+
+
+def _letter(doc_id: str):
+    lm = _csv("data", "vn", "processed", "letters_meta.csv")
+    lm["doc_id"] = lm.ticker + "_" + lm.year.astype(str)
+    hit = lm[(lm.doc_id == doc_id) & lm.flag.isin(["ok", "too_long", "too_short"])]
+    if hit.empty or pd.isna(hit.iloc[0].start_page):
+        raise HTTPException(404, "Không có thư này trong mẫu")
+    return hit.iloc[0]
+
+
+def _forced_ocr(ticker, year) -> bool:
+    mp = _csv("data", "vn", "processed", "manual_pages.csv")
+    if mp is None or "force_ocr" not in mp:
+        return False
+    r = mp[(mp.ticker == ticker) & (mp.year == year)]
+    return bool(len(r) and r.iloc[0].force_ocr == 1)
+
+
+REASON_VI = {
+    "accepted": "Nhận bản AI: chất lượng chữ không giảm",
+    "quality_not_improved": "Giữ bản cũ: chất lượng chữ của bản AI không cao hơn",
+    "rewrite_suspected": "Giữ bản cũ: bản AI khác bản OCR quá nhiều (nghi AI viết lại)",
+    "llm_empty": "Giữ bản cũ: AI trả về rỗng",
+}
+
+
+def _reason_vi(reason):
+    if not isinstance(reason, str):
+        return None
+    for k, v in REASON_VI.items():
+        if reason.startswith(k):
+            return v
+    return reason
+
+
+@app.get("/api/vn/pages")
+def letter_pages(doc_id: str = Query(...)):
+    """Các trang của thư + quyết định của tầng AI trong lần chạy pipeline gần nhất (llm_pages.csv)."""
+    from common import CFG
+    L = CFG["vn"]["extract"]["llm"]
+    r = _letter(doc_id)
+    log = _csv("data", "vn", "processed", "llm_pages.csv")
+    log = log[(log.ticker == r.ticker) & (log.year == r.year)] if log is not None else pd.DataFrame()
+    pages = []
+    for p in range(int(r.start_page), int(r.end_page) + 1):
+        row = log[log.page == p]
+        g = (lambda k: None if row.empty or pd.isna(row.iloc[0].get(k)) else row.iloc[0].get(k))
+        pages.append({"page": p, "source": g("source"), "q_before": g("q_before"), "q_after": g("q_after"),
+                      "sent": g("decision") is not None, "decision": g("decision"), "reason": _reason_vi(g("reason")),
+                      "mode": g("mode")})
+    return {"doc_id": doc_id, "threshold": L.get("quality_threshold", 0.85), "enabled": bool(L.get("enabled")),
+            "has_key": bool(_llm().providers()), "provider": L.get("provider"), "model": L.get(f"model_{L.get('provider')}"),
+            "pages": pages}
+
+
+@functools.lru_cache(maxsize=64)
+def _page_png(doc_id: str, page: int, dpi: int) -> bytes:
+    import fitz
+    r = _letter(doc_id)
+    doc = fitz.open(ROOT / "data" / "vn" / "raw" / "bctn" / r.file)
+    if not 1 <= page <= doc.page_count:
+        raise HTTPException(404, "Trang không tồn tại")
+    import io
+    from PIL import Image
+    pg = doc[page - 1]
+    pix = pg.get_pixmap(dpi=min(dpi, int(1600 / (pg.rect.width / 72))))          # rộng tối đa ~1.600 px
+    buf = io.BytesIO()
+    Image.frombytes("RGB", (pix.width, pix.height), pix.samples).save(buf, "JPEG", quality=82)
+    return buf.getvalue()
+
+
+@app.get("/api/vn/page_image")
+def page_image(doc_id: str = Query(...), page: int = Query(...)):
+    from fastapi.responses import Response
+    return Response(_page_png(doc_id, page, 150), media_type="image/jpeg", headers={"Cache-Control": "max-age=3600"})
+
+
+def _diff(a: str, b: str):
+    """So sánh theo từ: trả 2 danh sách đoạn [chữ, loại] cho bản cũ (same/del) và bản AI (same/ins)."""
+    import difflib
+    ta, tb = re.findall(r"\S+|\s+", a), re.findall(r"\S+|\s+", b)
+    wa, wb = [t for t in ta if not t.isspace()], [t for t in tb if not t.isspace()]
+    sm = difflib.SequenceMatcher(None, [w.lower() for w in wa], [w.lower() for w in wb], autojunk=False)
+    mark_a, mark_b = ["same"] * len(wa), ["same"] * len(wb)
+    for op, i1, i2, j1, j2 in sm.get_opcodes():
+        if op != "equal":
+            for i in range(i1, i2): mark_a[i] = "del"
+            for j in range(j1, j2): mark_b[j] = "ins"
+
+    def build(tokens, marks):
+        # loại của từng token; khoảng trắng nằm giữa hai từ cùng loại nhận loại đó (để gộp thành một đoạn)
+        kinds, k = [], 0
+        for t in tokens:
+            kinds.append(None if t.isspace() else marks[k]); k += 0 if t.isspace() else 1
+        for i, t in enumerate(kinds):
+            if t is None:
+                prev = next((x for x in reversed(kinds[:i]) if x), "same")
+                nxt = next((x for x in kinds[i + 1:] if x), "same")
+                kinds[i] = prev if prev == nxt else "same"
+        out = []
+        for t, kind in zip(tokens, kinds):
+            if out and out[-1][1] == kind:
+                out[-1][0] += t
+            else:
+                out.append([t, kind])
+        return out
+    return build(ta, mark_a), build(tb, mark_b)
+
+
+class OcrFixRequest(BaseModel):
+    doc_id: str
+    page: int
+    mode: str = "vision"       # 'vision' | 'text_fix'
+
+
+@app.post("/api/vn/ocr_fix")
+def ocr_fix(req: OcrFixRequest):
+    """Chạy đúng tầng AI của pipeline cho 1 trang: chép nguyên văn (temperature 0, có cache), chấm chất lượng trước/sau,
+    áp quy tắc decide(). CHỈ ĐỂ XEM – không ghi đè văn bản đã trích; muốn áp vào dữ liệu: v03_extract_letter.py --llm."""
+    import fitz
+    from common import CFG
+    from textkit.llm_client import BudgetExceeded, decide, similarity
+    from textkit.ocr_quality import quality_score
+    if req.mode not in ("vision", "text_fix"):
+        raise HTTPException(400, "Chế độ phải là 'vision' hoặc 'text_fix'")
+    L = CFG["vn"]["extract"]["llm"]
+    r = _letter(req.doc_id)
+    if not int(r.start_page) <= req.page <= int(r.end_page):
+        raise HTTPException(400, "Trang không thuộc thư")
+    client = _llm()
+    if not client.providers():
+        raise HTTPException(400, "Chưa có API key. Tạo file .env ở thư mục gốc repo với dòng GEMINI_API_KEY=... "
+                                 "(lấy miễn phí tại https://aistudio.google.com/apikey) rồi khởi động lại dashboard.")
+    v03 = _v03()
+    doc = fitz.open(ROOT / "data" / "vn" / "raw" / "bctn" / r.file)
+    before, source = v03.page_text(doc, req.page - 1, r.lang, force_ocr=_forced_ocr(r.ticker, r.year))
+    if source == "text_ocr_fail":
+        raise HTTPException(500, "Không chạy được Tesseract để lấy bản OCR của trang (kiểm tra cài đặt Tesseract + gói 'vie').")
+    q_before = quality_score(before)
+    png = v03.render_png(doc[req.page - 1], L.get("dpi", 200))
+    mode, note = req.mode, None
+    try:
+        try:
+            out = client.transcribe_page(png, before, mode)
+        except Exception as e:
+            if mode == "vision" and "RECITATION" in str(e) and L.get("recitation_fallback") == "text_fix" and before.strip():
+                mode, note = "text_fix", "Gemini từ chối chép nguyên văn (RECITATION) → đã chuyển sang chế độ sửa lỗi ký tự trên bản OCR."
+                out = client.transcribe_page(png, before, mode)
+            else:
+                raise
+    except BudgetExceeded as e:
+        raise HTTPException(429, f"Đã chạm trần số lượt gọi của phiên ({e}). Khởi động lại dashboard để đặt lại.")
+    except Exception as e:
+        raise HTTPException(502, f"Gọi AI không thành công: {str(e)[:300]}")
+    ai = out["page_text"]
+    q_ai = quality_score(ai)
+    ok, why = decide(mode, before, ai, q_before, q_ai, L)
+    d_before, d_ai = _diff(before, ai)
+    return {"page": req.page, "mode": mode, "note": note, "source": source,
+            "before": d_before, "ai": d_ai, "q_before": q_before, "q_ai": q_ai,
+            "similarity": similarity(before, ai), "accepted": ok, "reason": _reason_vi(why),
+            "threshold": L.get("quality_threshold", 0.85), "provider": out.get("provider"), "model": out.get("model"),
+            "cached": bool(out.get("cached")), "is_letter_page": out.get("is_chairman_letter"),
+            "calls_this_session": client.calls}
+
+
 # ----------------------------------------------------------------------------- dữ liệu & chất lượng
 @app.get("/api/quality")
 def quality():

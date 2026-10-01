@@ -4,6 +4,7 @@ import { api, fmt, fmtSigned } from '../api'
 import { useData } from '../hooks'
 import { Card, Note, PageHeader, Segmented, Stat, Status } from '../components/ui'
 import ToneResult from '../components/ToneResult'
+import OcrFix from '../components/OcrFix'
 
 const METHOD = {
   text: 'Lớp chữ của PDF', ocr: 'OCR (Tesseract)', llm_vision: 'OCR + AI chép lại trang chữ xấu',
@@ -88,6 +89,7 @@ export default function Explorer({ mkt, marketSwitch }) {
             <ToneResult result={doc.data.analysis} />
           </Card>
         )}
+        {mkt === 'vn' && doc.data?.available && docId && <OcrFix key={docId} docId={docId} />}
       </Status>
     </>
   )

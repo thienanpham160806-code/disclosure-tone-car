@@ -24,6 +24,10 @@ export const api = {
   analyze: (text, lang) =>
     req('/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text, lang }) }),
   quality: () => req('/quality'),
+  letterPages: (docId) => req(`/vn/pages?doc_id=${encodeURIComponent(docId)}`),
+  pageImage: (docId, page) => `${BASE}/vn/page_image?doc_id=${encodeURIComponent(docId)}&page=${page}`,
+  ocrFix: (docId, page, mode) =>
+    req('/vn/ocr_fix', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ doc_id: docId, page, mode }) }),
 }
 
 // ---------------------------------------------------------------- định dạng số kiểu Việt Nam

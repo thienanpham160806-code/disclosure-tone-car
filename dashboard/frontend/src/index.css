@@ -277,3 +277,31 @@ b { font-weight: 600; }
 .hl-uncertainty { background: var(--hl-unc); box-shadow: inset 0 -2px 0 var(--unc); }
 .hl-litigious { background: var(--surface-2); box-shadow: inset 0 -2px 0 var(--muted); }
 .hl-noise { background: var(--hl-noise); box-shadow: inset 0 -2px 0 var(--noise); }
+
+/* ============================================================ sửa OCR bằng AI */
+.title-icon { display: inline-flex; align-items: center; gap: 8px; }
+.title-icon svg { color: var(--accent); }
+.table-click tbody tr { cursor: pointer; }
+.table-click tbody tr:hover td { background: var(--surface-2); }
+.table .row-on td { background: var(--accent-soft); }
+.muted-cell { color: var(--text-2); font-size: 13px; }
+.qbadge { font-variant-numeric: tabular-nums; font-weight: 600; }
+.qbadge-low { color: var(--neg); }
+.ocr-work { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr); gap: 20px; margin-top: 16px; align-items: start; }
+@media (max-width: 1000px) { .ocr-work { grid-template-columns: 1fr; } }
+.ocr-image { margin: 0; position: sticky; top: 16px; }
+.ocr-image img { width: 100%; border: 1px solid var(--border); border-radius: 8px; background: #fff; display: block; }
+.ocr-image figcaption { font-size: 12px; color: var(--text-2); margin-top: 6px; text-align: center; }
+.ocr-side { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.ocr-result { display: flex; flex-direction: column; gap: 12px; }
+.ocr-verdict { display: flex; gap: 10px; padding: 12px 14px; border-radius: 10px; background: var(--surface-2); }
+.ocr-verdict.ok { background: var(--hl-pos); } .ocr-verdict.ok svg { color: var(--pos); }
+.ocr-verdict.no svg { color: var(--text-2); }
+.ocr-verdict svg { flex: none; margin-top: 2px; }
+.ocr-verdict-sub { font-size: 13px; color: var(--text-2); margin-top: 2px; }
+.diff-text { max-height: 520px; overflow: auto; white-space: pre-wrap; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); font-size: 14.5px; line-height: 1.7; }
+.diff-text mark { color: inherit; border-radius: 3px; padding: 0 1px; }
+.diff-ins { background: var(--hl-pos); box-shadow: inset 0 -2px 0 var(--pos); }
+.diff-del { background: var(--hl-neg); box-shadow: inset 0 -2px 0 var(--neg); text-decoration: line-through; text-decoration-color: var(--neg); }
+.diff-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.diff-head { font-size: 12.5px; font-weight: 600; color: var(--text-2); margin-bottom: 6px; }
