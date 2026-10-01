@@ -14,6 +14,12 @@ Mã có tin trên CafeF,90
 "Sự kiện có tin 'nhan_su' trong [0, 5]",74
 "Sự kiện có tin 'chung_quyen' trong [0, 5]",17
 "Sự kiện có tin 'gd_noi_bo' trong [0, 5]",77
+Trung vị số tin / mã / tháng,8.25
+Tháng kho tin CafeF bị hổng (< 25% trung vị),"2022-02, 2022-03"
+"Sự kiện có cửa sổ [−10, +10] chạm tháng hổng",32
+"  trong đó không có tin nào trong [0, 3]",18
+"  trong đó không có tin nào trong [−10, +10]",5
+"Sự kiện không có tin trong [0, 3] (toàn mẫu)",99
 Tin cũ nhất thu thập được,2016-04-01
 Tin mới nhất,2026-10-01
 Thời điểm thu thập,2026-10-01T13:33:25+07:00 → 2026-10-01T14:04:16+07:00

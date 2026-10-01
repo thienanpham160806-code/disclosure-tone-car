@@ -15,6 +15,9 @@ của mã 60 ngày. Phản hồi thô cache ở data/vn/raw/cafef_news/<MÃ>.jso
                                            thời điểm đăng, loại, tiêu đề, link CafeF, nhãn chủ đề theo từ khóa)
   outputs/vn/news_event_counts.csv        : số tin theo cửa sổ cho từng sự kiện
   outputs/vn/news_summary.csv             : tổng hợp toàn mẫu
+  outputs/vn/news_coverage_monthly.csv    : độ phủ kho tin CafeF theo tháng = số tin / số mã đã thu thập tới tháng đó;
+                                           tháng "hổng" = < 25% trung vị, có ≥ 10 mã, không tính tháng đang thu thập
+Sự kiện có cửa sổ [T−10, T+10] chạm tháng hổng được gắn cờ cafef_gap: "không có tin" ở đó KHÔNG có nghĩa là không có thông tin.
 Tin đăng sau 15:00 (giờ Việt Nam) hoặc ngày không giao dịch được tính vào phiên kế tiếp (giống quy tắc T = 0).
 Đây là dữ liệu MÔ TẢ – không thay đổi mô hình hồi quy chính.
 """
@@ -31,6 +34,7 @@ API = "https://cafef.vn/du-lieu/Ajax/PageNew/News.ashx"
 CACHE = D("vn", "raw", "cafef_news", "x").parent
 WIN = 10                                    # cửa sổ [−10, +10] phiên
 VN_TZ = dt.timezone(dt.timedelta(hours=7))
+GAP_SHARE, GAP_MIN_TICKERS = 0.25, 10       # tháng hổng: tin/mã < 25% trung vị, chỉ xét tháng có ≥ 10 mã đã thu thập
 TOPICS = {                                  # nhãn chủ đề theo từ khóa trong tiêu đề (không phân biệt hoa thường)
     "kqkd": r"kết quả kinh doanh|kqkd|lợi nhuận|doanh thu|báo cáo tài chính|bctc|lãi ròng|lỗ ",
     "dhdcd": r"đại hội|đhđcđ|đhcđ|tài liệu họp|biên bản họp",
@@ -75,6 +79,22 @@ def tidy(raw):
                          title=(x.get("Title") or "").strip(), url="https://cafef.vn" + link if link.startswith("/") else link,
                          source="CafeF", crawled_at=raw["crawled_at"]))
     return pd.DataFrame(rows)
+
+
+def coverage(news):
+    """Độ phủ kho tin theo tháng. Mỗi mã chỉ được thu thập lùi tới (sự kiện sớm nhất − 60 ngày) nên chia cho số mã đã
+    thu thập tới đầu tháng, tránh nhầm "ít mã" thành "ít tin"."""
+    oldest = news.groupby("ticker").date.min()
+    m = news.date.dt.to_period("M")
+    months = pd.period_range(m.min(), m.max(), freq="M")
+    cov = pd.DataFrame({"thang": months.astype(str), "so_tin": m.value_counts().reindex(months, fill_value=0).to_numpy(),
+                        "so_ma": [int((oldest <= p.start_time).sum()) for p in months]})
+    cov["tin_moi_ma"] = (cov.so_tin / cov.so_ma.where(cov.so_ma > 0)).round(2)
+    crawl_month = pd.Period(news.crawled_at.max()[:7], "M")
+    ok = (cov.so_ma >= GAP_MIN_TICKERS) & (months < crawl_month)
+    med = cov.loc[ok, "tin_moi_ma"].median()
+    cov["hong"] = ok & (cov.tin_moi_ma < GAP_SHARE * med)
+    return cov, med
 
 
 def main(refresh=False, only=None):
@@ -125,6 +145,12 @@ def main(refresh=False, only=None):
         base[c] = base[c].astype(int)
     for k in TOPICS:
         base[f"{k}_w0_5"] = base[f"{k}_w0_5"].astype(bool)
+    # cờ kho tin CafeF bị hổng: cửa sổ [T−10, T+10] (theo lịch phiên) chạm một tháng hổng
+    cov, med = coverage(news)
+    cov.to_csv(O("vn", "news_coverage_monthly.csv"), index=False, encoding="utf-8-sig")
+    gap = set(cov.loc[cov.hong, "thang"])
+    span = lambda d0: cal[max(pos[d0] - WIN, 0):pos[d0] + WIN + 1].to_period("M").astype(str)
+    base["cafef_gap"] = ev.set_index("doc_id").day0.map(lambda d0: bool(gap & set(span(d0)))).reindex(base.index)
     base.reset_index().to_csv(O("vn", "news_event_counts.csv"), index=False, encoding="utf-8-sig")
 
     summ = [("Sự kiện (BCTN có T = 0 và CAR)", len(base)), ("Mã có tin trên CafeF", int(news.ticker.nunique())),
@@ -134,6 +160,13 @@ def main(refresh=False, only=None):
             ("Số tin trung bình / sự kiện trong [0, 3]", round(base.n_w0_3.mean(), 2)),
             ("Số tin trung bình / sự kiện trong [−10, −1]", round(base.n_pre_m10_m1.mean(), 2))]
     summ += [(f"Sự kiện có tin '{k}' trong [0, 5]", int(base[f"{k}_w0_5"].sum())) for k in TOPICS]
+    g = base[base.cafef_gap]
+    summ += [("Trung vị số tin / mã / tháng", round(med, 2)),
+             ("Tháng kho tin CafeF bị hổng (< 25% trung vị)", ", ".join(sorted(gap)) or "không có"),
+             ("Sự kiện có cửa sổ [−10, +10] chạm tháng hổng", len(g)),
+             ("  trong đó không có tin nào trong [0, 3]", int((g.n_w0_3 == 0).sum())),
+             ("  trong đó không có tin nào trong [−10, +10]", int(((g.n_pre_m10_m1 + g.n_w0_10) == 0).sum())),
+             ("Sự kiện không có tin trong [0, 3] (toàn mẫu)", int((base.n_w0_3 == 0).sum()))]
     summ += [("Tin cũ nhất thu thập được", str(news.date.min().date())), ("Tin mới nhất", str(news.date.max().date())),
              ("Thời điểm thu thập", f"{news.crawled_at.min()} → {news.crawled_at.max()}"), ("Nguồn", f"CafeF – {API}")]
     pd.DataFrame(summ, columns=["chi_so", "gia_tri"]).to_csv(O("vn", "news_summary.csv"), index=False, encoding="utf-8-sig")
