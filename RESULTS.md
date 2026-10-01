@@ -351,7 +351,7 @@ Hệ số chính gần như không đổi về dấu và độ lớn; kết lu�
    - Chưa tách từ tiếng Việt, chỉ khớp cụm dài nhất theo âm tiết.
 4. **Sự kiện trùng thời điểm:**
    - **Mỹ:** 18,6% hồ sơ 10-K trùng KQKD. Đã kiểm tra: loại chúng không đổi kết luận.
-   - **VN:** BCTN ra sát ĐHĐCĐ (trung vị 13 ngày) và mùa KQKD quý 1 (tháng 4). Cửa sổ [0,5] và [0,10] có thể lẫn các tin này. CAR placebo VN cũng âm và có ý nghĩa.
+   - **VN:** BCTN ra sát ĐHĐCĐ (trung vị 13 ngày) và mùa KQKD quý 1 (tháng 4). Cửa sổ [0,5] và [0,10] có thể lẫn các tin này. CAR placebo VN cũng âm và có ý nghĩa. Tin CafeF quanh ngày công bố (thu thập thêm, chỉ để mô tả; `src/vn/v05_news.py`) cho thấy mức độ trùng này là đáng kể [`outputs/vn/news_summary.csv`]: 409/508 sự kiện có ít nhất 1 tin trong [0,3] (trung bình 2,57 tin); trong [0,5], 252 sự kiện có tin về ĐHĐCĐ và 149 sự kiện có tin về kết quả kinh doanh (gán nhãn theo từ khóa trong tiêu đề). Dữ liệu này chưa được đưa vào hồi quy.
 5. **Trích văn bản ở VN:**
    - Mẫu QC 10% (`data/vn/processed/qc_sample.csv`, 59 văn bản, đối chiếu đầu/cuối văn bản và ảnh trang): 49 đúng (10 trong số đó lệch biên nhỏ), 10 sai trang. 9 văn bản sai đã sửa trang, 1 đã loại. Tỷ lệ sai trang khoảng 17% gợi ý phần chưa kiểm tra cũng có tỷ lệ tương tự, chủ yếu là lẫn trang mục lục.
    - Sau đó, toàn bộ 80 thư mà bước trích tự động cắt ở trần 6 trang được rà bằng ảnh (#44): 9 bị loại vì BCTN không có thư, 46 sai cả trang bắt đầu, và cả 71 thư còn lại đều lấy lố trang cuối. Nhóm này đã được sửa hết. Tiếp theo, 24 thư không có lời chào hay câu kết nào được rà bằng ảnh (#55): 9 sửa trang (MWG 2025 trước đó là trang mục lục), 3 bị loại, 12 đúng. Các thư còn lại (trích tự động, có lời chào hoặc câu kết) chưa được rà toàn bộ bằng ảnh.

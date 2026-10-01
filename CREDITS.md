@@ -19,6 +19,7 @@ Repo này gom điểm mạnh của các dự án mã nguồn mở dưới đây.
 | [anthropics/anthropic-sdk-python](https://github.com/anthropics/anthropic-sdk-python) (`anthropic`) | MIT | Thư viện phụ thuộc: Claude API (provider dự phòng của tầng AI) | `src/textkit/llm_client.py` |
 | [rapidfuzz/RapidFuzz](https://github.com/rapidfuzz/RapidFuzz) | MIT | Thư viện phụ thuộc: độ tương đồng ký tự (kiểm tra LLM không "viết lại"), khoảng cách Levenshtein cho CER/WER | `llm_client.similarity`, `src/vn/v03b_eval_ocr.py` |
 | [theskumar/python-dotenv](https://github.com/theskumar/python-dotenv) | BSD-3-Clause | Thư viện phụ thuộc: đọc API key từ `.env` | `src/textkit/llm_client.py` |
+| [CafeF](https://cafef.vn) – dữ liệu doanh nghiệp | điều khoản sử dụng của CafeF; `robots.txt` cho phép (Allow: /) | Dữ liệu: file BCTN (PDF), giá điều chỉnh, và (từ 01/10/2026) **tin tức theo mã** qua API mà chính trang web gọi (`/du-lieu/Ajax/PageNew/News.ashx`). Với tin tức chỉ lưu tiêu đề, thời điểm đăng, đường dẫn bài gốc và thời điểm thu thập – không lưu nội dung bài; dashboard luôn dẫn link về CafeF. Thu thập lịch sự: một tiến trình, nghỉ giữa các request | `src/vn/v02_crawl_bctn.py`, `v04_prices.py`, `v05_news.py`; `data/vn/processed/news_cafef_events.csv` |
 | Google Gemini API / Anthropic Claude API | điều khoản dịch vụ của nhà cung cấp | Dịch vụ: chỉ nhận ẢNH hoặc TEXT của từng trang thư lãnh đạo cần sửa (không gửi cả PDF); mọi phản hồi được cache trong `data/vn/interim/llm_cache/` | `src/vn/v03_extract_letter.py` (`--llm`) |
 
 ## Điểm nhóm tự bổ sung (không có trong các repo trên)

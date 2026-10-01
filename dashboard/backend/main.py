@@ -321,6 +321,26 @@ def analyze_text(req: AnalyzeRequest):
     return analyze(req.text, req.lang)
 
 
+# ----------------------------------------------------------------------------- tin tức CafeF quanh ngày công bố (v05_news.py)
+@functools.lru_cache(maxsize=1)
+def _news():
+    df = _csv("data", "vn", "processed", "news_cafef_events.csv")
+    return df if df is not None else pd.DataFrame()
+
+
+@app.get("/api/vn/news")
+def news(doc_id: str = Query(...)):
+    df = _news()
+    if df.empty:
+        return {"available": False, "items": []}
+    d = df[df.doc_id == doc_id]
+    topics = [c for c in ("kqkd", "dhdcd", "co_tuc", "bctn", "nhan_su", "gd_noi_bo", "chung_quyen") if c in df]
+    items = [{"offset": int(r.offset), "published_at": r.published_at, "kind": r.kind, "title": r.title, "url": r.url,
+              "topics": [t for t in topics if bool(getattr(r, t))]} for r in d.itertuples()]
+    return {"available": True, "items": items, "day0": None if d.empty else str(d.day0.iloc[0]),
+            "crawled_at": None if df.empty else str(df.crawled_at.max()), "source": "CafeF – cafef.vn (mục Tin tức của mã)"}
+
+
 # ----------------------------------------------------------------------------- sửa OCR bằng AI (tầng AI của pipeline)
 def _tesseract_env():
     """Dashboard chạy độc lập với PowerShell của người dùng → tự tìm Tesseract và gói tiếng Việt nếu chưa cấu hình."""

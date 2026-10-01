@@ -1,0 +1,20 @@
+﻿chi_so,gia_tri
+Sự kiện (BCTN có T = 0 và CAR),508
+Mã có tin trên CafeF,90
+"Tin thu thập (toàn bộ, đã bỏ trùng)",68129
+"Tin trong cửa sổ [−10, +10] phiên",5738
+  trong đó tin công bố thông tin (CBTT),3722
+"Sự kiện có ≥ 1 tin trong [0, 3]",409
+"Số tin trung bình / sự kiện trong [0, 3]",2.57
+"Số tin trung bình / sự kiện trong [−10, −1]",4.24
+"Sự kiện có tin 'kqkd' trong [0, 5]",149
+"Sự kiện có tin 'dhdcd' trong [0, 5]",252
+"Sự kiện có tin 'co_tuc' trong [0, 5]",53
+"Sự kiện có tin 'bctn' trong [0, 5]",159
+"Sự kiện có tin 'nhan_su' trong [0, 5]",74
+"Sự kiện có tin 'chung_quyen' trong [0, 5]",17
+"Sự kiện có tin 'gd_noi_bo' trong [0, 5]",77
+Tin cũ nhất thu thập được,2016-04-01
+Tin mới nhất,2026-10-01
+Thời điểm thu thập,2026-10-01T13:33:25+07:00 → 2026-10-01T14:04:16+07:00
+Nguồn,CafeF – https://cafef.vn/du-lieu/Ajax/PageNew/News.ashx

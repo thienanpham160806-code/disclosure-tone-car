@@ -20,7 +20,7 @@ trình duyệt ở http://127.0.0.1:8000. Dừng bằng `Ctrl + C`.
 | **Tổng quan** | Câu hỏi nghiên cứu, câu trả lời ngắn cho Việt Nam và Mỹ, kết luận, thuật ngữ |
 | **Giọng điệu** (Mục tiêu 1–2) | Tỷ lệ từ tiêu cực / tích cực theo năm; các từ bị từ điển tổng quát gán nhãn sai |
 | **Phản ứng thị trường** (Mục tiêu 3) | Đường CAAR theo nhóm tone; hệ số + khoảng tin cậy 95% ở từng cửa sổ; CAR theo nhóm |
-| **Tra cứu văn bản** | Chọn công ty – năm: văn bản với từng từ được đếm được tô màu, tone, ngày T = 0, CAR của sự kiện |
+| **Tra cứu văn bản** | Chọn công ty – năm: văn bản với từng từ được đếm được tô màu, tone, ngày T = 0, CAR của sự kiện; (VN) tin tức CafeF trong [T−10, T+10] phiên, có link bài gốc; Sửa OCR bằng AI |
 | **Thử một câu** | Gõ câu bất kỳ, so sánh từ điển tài chính với từ điển tổng quát (có câu mẫu) |
 | **Dữ liệu & chất lượng** | Phễu mẫu hai thị trường, độ chính xác OCR, thống kê tầng AI |
 

@@ -28,6 +28,7 @@ export const api = {
     req('/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text, lang }) }),
   quality: () => req('/quality'),
   status: () => req('/status'),
+  news: (docId) => req(`/vn/news?doc_id=${encodeURIComponent(docId)}`),
   letterPages: (docId) => req(`/vn/pages?doc_id=${encodeURIComponent(docId)}`),
   pageImage: (docId, page) => `${BASE}/vn/page_image?doc_id=${encodeURIComponent(docId)}&page=${page}`,
   ocrFix: (docId, page, mode) =>

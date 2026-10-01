@@ -136,6 +136,7 @@ python run_all.py --market vn --only v03
 python src/vn/v03_extract_letter.py --manual     # áp các trang đã kiểm tra tay (manual_pages.csv)
 python run_all.py --market vn --only v04
 python run_all.py --market vn --from 5           # a01 → a06
+python src/vn/v05_news.py                        # tùy chọn: tin CafeF quanh ngày công bố (~20–30 phút, chỉ để mô tả)
 ```
 
 **Bước kiểm tra tay (human-in-the-loop).** Cần đọc kỹ trước khi dùng kết quả:

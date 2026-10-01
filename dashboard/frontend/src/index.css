@@ -305,3 +305,18 @@ b { font-weight: 600; }
 .diff-del { background: var(--hl-neg); box-shadow: inset 0 -2px 0 var(--neg); text-decoration: line-through; text-decoration-color: var(--neg); }
 .diff-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .diff-head { font-size: 12.5px; font-weight: 600; color: var(--text-2); margin-bottom: 6px; }
+
+/* ============================================================ tin tức CafeF */
+.check { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; color: var(--text-2); cursor: pointer; }
+.news-list { list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-direction: column; max-height: 560px; overflow: auto; border: 1px solid var(--border); border-radius: 10px; }
+.news-list li { display: grid; grid-template-columns: 64px 1fr; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--border); }
+.news-list li:last-child { border-bottom: 0; }
+.news-list li.in-window { background: var(--band); }
+.news-sess { font-weight: 700; font-variant-numeric: tabular-nums; color: var(--text-2); font-size: 13px; padding-top: 1px; }
+.news-sess.is-t0 { color: var(--accent); }
+.news-body a { color: var(--text); text-decoration: none; font-weight: 550; }
+.news-body a:hover { color: var(--accent); text-decoration: underline; }
+.news-body a svg { color: var(--text-2); vertical-align: -1px; }
+.news-meta { display: flex; flex-wrap: wrap; gap: 6px 10px; margin-top: 4px; font-size: 12.5px; color: var(--text-2); align-items: center; }
+.news-kind, .news-topic { padding: 1px 7px; border-radius: 5px; background: var(--surface-2); }
+.news-kind.kind-cbtt { background: var(--accent-soft); color: var(--text); }
