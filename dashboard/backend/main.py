@@ -158,7 +158,7 @@ def status():
             "vswn_dictionary": has("dict/VietSentiWordnet_*.txt"),
             "extracted_text": has("data/vn/interim/text/*.txt") and has("data/us/interim/text/*.gz"),
             "raw_pdf": has("data/vn/raw/bctn/*.pdf"),
-            "ai_key": bool(os.getenv("GEMINI_API_KEY") or os.getenv("ANTHROPIC_API_KEY"))}
+            "ai_key": bool(_llm().providers())}        # LLMClient tự nạp .env nếu có
 
 
 # ----------------------------------------------------------------------------- tổng quan
