@@ -275,6 +275,74 @@ def documents(mkt: str):
     return _records(df[cols])
 
 
+# ----------------------------------------------------------------------------- "Bản đọc": chỉ đổi cách HIỂN THỊ văn bản
+# Giữ nguyên độ dài và vị trí ký tự của văn bản đã chấm (để vị trí tô màu không lệch): xuống dòng giữa câu → khoảng
+# trắng; khối rác → trả về dưới dạng khoảng ẩn [đầu, cuối, nhãn] để giao diện thu gọn. Số đếm vẫn tính trên văn bản đầy đủ.
+XBRL_TOK = re.compile(r"(?:\d{10}|\d{4}-\d{2}-\d{2}|--\d{2}-\d{2}|[A-Z][A-Z0-9_\-]*:[A-Z0-9_\-\.]+)$", re.IGNORECASE)
+WORD2 = re.compile(r"[^\W\d_]{2,}")
+LINE_END = re.compile(r"[.!?:;…”\"»)]\s*$")
+LINE_START = re.compile(r"\s*[A-ZÀ-Ỹ0-9\-–•*(“\"+]")
+
+
+def _xbrl_ranges(text):
+    """Khối context XBRL lọt vào văn bản 10-K (mã CIK, ngày, US-GAAP:…MEMBER): ≥ 20 mục liền nhau."""
+    toks = [(m.start(), m.end(), m.group()) for m in re.finditer(r"\S+", text)]
+    out, i = [], 0
+    while i < len(toks):
+        if not XBRL_TOK.match(toks[i][2]):
+            i += 1
+            continue
+        j, last, miss, k = i, i, 0, 1
+        while j + 1 < len(toks) and miss <= 2:
+            j += 1
+            if XBRL_TOK.match(toks[j][2]):
+                last, miss, k = j, 0, k + 1
+            else:
+                miss += 1
+        if k >= 20:
+            out.append([toks[i][0], toks[last][1], f"khối dữ liệu máy XBRL ({k:,} mục)".replace(",", ".")])
+        i = last + 1
+    return out
+
+
+def _junk_line(s: str) -> bool:
+    """Dòng rác OCR: không có từ nào ≥ 2 chữ cái (ký tự lẻ, số trang, mảnh logo/khung hình)."""
+    return bool(s.strip()) and not WORD2.search(s)
+
+
+def readable_view(text: str, lang: str):
+    hidden = _xbrl_ranges(text) if lang == "en" else []
+    chars, scrambled = list(text), False
+    if lang == "vi":
+        pos, lines = 0, []
+        for ln in text.split("\n"):
+            lines.append((pos, pos + len(ln), ln)); pos += len(ln) + 1
+        run = []
+        for s, e, ln in lines + [(len(text), len(text), "x" * 3)]:          # dòng gác cuối để đóng cụm
+            if _junk_line(ln):
+                run.append((s, e))
+            elif ln.strip() and run:
+                hidden.append([run[0][0], min(run[-1][1] + 1, len(text)), f"{len(run)} dòng nhiễu OCR"])
+                run = []
+        # PDF nhiều cột: lớp chữ đọc theo hàng ngang nên dòng của các cột xen kẽ nhau → nhiều "đoạn" bắt đầu bằng chữ thường.
+        paras = [p.strip() for p in re.split(r"\n\s*\n", text) if len(p.strip()) > 20]
+        low = sum(bool(re.match(r"[a-zà-ỹđ]", p)) for p in paras) / max(len(paras), 1)
+        scrambled = len(paras) >= 8 and low > 0.3
+        # nối dòng bị ngắt giữa câu: giữ xuống dòng sau dấu kết câu + dòng sau viết hoa, và sau dòng tiêu đề in hoa.
+        # Dòng cách nhau bởi dòng trống chỉ nối khi dòng sau bắt đầu bằng chữ thường (và văn bản không bị xen cột).
+        body = [(s, e, ln) for s, e, ln in lines if ln.strip() and not _junk_line(ln)]
+        for (s1, e1, a), (s2, e2, b) in zip(body, body[1:]):
+            heading = a.strip().upper() == a.strip() and len(WORD2.findall(a)) <= 12
+            if heading or (LINE_END.search(a) and LINE_START.match(b)):
+                continue
+            gap = text[e1:s2]
+            if gap.count("\n") == 1 or (not scrambled and re.match(r"\s*[a-zà-ỹđ]", b)):
+                for k in range(e1, s2):
+                    chars[k] = " "
+    hidden.sort()
+    return {"text": "".join(chars), "hidden": hidden, "scrambled": scrambled}
+
+
 def _read_text(mkt, name):
     p = ROOT / "data" / mkt / "interim" / "text" / str(name)
     if not name or not isinstance(name, str) or not p.exists():
@@ -299,6 +367,7 @@ def document(mkt: str, doc_id: str = Query(...), section: str = Query("main")):
         return {"meta": meta, "available": False, "analysis": None}
     try:
         analysis, err = analyze(text, "vi" if mkt == "vn" else "en"), None
+        analysis["readable"] = readable_view(analysis["text"], analysis["lang"])
     except HTTPException as e:
         analysis, err = None, e.detail
     return {"meta": meta, "available": True, "section": "alt" if name == r.get("text_alt") else "main",

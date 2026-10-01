@@ -422,3 +422,8 @@ ul.prose, ol.prose { padding-left: 22px; display: flex; flex-direction: column; 
 }
 .nav-group { font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-2); padding: 14px 10px 4px; }
 @media (max-width: 960px) { .nav-group { display: none; } }
+
+/* ============================================================ Bản đọc (Tra cứu văn bản) */
+.doc-reading { white-space: pre-line; font-size: 15.5px; line-height: 1.8; }
+.hidden-run { display: inline-block; margin: 2px 0; padding: 1px 10px; border-radius: 999px; background: var(--surface-2); color: var(--text-2); font-size: 12px; font-style: italic; white-space: nowrap; }
+.read-note { margin: 0; font-size: 13px; }

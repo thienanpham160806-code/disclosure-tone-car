@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { fmt, fmtSigned, fmtInt } from '../api'
-import { Legend, Segmented } from './ui'
+import { Legend, Note, Segmented } from './ui'
 
 const PRIORITY = ['negative', 'positive', 'uncertainty', 'litigious']
 const NAMES = { negative: 'Tiêu cực', positive: 'Tích cực', uncertainty: 'Bất định', litigious: 'Pháp lý' }
@@ -10,22 +10,37 @@ function mainCat(cats) {
 }
 
 // Văn bản với các từ khớp từ điển được tô màu. mode: 'financial' | 'general' | 'mislabeled'
-function Highlighted({ text, spans, mode }) {
+// hidden: các khoảng [đầu, cuối, nhãn] thu gọn trong "Bản đọc" (khối rác) – vị trí ký tự giữ nguyên như văn bản đã chấm.
+function Highlighted({ text, spans, mode, hidden = [], reading }) {
   const parts = useMemo(() => {
     const out = []
-    let pos = 0
+    let pos = 0, h = 0
+    const emit = (upto) => {                       // chữ thường từ pos → upto, chen các khối ẩn
+      while (pos < upto) {
+        while (h < hidden.length && hidden[h][1] <= pos) h++
+        const hs = h < hidden.length ? hidden[h][0] : Infinity
+        if (hs <= pos) {
+          out.push(<span key={`h${h}`} className="hidden-run" title="Đã ẩn trong Bản đọc – vẫn nằm trong văn bản được chấm">⋯ đã ẩn {hidden[h][2]} ⋯</span>)
+          pos = Math.max(pos, hidden[h][1]); h++
+          continue
+        }
+        const stop = Math.min(upto, hs)
+        out.push(text.slice(pos, stop)); pos = stop
+      }
+    }
     spans.forEach(([s, e, cats], i) => {
       if (s < pos) return
-      if (s > pos) out.push(text.slice(pos, s))
+      emit(s)
+      if (s < pos) return                            // từ nằm trong khối ẩn
       const cls = mode === 'mislabeled' ? 'hl-noise' : `hl-${mainCat(cats)}`
       const tip = mode === 'mislabeled' ? 'Từ điển tổng quát: tiêu cực · Từ điển tài chính: không' : cats.map((c) => NAMES[c] || c).join(', ')
       out.push(<mark key={i} className={cls} title={tip}>{text.slice(s, e)}</mark>)
       pos = e
     })
-    out.push(text.slice(pos))
+    emit(text.length)
     return out
-  }, [text, spans, mode])
-  return <div className="doc-text">{parts}</div>
+  }, [text, spans, mode, hidden])
+  return <div className={`doc-text ${reading ? 'doc-reading' : ''}`}>{parts}</div>
 }
 
 function DictColumn({ title, r, highlight }) {
@@ -68,6 +83,9 @@ export function NetBar({ net }) {
 
 export default function ToneResult({ result }) {
   const [mode, setMode] = useState('financial')
+  const rd = result.readable
+  const [view, setView] = useState(rd ? 'read' : 'raw')
+  const reading = rd && view === 'read'
   const nMis = result.mislabeled.length
   const spans = mode === 'mislabeled' ? result.mislabeled.map(([s, e]) => [s, e, ['negative']])
     : result[mode].spans
@@ -96,7 +114,29 @@ export default function ToneResult({ result }) {
           { label: 'Tích cực', color: 'var(--pos)', box: true },
           { label: 'Bất định', color: 'var(--unc)', box: true },
         ]} />}
-      <Highlighted text={result.text} spans={spans} mode={mode} />
+      {rd && (
+        <div className="hl-toolbar">
+          <span className="hl-toolbar-label">Hiển thị</span>
+          <Segmented value={view} onChange={setView} label="Cách hiển thị văn bản" options={[
+            { value: 'read', label: 'Bản đọc' }, { value: 'raw', label: 'Văn bản gốc (đúng như khi chấm)' },
+          ]} />
+        </div>
+      )}
+      {reading && (
+        <p className="muted-text read-note">
+          <b>Bản đọc</b> chỉ đổi cách hiển thị: nối các dòng bị ngắt giữa câu
+          {rd.hidden.length ? `, thu gọn ${fmtInt(rd.hidden.length)} khối không phải chữ (${result.lang === 'en' ? 'dữ liệu máy XBRL' : 'ký tự lẻ, số trang, mảnh hình do OCR'})` : ''}.
+          Số đếm phía trên vẫn tính trên văn bản đầy đủ.
+          {result.lang === 'vi' ? ' Lỗi chính tả do OCR (vd “cồ đồng”) là chữ thật trong dữ liệu đã chấm nên vẫn giữ nguyên.' : ' Văn bản 10-K được viết hoa toàn bộ theo quy ước đếm từ của Loughran–McDonald.'}
+        </p>
+      )}
+      {reading && rd.scrambled && (
+        <Note kind="warn">
+          Thư này in nhiều cột; lớp chữ của PDF được đọc theo hàng ngang nên các dòng của hai cột <b>xen kẽ nhau</b> – đọc sẽ thấy câu bị nhảy.
+          Đây là thứ tự trong dữ liệu đã trích, không phải lỗi hiển thị. Phép đếm từ (túi từ) gần như không bị ảnh hưởng bởi thứ tự dòng.
+        </Note>
+      )}
+      <Highlighted text={reading ? rd.text : result.text} spans={spans} mode={mode} hidden={reading ? rd.hidden : []} reading={reading} />
     </div>
   )
 }
