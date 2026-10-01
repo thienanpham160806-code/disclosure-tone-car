@@ -27,8 +27,10 @@ trình duyệt ở http://127.0.0.1:8000. Dừng bằng `Ctrl + C`.
 Nút **Việt Nam / Mỹ** ở góc phải chuyển thị trường; nút **Giao diện** (Tự động / Sáng / Tối) ở cuối thanh bên – nên chọn
 **Sáng** khi chiếu máy chiếu. Đường dẫn giữ trang đang xem (vd `http://127.0.0.1:8000/#thi-truong/us`).
 
-Trang *Tra cứu văn bản* cần văn bản đã trích (`data/*/interim/text`, không có trong git). Trên máy khác, các chỉ số vẫn
-hiện nhưng phần văn bản sẽ báo thiếu.
+Trang *Tra cứu văn bản* dùng văn bản đã trích (`data/*/interim/text`, có trong git). Mục *Sửa OCR bằng AI* cần thêm PDF gốc
+(`data/vn/raw`, không có trong git) nên chỉ chạy được trên máy có dữ liệu.
+
+**Đưa lên mạng (Render + Vercel):** xem `DEPLOY.md` ở thư mục gốc.
 
 ## Phát triển
 

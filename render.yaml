@@ -1,0 +1,20 @@
+# Render Blueprint – máy chủ API của dashboard (FastAPI). Hướng dẫn: DEPLOY.md
+services:
+  - type: web
+    name: doan05-dashboard-api
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: pip install -r dashboard/backend/requirements.txt && python dashboard/backend/fetch_dicts.py
+    startCommand: uvicorn main:app --app-dir dashboard/backend --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/status
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: PYTHONUTF8
+        value: "1"
+      - key: LM_DICT_URL          # link tải từ điển Loughran–McDonald (Google Drive của bạn); để trống cũng chạy được
+        sync: false
+      - key: CORS_ORIGINS         # chỉ cần khi frontend dùng tên miền riêng (không phải *.vercel.app)
+        sync: false

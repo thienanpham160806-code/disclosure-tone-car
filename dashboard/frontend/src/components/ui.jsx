@@ -78,8 +78,10 @@ export function Note({ children, kind = 'info' }) {
 }
 
 export function Status({ state, children }) {
-  if (state.error) return <Note kind="warn">Không tải được dữ liệu: {state.error.message}. Backend đã chạy chưa?</Note>
-  if (!state.data) return <div className="loading"><Loader2 size={18} className="spin" aria-hidden /> Đang tải…</div>
+  if (state.error) return <Note kind="warn">Không tải được dữ liệu: {state.error.message}. Máy chủ (backend) đã chạy chưa? Nếu là bản online, thử tải lại trang sau 1 phút.</Note>
+  if (!state.data) return (
+    <div className="loading"><Loader2 size={18} className="spin" aria-hidden /> Đang tải… (bản online dùng máy chủ miễn phí, lần mở đầu tiên có thể mất khoảng 1 phút để máy chủ khởi động)</div>
+  )
   return children
 }
 

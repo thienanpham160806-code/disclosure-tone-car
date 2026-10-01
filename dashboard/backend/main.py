@@ -4,7 +4,7 @@ pipeline (src/textkit/scoring.py). Không gọi LLM, không sửa dữ liệu.
 Chạy nhanh nhất:  powershell -ExecutionPolicy Bypass -File dashboard\\run.ps1   (tự build giao diện nếu cần, mở trình duyệt)
 Hoặc:            .venv\\Scripts\\python dashboard\\backend\\main.py --open     → http://127.0.0.1:8000
 """
-import functools, pathlib, re, sys, unicodedata
+import functools, os, pathlib, re, sys, unicodedata
 
 import pandas as pd
 from fastapi import FastAPI, HTTPException, Query
@@ -22,7 +22,10 @@ from textkit.us_clean import TOKEN_RE                                   # noqa: 
 MARKETS = ("vn", "us")
 DIST = ROOT / "dashboard" / "frontend" / "dist"
 app = FastAPI(title="Đồ án 05 – Dashboard API")
-app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+# CORS: máy cá nhân (Vite dev/preview) + mọi tên miền *.vercel.app; thêm tên miền riêng qua biến môi trường CORS_ORIGINS
+app.add_middleware(CORSMiddleware,
+                   allow_origins=[o.strip() for o in os.getenv("CORS_ORIGINS", "").split(",") if o.strip()],
+                   allow_origin_regex=r"https://[a-z0-9-]+\.vercel\.app|http://(localhost|127\.0\.0\.1)(:\d+)?",
                    allow_methods=["GET", "POST"], allow_headers=["*"])
 
 
@@ -118,13 +121,22 @@ def _summary(n, spans, text):
             "spans": spans}
 
 
+def _scorers_or_503(lang):
+    try:
+        return scorers(lang)
+    except SystemExit as e:                    # load_lm báo thiếu file bằng SystemExit
+        raise HTTPException(503, f"Máy chủ chưa có từ điển: {e}") from None
+    except Exception as e:
+        raise HTTPException(503, f"Không nạp được từ điển ({type(e).__name__}: {str(e)[:200]})") from None
+
+
 def analyze(text: str, lang: str):
     text = unicodedata.normalize("NFC", text or "")
     if lang == "vi":
-        fin, gen = scorers("vi")
+        fin, gen = _scorers_or_503("vi")
         rf, rg = _spans_vi(text, fin), _spans_vi(text, gen)
     else:
-        fin, gen, master = scorers("en")
+        fin, gen, master = _scorers_or_503("en")
         rf, rg = _spans_en(text, fin, master), _spans_en(text, gen, master)
     if rf is None or rg is None:
         raise HTTPException(422, "Không tách được từ để tô màu cho văn bản này")
@@ -135,6 +147,18 @@ def analyze(text: str, lang: str):
     return {"text": text, "lang": lang, "financial": F, "general": G, "mislabeled": mis,
             "dict_names": {"financial": "fin_vn" if lang == "vi" else "Loughran–McDonald",
                            "general": "VietSentiWordNet" if lang == "vi" else "Harvard GI"}}
+
+
+# ----------------------------------------------------------------------------- trạng thái máy chủ
+@app.get("/api/status")
+def status():
+    import glob
+    has = lambda pat: bool(glob.glob(str(ROOT / pat)))
+    return {"lm_dictionary": has("dict/Loughran*MasterDictionary*.csv"),
+            "vswn_dictionary": has("dict/VietSentiWordnet_*.txt"),
+            "extracted_text": has("data/vn/interim/text/*.txt") and has("data/us/interim/text/*.gz"),
+            "raw_pdf": has("data/vn/raw/bctn/*.pdf"),
+            "ai_key": bool(os.getenv("GEMINI_API_KEY") or os.getenv("ANTHROPIC_API_KEY"))}
 
 
 # ----------------------------------------------------------------------------- tổng quan
@@ -273,8 +297,12 @@ def document(mkt: str, doc_id: str = Query(...), section: str = Query("main")):
     text = _read_text(mkt, name)
     if text is None:
         return {"meta": meta, "available": False, "analysis": None}
+    try:
+        analysis, err = analyze(text, "vi" if mkt == "vn" else "en"), None
+    except HTTPException as e:
+        analysis, err = None, e.detail
     return {"meta": meta, "available": True, "section": "alt" if name == r.get("text_alt") else "main",
-            "analysis": analyze(text, "vi" if mkt == "vn" else "en")}
+            "analysis": analysis, "error": err}
 
 
 class AnalyzeRequest(BaseModel):
@@ -370,7 +398,8 @@ def letter_pages(doc_id: str = Query(...)):
         pages.append({"page": p, "source": g("source"), "q_before": g("q_before"), "q_after": g("q_after"),
                       "sent": g("decision") is not None, "decision": g("decision"), "reason": _reason_vi(g("reason")),
                       "mode": g("mode")})
-    return {"doc_id": doc_id, "threshold": L.get("quality_threshold", 0.85), "enabled": bool(L.get("enabled")),
+    pdf_ok = (ROOT / "data" / "vn" / "raw" / "bctn" / str(r.file)).exists()
+    return {"doc_id": doc_id, "pdf_available": pdf_ok, "threshold": L.get("quality_threshold", 0.85), "enabled": bool(L.get("enabled")),
             "has_key": bool(_llm().providers()), "provider": L.get("provider"), "model": L.get(f"model_{L.get('provider')}"),
             "pages": pages}
 
@@ -379,7 +408,10 @@ def letter_pages(doc_id: str = Query(...)):
 def _page_png(doc_id: str, page: int, dpi: int) -> bytes:
     import fitz
     r = _letter(doc_id)
-    doc = fitz.open(ROOT / "data" / "vn" / "raw" / "bctn" / r.file)
+    pdf = ROOT / "data" / "vn" / "raw" / "bctn" / r.file
+    if not pdf.exists():
+        raise HTTPException(404, "Máy chủ này không có PDF gốc (data/vn/raw không đưa lên git)")
+    doc = fitz.open(pdf)
     if not 1 <= page <= doc.page_count:
         raise HTTPException(404, "Trang không tồn tại")
     import io
@@ -453,8 +485,12 @@ def ocr_fix(req: OcrFixRequest):
     if not client.providers():
         raise HTTPException(400, "Chưa có API key. Tạo file .env ở thư mục gốc repo với dòng GEMINI_API_KEY=... "
                                  "(lấy miễn phí tại https://aistudio.google.com/apikey) rồi khởi động lại dashboard.")
+    pdf = ROOT / "data" / "vn" / "raw" / "bctn" / r.file
+    if not pdf.exists():
+        raise HTTPException(503, "Máy chủ này không có PDF gốc (data/vn/raw, ~11 GB, không đưa lên git) nên không chạy được AI. "
+                                 "Dùng tính năng này trên máy có dữ liệu: powershell -ExecutionPolicy Bypass -File dashboard\\run.ps1")
     v03 = _v03()
-    doc = fitz.open(ROOT / "data" / "vn" / "raw" / "bctn" / r.file)
+    doc = fitz.open(pdf)
     before, source = v03.page_text(doc, req.page - 1, r.lang, force_ocr=_forced_ocr(r.ticker, r.year))
     if source == "text_ocr_fail":
         raise HTTPException(500, "Không chạy được Tesseract để lấy bản OCR của trang (kiểm tra cài đặt Tesseract + gói 'vie').")
@@ -515,7 +551,8 @@ if __name__ == "__main__":
     import argparse, threading, webbrowser
     import uvicorn
     ap = argparse.ArgumentParser(description="Dashboard Đồ án 05")
-    ap.add_argument("--port", type=int, default=8000)
+    ap.add_argument("--host", default=os.getenv("HOST", "127.0.0.1"))
+    ap.add_argument("--port", type=int, default=int(os.getenv("PORT", 8000)))
     ap.add_argument("--open", action="store_true", help="tự mở trình duyệt khi máy chủ sẵn sàng")
     a = ap.parse_args()
     url = f"http://127.0.0.1:{a.port}"
@@ -524,4 +561,4 @@ if __name__ == "__main__":
     if a.open:
         threading.Timer(1.5, lambda: webbrowser.open(url)).start()
     print(f"Dashboard: {url}  (Ctrl + C để dừng)")
-    uvicorn.run(app, host="127.0.0.1", port=a.port, log_level="warning")
+    uvicorn.run(app, host=a.host, port=a.port, log_level="warning")

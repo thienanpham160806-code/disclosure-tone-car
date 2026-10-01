@@ -81,7 +81,8 @@ export default function OcrFix({ docId }) {
       <Status state={info}>
         {d && (
           <>
-            {!d.has_key && <Note kind="warn">Chưa có API key nên chưa chạy được AI. Tạo file <code>.env</code> ở thư mục gốc repo với dòng <code>GEMINI_API_KEY=...</code> (lấy miễn phí tại aistudio.google.com/apikey), rồi chạy lại <code>dashboard\run.ps1</code>. Bảng dưới vẫn hiện kết quả của lần chạy pipeline.</Note>}
+            {!d.pdf_available && <Note>Bản đang xem không có PDF gốc của báo cáo (data/vn/raw, khoảng 11 GB, không đưa lên GitHub), nên không xem được ảnh trang và không chạy được AI. Bảng dưới vẫn là kết quả thật của lần chạy pipeline. Muốn chạy AI: mở dashboard trên máy có dữ liệu (<code>dashboardun.ps1</code>).</Note>}
+            {d.pdf_available && !d.has_key && <Note kind="warn">Chưa có API key nên chưa chạy được AI. Tạo file <code>.env</code> ở thư mục gốc repo với dòng <code>GEMINI_API_KEY=...</code> (lấy miễn phí tại aistudio.google.com/apikey), rồi chạy lại <code>dashboard\run.ps1</code>. Bảng dưới vẫn hiện kết quả của lần chạy pipeline.</Note>}
             <table className="table table-click">
               <thead><tr><th>Trang PDF</th><th>Nguồn chữ</th><th>Điểm chất lượng</th><th>Lần chạy pipeline</th></tr></thead>
               <tbody>
@@ -97,7 +98,7 @@ export default function OcrFix({ docId }) {
             </table>
             <p className="chart-foot">Điểm chất lượng = tỷ lệ âm tiết tiếng Việt hợp lệ, ký tự rác, từ vỡ (0–1). Dưới {fmt(d.threshold, 2)} là “thấp” và được gửi AI khi chạy <code>v03_extract_letter.py --llm</code>.</p>
 
-            {page && (
+            {page && d.pdf_available && (
               <div className="ocr-work">
                 <figure className="ocr-image">
                   <img src={api.pageImage(docId, page.page)} alt={`Ảnh trang ${page.page} của PDF`} loading="lazy" />

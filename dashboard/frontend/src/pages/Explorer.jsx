@@ -84,7 +84,8 @@ export default function Explorer({ mkt, marketSwitch }) {
           <Note kind="warn">Máy này không có văn bản đã trích của {meta?.doc_id} (thư mục <code>data/{mkt}/interim/text</code> không đưa lên git).
             Các chỉ số phía trên vẫn đúng vì lấy từ dữ liệu đã xử lý. Muốn xem văn bản: chạy lại bước trích văn bản (HUONG_DAN_CHAY.md, Cách B).</Note>
         )}
-        {doc.data?.available && (
+        {doc.data?.available && doc.data.error && <Note kind="warn">{doc.data.error}</Note>}
+        {doc.data?.available && doc.data.analysis && (
           <Card title="Văn bản và các từ được đếm">
             <ToneResult result={doc.data.analysis} />
           </Card>
