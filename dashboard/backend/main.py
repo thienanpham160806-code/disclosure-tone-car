@@ -150,7 +150,7 @@ def analyze(text: str, lang: str):
 
 
 # ----------------------------------------------------------------------------- trạng thái máy chủ
-@app.get("/api/status")
+@app.api_route("/api/status", methods=["GET", "HEAD"])
 def status():
     import glob
     has = lambda pat: bool(glob.glob(str(ROOT / pat)))
@@ -406,11 +406,11 @@ def letter_pages(doc_id: str = Query(...)):
 
 @functools.lru_cache(maxsize=64)
 def _page_png(doc_id: str, page: int, dpi: int) -> bytes:
-    import fitz
     r = _letter(doc_id)
     pdf = ROOT / "data" / "vn" / "raw" / "bctn" / r.file
     if not pdf.exists():
         raise HTTPException(404, "Máy chủ này không có PDF gốc (data/vn/raw không đưa lên git)")
+    import fitz                                        # chỉ cần khi có PDF (máy chủ online không cài PyMuPDF)
     doc = fitz.open(pdf)
     if not 1 <= page <= doc.page_count:
         raise HTTPException(404, "Trang không tồn tại")
@@ -471,7 +471,6 @@ class OcrFixRequest(BaseModel):
 def ocr_fix(req: OcrFixRequest):
     """Chạy đúng tầng AI của pipeline cho 1 trang: chép nguyên văn (temperature 0, có cache), chấm chất lượng trước/sau,
     áp quy tắc decide(). CHỈ ĐỂ XEM – không ghi đè văn bản đã trích; muốn áp vào dữ liệu: v03_extract_letter.py --llm."""
-    import fitz
     from common import CFG
     from textkit.llm_client import BudgetExceeded, decide, similarity
     from textkit.ocr_quality import quality_score
@@ -481,14 +480,15 @@ def ocr_fix(req: OcrFixRequest):
     r = _letter(req.doc_id)
     if not int(r.start_page) <= req.page <= int(r.end_page):
         raise HTTPException(400, "Trang không thuộc thư")
-    client = _llm()
-    if not client.providers():
-        raise HTTPException(400, "Chưa có API key. Tạo file .env ở thư mục gốc repo với dòng GEMINI_API_KEY=... "
-                                 "(lấy miễn phí tại https://aistudio.google.com/apikey) rồi khởi động lại dashboard.")
     pdf = ROOT / "data" / "vn" / "raw" / "bctn" / r.file
     if not pdf.exists():
         raise HTTPException(503, "Máy chủ này không có PDF gốc (data/vn/raw, ~11 GB, không đưa lên git) nên không chạy được AI. "
                                  "Dùng tính năng này trên máy có dữ liệu: powershell -ExecutionPolicy Bypass -File dashboard\\run.ps1")
+    client = _llm()
+    if not client.providers():
+        raise HTTPException(400, "Chưa có API key. Tạo file .env ở thư mục gốc repo với dòng GEMINI_API_KEY=... "
+                                 "(lấy miễn phí tại https://aistudio.google.com/apikey) rồi khởi động lại dashboard.")
+    import fitz
     v03 = _v03()
     doc = fitz.open(pdf)
     before, source = v03.page_text(doc, req.page - 1, r.lang, force_ocr=_forced_ocr(r.ticker, r.year))

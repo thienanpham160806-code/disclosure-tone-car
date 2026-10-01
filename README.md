@@ -49,7 +49,7 @@ python run_all.py --market us --only a03 # chạy riêng một bước
 pytest -q                                # kiểm thử các khối lõi (không cần mạng)
 jupyter notebook notebooks/main.ipynb    # chạy lại phân tích và xem toàn bộ bảng, hình
 ```
-**Dashboard:** `powershell -ExecutionPolicy Bypass -File dashboardun.ps1` (6 trang: tổng quan, giọng điệu, phản ứng thị trường, tra cứu từng văn bản, thử một câu, dữ liệu & chất lượng – xem `dashboard/README.md`).
+**Dashboard:** `powershell -ExecutionPolicy Bypass -File dashboard\run.ps1` – đưa lên mạng: xem `DEPLOY.md` (6 trang: tổng quan, giọng điệu, phản ứng thị trường, tra cứu từng văn bản, thử một câu, dữ liệu & chất lượng – xem `dashboard/README.md`).
 
 Demo nhanh (chấm tone một câu bất kỳ bằng từ điển tài chính vs tổng quát): `python demo_tone.py "…"` (thêm `--en` cho tiếng Anh). Kịch bản trình bày cho giảng viên: `HUONG_DAN_CHAY.md` mục 10.
 

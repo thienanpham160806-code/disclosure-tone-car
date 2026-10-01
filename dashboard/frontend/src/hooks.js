@@ -22,18 +22,21 @@ export function useChartColors() {
 
 // Tải dữ liệu theo khóa; giữ dữ liệu cũ khi đang tải lại (không nháy khung trống).
 export function useData(fn, deps) {
-  const [state, setState] = useState({ data: null, error: null, loading: true })
+  const key = JSON.stringify(deps)
+  const [state, setState] = useState({ key: null, data: null, error: null, loading: true })
   useEffect(() => {
     let alive = true
     setState((s) => ({ ...s, loading: true, error: null }))
     fn().then(
-      (data) => alive && setState({ data, error: null, loading: false }),
-      (error) => alive && setState((s) => ({ ...s, error, loading: false })),
+      (data) => alive && setState({ key, data, error: null, loading: false }),
+      (error) => alive && setState((s) => ({ ...s, key, error, loading: false })),
     )
     return () => { alive = false }
     // oxlint-disable-next-line react-hooks/exhaustive-deps -- deps do nơi gọi truyền vào
   }, deps)
-  return state
+  // khóa đã đổi nhưng effect chưa chạy → vẫn là dữ liệu cũ: báo đang tải (giữ data cũ để khỏi nháy, kèm cờ stale)
+  const stale = state.key !== key
+  return { ...state, loading: state.loading || stale, stale }
 }
 
 // Chế độ giao diện: 'auto' | 'light' | 'dark'. Ưu tiên ?theme= trên URL, rồi lựa chọn đã lưu (nếu trình duyệt cho lưu).

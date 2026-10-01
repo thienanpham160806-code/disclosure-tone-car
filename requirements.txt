@@ -1,4 +1,4 @@
-# lõi
+# loi
 pandas>=2.0
 numpy>=1.24
 scipy>=1.11
@@ -9,21 +9,21 @@ requests>=2.31
 tenacity>=8.2          # retry cho EDGAR client
 matplotlib>=3.8
 pytest>=8.0
-# Mỹ
+# My
 yfinance>=0.2.40
-pysentiment2>=0.1.1    # chỉ dùng file từ điển Harvard IV-4 đóng gói sẵn
-# Việt Nam
-# vnstock>=3.2        # TÙY CHỌN, không cần: PyPI cách ly gói này (27/09/2026); pipeline dùng tickers.csv + giá CafeF
+pysentiment2>=0.1.1    # chi dung file tu dien Harvard IV-4 dong goi san
+# Viet Nam
+# vnstock>=3.2        # TUY CHON, khong can: PyPI cach ly goi nay (27/09/2026); pipeline dung tickers.csv + gia CafeF
 pymupdf>=1.24
-pytesseract>=0.3.10    # + cài Tesseract và gói ngôn ngữ 'vie'
+pytesseract>=0.3.10    # + cai Tesseract va goi ngon ngu 'vie'
 pillow>=10.0
 # notebook
 jupyter>=1.0
-# tầng AI trích văn bản (v03 --llm, v03b_eval_ocr) – cần GEMINI_API_KEY / ANTHROPIC_API_KEY
-google-genai>=2.0      # Gemini (mặc định)
-anthropic>=1.0         # Claude (dự phòng)
-python-dotenv>=1.0     # đọc key từ file .env
-rapidfuzz>=3.0         # độ tương đồng ký tự, CER/WER
-# tùy chọn (bật khi cần)
+# tang AI trich van ban (v03 --llm, v03b_eval_ocr) - can GEMINI_API_KEY / ANTHROPIC_API_KEY
+google-genai>=2.0      # Gemini (mac dinh)
+anthropic>=1.0         # Claude (du phong)
+python-dotenv>=1.0     # doc key tu file .env
+rapidfuzz>=3.0         # do tuong dong ky tu, CER/WER
+# tuy chon (bat khi can)
 # transformers>=4.40   # FinBERT (a05_finbert.py)
 # torch>=2.2

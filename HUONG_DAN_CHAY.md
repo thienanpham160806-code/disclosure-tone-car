@@ -223,7 +223,7 @@ Toàn bộ kịch bản dưới đây chạy trên máy đã có dữ liệu (m�
 3. Chạy thử một lượt kịch bản bên dưới. Mở sẵn `RESULTS.md` và 3 hình trong `outputs/vn/`.
 4. Tắt chế độ ngủ của máy, cắm sạc.
 
-**Dashboard (giao diện web, nên dùng khi trình bày):** `powershell -ExecutionPolicy Bypass -File dashboardun.ps1` – tự mở trình duyệt; chọn **Giao diện → Sáng** khi chiếu. Các trang Tổng quan → Giọng điệu → Phản ứng thị trường → Tra cứu văn bản → Thử một câu đi đúng thứ tự kịch bản dưới đây (xem `dashboard/README.md`).
+**Dashboard (giao diện web, nên dùng khi trình bày):** `powershell -ExecutionPolicy Bypass -File dashboard\run.ps1` – tự mở trình duyệt; chọn **Giao diện → Sáng** khi chiếu. Các trang Tổng quan → Giọng điệu → Phản ứng thị trường → Tra cứu văn bản → Thử một câu đi đúng thứ tự kịch bản dưới đây (xem `dashboard/README.md`).
 
 **Cách chạy trên terminal:** `powershell -ExecutionPolicy Bypass -File demo.ps1`. Script chạy lần lượt các bước dưới đây, mỗi bước dừng chờ Enter, tự mở PDF/hình khi cần và có chỗ mời thầy tự gõ câu. Muốn kiểm tra trước buổi mà không phải bấm Enter: `$env:DEMO_AUTO = "1"` rồi chạy lệnh trên.
 

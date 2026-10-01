@@ -1,5 +1,5 @@
-# Thư viện cho máy chủ dashboard (Render). Phiên bản khớp môi trường chạy gốc (requirements-lock.txt).
-# Không gồm PyMuPDF/Tesseract/Gemini: bản online không có PDF gốc nên không chạy OCR / “Sửa OCR bằng AI”.
+# Thu vien cho may chu dashboard (Render). Phien ban khop moi truong chay goc (requirements-lock.txt).
+# Khong gom PyMuPDF/Tesseract/Gemini: ban online khong co PDF goc nen khong chay OCR / 'Sua OCR bang AI'.
 fastapi==0.142.2
 uvicorn==0.54.0
 pandas==3.0.6

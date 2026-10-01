@@ -1,6 +1,6 @@
-# Phiên bản chính xác của môi trường chạy gốc (Windows 11, Python 3.11.9, 29/09/2026) – pip freeze
-# Cài: py -3.11 -m venv .venv; .venv\Scripts\pip install -r requirements-lock.txt
-# torch là bản CPU (download.pytorch.org/whl/cpu), chỉ cần cho FinBERT (tùy chọn)
+# Phien ban chinh xac cua moi truong chay goc (Windows 11, Python 3.11.9, 29/09/2026) - pip freeze
+# Cai: py -3.11 -m venv .venv; .venv\Scripts\pip install -r requirements-lock.txt
+# torch la ban CPU (download.pytorch.org/whl/cpu), chi can cho FinBERT (tuy chon)
 --extra-index-url https://download.pytorch.org/whl/cpu
 annotated-doc==0.0.5
 annotated-types==0.8.0

@@ -14,7 +14,8 @@ const DEFAULT = { vn: ['MWG', 'MWG_2019'], us: ['AAPL', null] }   // [mã, văn 
 
 export default function Explorer({ mkt, marketSwitch }) {
   const list = useData(() => api.documents(mkt), [mkt])
-  const docs = useMemo(() => list.data || [], [list.data])
+  // trong lúc tải danh sách của thị trường mới, không dùng danh sách cũ (tránh gọi API VN với mã hồ sơ Mỹ và ngược lại)
+  const docs = useMemo(() => (list.stale ? [] : list.data || []), [list.data, list.stale])
   const tickers = useMemo(() => [...new Set(docs.map((d) => d.ticker))].sort(), [docs])
   // lựa chọn của người dùng; giá trị hiệu lực được suy ra khi render (đổi thị trường → về mặc định)
   const [pick, setPick] = useState({ mkt, ticker: '', docId: '', section: 'main' })
