@@ -3,7 +3,7 @@ Tỷ lệ 'nhiễu' của từ điển tổng quát (tần suất từ tiêu c�
 
 Tương quan:
          fin_neg  gen_neg  fin_net  gen_net
-fin_neg    1.000    0.570   -0.644   -0.461
-gen_neg    0.570    1.000   -0.387   -0.787
-fin_net   -0.644   -0.387    1.000    0.332
-gen_net   -0.461   -0.787    0.332    1.000
+fin_neg    1.000    0.566   -0.646   -0.455
+gen_neg    0.566    1.000   -0.394   -0.787
+fin_net   -0.646   -0.394    1.000    0.332
+gen_net   -0.455   -0.787    0.332    1.000

@@ -1,10 +1,10 @@
 ,0
 Breusch-Pagan p,0.0
 Jarque-Bera p,0.0
-"corr(fin_neg, gen_neg)",0.5703
-VIF fin_neg_z,2.8564
-VIF log_mcap,2.8672
-VIF log_bm,2.8814
-VIF log_turn,2.9807
-VIF pre_alpha,1.3553
-VIF log_len,2.2688
+"corr(fin_neg, gen_neg)",0.5657
+VIF fin_neg_z,2.8468
+VIF log_mcap,2.8586
+VIF log_bm,2.8815
+VIF log_turn,2.9774
+VIF pre_alpha,1.3546
+VIF log_len,2.2514

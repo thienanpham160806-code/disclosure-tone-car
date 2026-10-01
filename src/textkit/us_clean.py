@@ -52,6 +52,11 @@ UU_RE = re.compile(r"begin\s+\d{3}\s+\S+\n.*?\nend\s*\n", re.DOTALL)
 IX_HIDDEN_RE = re.compile(r"<ix:hidden\b[^>]*>.*?</ix:hidden>",
                           re.IGNORECASE | re.DOTALL)
 
+# BỔ SUNG CỦA NHÓM (CHANGELOG_RUN #64): toàn bộ <ix:header> (gồm ix:hidden, ix:references, ix:resources) là dữ liệu
+# cho máy đọc, trình duyệt không hiển thị. Chỉ bỏ ix:hidden thì các "context" XBRL trong ix:resources (CIK, ngày,
+# US-GAAP:…MEMBER, V:LAWSUIT…) lọt vào toàn văn ở 260/500 hồ sơ iXBRL.
+IX_HEADER_RE = re.compile(r"<ix:header\b[^>]*>.*?</ix:header>", re.IGNORECASE | re.DOTALL)
+
 # Strip ALL remaining tags (HTML / SGML / inline XBRL like <ix:…>).
 TAG_RE = re.compile(r"<[^>]+>")
 
@@ -129,6 +134,7 @@ def clean_text(raw: str) -> str:
 
     # 3. Strip inline-XBRL hidden-fact blocks BEFORE entity decoding & tag strip.
     #    These wrap content tagged for machines but not rendered to humans.
+    body = IX_HEADER_RE.sub(" ", body)
     body = IX_HIDDEN_RE.sub(" ", body)
 
     # 4. Decode HTML entities BEFORE table-filtering and tag-stripping.
@@ -330,6 +336,7 @@ def clean_primary_html(raw: str) -> str:
             return clean_text(raw)
         raw = m.group("body")
     body = STYLE_SCRIPT.sub(" ", raw)
+    body = IX_HEADER_RE.sub(" ", body)
     body = IX_HIDDEN_RE.sub(" ", body)
     body = html.unescape(body)
     body = TABLE_RE.sub(lambda m: " " if _table_is_numeric_heavy(m.group(0)) else m.group(0), body)
