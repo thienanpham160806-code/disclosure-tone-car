@@ -139,7 +139,7 @@ python run_all.py --market vn --from 5           # a01 → a06
 ```
 
 **Bước kiểm tra tay (human-in-the-loop).** Cần đọc kỹ trước khi dùng kết quả:
-- `data/vn/processed/manual_pages.csv` đã chứa 130 văn bản được xác định trang bằng tay (50 ca đợt đầu + 80 thư bị bước trích tự động cắt ở trần 6 trang), có ghi chú từng ca. `--manual` áp lại các trang này sau `v03`. Để thêm ca mới, ghi thêm dòng `ticker,year,start_page,end_page,force_ocr,ghi_chu`:
+- `data/vn/processed/manual_pages.csv` đã chứa 144 văn bản được xác định trang bằng tay (50 ca đợt đầu + 80 thư bị bước trích tự động cắt ở trần 6 trang + 24 thư không có lời chào/câu kết), có ghi chú từng ca. `--manual` áp lại các trang này sau `v03`. Để thêm ca mới, ghi thêm dòng `ticker,year,start_page,end_page,force_ocr,ghi_chu`:
   - `force_ocr = 1` khi lớp chữ PDF bị lỗi font.
   - `start_page = 0` khi xác nhận BCTN không có thư của ban lãnh đạo (văn bản sẽ bị loại).
 - `data/vn/processed/qc_sample.csv` là mẫu 10% đã đối chiếu (49/59 đúng). Nếu chạy lại `v03` toàn bộ, file này bị tạo lại và phải điền lại. Để chỉ trích các BCTN mới mà giữ kết quả cũ, dùng `python src/vn/v03_extract_letter.py --new`.
@@ -223,7 +223,8 @@ Toàn bộ kịch bản dưới đây chạy trên máy đã có dữ liệu (m�
 3. Chạy thử một lượt kịch bản bên dưới. Mở sẵn `RESULTS.md` và 3 hình trong `outputs/vn/`.
 4. Tắt chế độ ngủ của máy, cắm sạc.
 
-**Dashboard (giao diện web, nên dùng khi trình bày):** `powershell -ExecutionPolicy Bypass -File dashboardun.ps1` – tự mở trình duyệt; chọn **Giao diện → Sáng** khi chiếu. Các trang Tổng quan → Giọng điệu → Phản ứng thị trường → Tra cứu văn bản → Thử một câu đi đúng thứ tự kịch bản dưới đây (xem `dashboard/README.md`).
+**Dashboard (giao diện web, nên dùng khi trình bày):** `powershell -ExecutionPolicy Bypass -File dashboard
+un.ps1` – tự mở trình duyệt; chọn **Giao diện → Sáng** khi chiếu. Các trang Tổng quan → Giọng điệu → Phản ứng thị trường → Tra cứu văn bản → Thử một câu đi đúng thứ tự kịch bản dưới đây (xem `dashboard/README.md`).
 
 **Cách chạy trên terminal:** `powershell -ExecutionPolicy Bypass -File demo.ps1`. Script chạy lần lượt các bước dưới đây, mỗi bước dừng chờ Enter, tự mở PDF/hình khi cần và có chỗ mời thầy tự gõ câu. Muốn kiểm tra trước buổi mà không phải bấm Enter: `$env:DEMO_AUTO = "1"` rồi chạy lệnh trên.
 

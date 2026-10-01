@@ -129,3 +129,17 @@ VTP,2019,5,6,0,"Rà trần 6 trang: p4 bìa chương; thông điệp TGĐ p5 (�
 VIB,2025,7,11,0,"Rà trần 6 trang: p6 bìa ""Thông điệp""; thư Chủ tịch HĐQT p7-11 (ký Đặng Khắc Vỹ) - thư dài hơn 5 trang so với phần regex lấy (p6-11), đúng biên"
 VIB,2023,7,10,0,"Rà trần 6 trang: p6 bìa ""Thông điệp""; thông điệp Chủ tịch HĐQT và TGĐ p7-10 (ký cả hai); p11 bìa chiến lược"
 VIB,2020,0,0,0,"Rà trần 6 trang: BCTN không có thư lãnh đạo, chỉ có ""Báo cáo của Tổng Giám đốc"" (tổng kết + kế hoạch, không lời chào); regex lấy nhầm p17-22 (ngân hàng số) -> loại"
+MWG,2025,7,8,0,Rà thư không có lời chào (#55): regex lấy p5 là mục lục; thư ngỏ Chủ tịch HĐQT p7-8 (ký Nguyễn Đức Tài)
+STB,2019,4,4,0,Rà thư không có lời chào (#55): regex lấy p11 (tổng quan hoạt động); thông điệp Chủ tịch HĐQT 1 trang đôi p4 (Dương Công Minh)
+NLG,2019,6,6,0,Rà thư không có lời chào (#55): regex lấy p2 (giới thiệu); thư Chủ tịch HĐQT 1 trang đôi p6 (ký Nguyễn Xuân Quang); p7 thư TGĐ - ưu tiên thư Chủ tịch
+DXG,2016,4,4,0,Rà thư không có lời chào (#55): đúng – thông điệp Chủ tịch HĐQT 1 trang p4 (thư không có lời chào)
+BMP,2022,0,0,0,Rà thư không có lời chào (#55): file BMP_2022_vi.pdf thực chất là bản tiếng Anh (Chairman's statement p3) – bộ đếm tiếng Việt không đo được -> loại
+NAB,2019,0,0,0,"Rà thư không có lời chào (#55): BCTN 28 trang theo mẫu biểu, không có thư lãnh đạo; p27-28 là đánh giá của HĐQT + chữ ký TGĐ -> loại"
+BSR,2021,10,10,0,Rà thư không có lời chào (#55): regex lấy p4-7 (bìa chương/giới thiệu/số liệu); thông điệp Ban lãnh đạo 1 trang đôi p10 (ký Chủ tịch HĐQT + TGĐ)
+EIB,2017,3,3,0,"Rà thư không có lời chào (#55): đúng – thông điệp Chủ tịch HĐQT p3 (mở đầu 'Trước hết, tôi xin gửi lời tri ân'); p4 phát biểu TGĐ"
+OCB,2018,0,0,0,Rà thư không có lời chào (#55): mục lục không có thư lãnh đạo; regex lấy p15 (giới thiệu khối kinh doanh) -> loại
+VJC,2018,18,18,0,Rà thư không có lời chào (#55): regex lấy p2-4 (mục lục/tầm nhìn/cam kết); thông điệp Chủ tịch HĐQT 1 trang đôi p18 (ký Nguyễn Thanh Hà); p19 thư CEO - ưu tiên thư Chủ tịch
+VPI,2017,3,3,0,"Rà thư không có lời chào (#55): regex lấy p2-4 (mục lục + dự án); thông điệp Chủ tịch HĐQT ở nửa trái trang đôi p3 (nửa phải là tầm nhìn - sứ mệnh, không tách được theo trang)"
+VCB,2017,4,5,0,Rà thư không có lời chào (#55): thông điệp Chủ tịch HĐQT & TGĐ p4-5 (ký cả hai); regex lấy lố p6 (thông tin chung)
+MBB,2018,4,4,0,Rà thư không có lời chào (#55): thông điệp Chủ tịch HĐQT 1 trang đôi p4 (ký Lê Hữu Đức); regex lấy lố p5-7 (dấu ấn 2018)
+MBB,2020,4,4,0,Rà thư không có lời chào (#55): thông điệp Chủ tịch HĐQT 1 trang đôi p4 (ký Lưu Trung Thái); regex lấy thêm p3 (bìa chương) và p5-7 (điểm nổi bật)
