@@ -241,7 +241,7 @@ Hệ số `fin_neg_z`, dùng cùng biến kiểm soát và FE [`outputs/*/regres
 
 ### 4.5 Tầng AI sửa OCR: có đổi kết luận không?
 
-Tầng AI (`src/textkit/llm_client.py`, gọi từ `v03 --llm`; CHANGELOG #33–#42) chấm điểm chất lượng chữ `quality_score` cho từng trang thư. Chỉ trang dưới ngưỡng 0,85 mới được gửi ảnh cho Gemini (`gemini-3.5-flash-lite`, temperature = 0) để **chép nguyên văn**. Bản AI chỉ được nhận khi điểm không giảm. Bảng dưới là lần chạy tầng AI trên 617 thư, trước khi sửa trang thư ở #44 [`outputs/vn/llm_ocr_summary_truoc_sua_trang.csv`]. Sau khi sửa trang, còn 1.108 trang thuộc 608 thư, trong đó 87 trang được gửi AI, 78 trang nhận bản AI, 59 thư có trang dùng bản AI [`outputs/vn/llm_ocr_summary.csv`]:
+Tầng AI (`src/textkit/llm_client.py`, gọi từ `v03 --llm`; CHANGELOG #33–#42) chấm điểm chất lượng chữ `quality_score` cho từng trang thư. Chỉ trang dưới ngưỡng 0,85 mới được gửi ảnh cho Gemini (`gemini-3.5-flash-lite`, temperature = 0) để **chép nguyên văn**. Bản AI chỉ được nhận khi điểm không giảm. Bảng dưới là lần chạy tầng AI trên 617 thư, trước khi sửa trang thư ở #44 [`outputs/vn/llm_ocr_summary_truoc_sua_trang.csv`]. Sau khi sửa trang, còn 1.108 trang thuộc 608 thư, trong đó 87 trang được gửi AI, 78 trang nhận bản AI, 58 thư có trang dùng bản AI [`outputs/vn/llm_ocr_summary.csv`]:
 
 | | Số lượng |
 |---|---:|
