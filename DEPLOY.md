@@ -45,7 +45,7 @@ Làm theo thứ tự: Render trước (để có địa chỉ API), Vercel sau. 
 2. **Root Directory**: bấm *Edit* → chọn `dashboard/frontend`. Framework tự nhận là **Vite** (đã khai báo trong `vercel.json`).
 3. **Environment Variables** → thêm:
    - Name: `VITE_API_BASE`
-   - Value: `https://<địa-chỉ-render>/api` (địa chỉ ở bước 1.6 + `/api`, không có dấu `/` ở cuối)
+   - Value: `https://<địa-chỉ-render>/api` (địa chỉ ở bước 1.6; quên đuôi `/api` cũng được – giao diện tự thêm)
 4. Nhánh: trong *Settings → Git → Production Branch* chọn nhánh ở bước 0.2 (mặc định `main`).
 5. **Deploy**. Khoảng 1 phút sau có địa chỉ dạng `https://disclosure-tone-car.vercel.app`.
 6. Mở địa chỉ đó. Lần đầu có thể chờ ~1 phút (máy chủ Render miễn phí đang “ngủ” và phải khởi động).

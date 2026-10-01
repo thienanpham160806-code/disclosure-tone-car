@@ -1,7 +1,8 @@
 // Gọi API backend.
 //  • Máy cá nhân: Vite chuyển /api → 127.0.0.1:8000 (vite.config.js); bản build chạy cùng origin với FastAPI.
 //  • Vercel: đặt biến môi trường VITE_API_BASE = https://<tên-dịch-vụ>.onrender.com/api (xem DEPLOY.md).
-const BASE = (import.meta.env.VITE_API_BASE || '/api').replace(/\/$/, '')
+// Chấp nhận cả địa chỉ thiếu đuôi /api (vd https://x.onrender.com) – tự thêm cho đúng.
+const BASE = ((b) => (/\/api$/.test(b) ? b : `${b}/api`))((import.meta.env.VITE_API_BASE || '/api').replace(/\/+$/, ''))
 
 async function req(path, opts) {
   const res = await fetch(BASE + path, opts)
