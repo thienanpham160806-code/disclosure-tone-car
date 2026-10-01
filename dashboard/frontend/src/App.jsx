@@ -1,30 +1,28 @@
-import { useEffect, useState } from 'react'
-import { BarChart3, Database, FileSearch, Home, LineChart, MessageSquareText, PenLine } from 'lucide-react'
+import { Fragment, useEffect, useState } from 'react'
+import { BarChart3, BookOpenText, FileSearch, PenLine } from 'lucide-react'
 import { Segmented } from './components/ui'
 import { applyTheme, initialTheme } from './hooks'
-import Overview from './pages/Overview'
-import Tone from './pages/Tone'
-import Market from './pages/Market'
+import Report from './pages/Report'
 import Explorer from './pages/Explorer'
 import TryIt from './pages/TryIt'
-import Data from './pages/Data'
 
 const PAGES = [
-  { id: 'tong-quan', label: 'Tổng quan', hint: 'Câu hỏi & câu trả lời', icon: Home },
-  { id: 'giong-dieu', label: 'Giọng điệu', hint: 'Mục tiêu 1–2', icon: MessageSquareText },
-  { id: 'thi-truong', label: 'Phản ứng thị trường', hint: 'Mục tiêu 3', icon: LineChart },
+  { id: 'bao-cao', label: 'Báo cáo kết quả', hint: 'Đọc từ đầu đến cuối', icon: BookOpenText },
   { id: 'tra-cuu', label: 'Tra cứu văn bản', hint: 'Từng công ty, từng năm', icon: FileSearch },
   { id: 'thu-cau', label: 'Thử một câu', hint: 'Demo trực tiếp', icon: PenLine },
-  { id: 'du-lieu', label: 'Dữ liệu & chất lượng', hint: 'Mẫu, OCR, tầng AI', icon: Database },
 ]
+// đường dẫn của bản dashboard cũ → mục tương ứng trong báo cáo
+const OLD = { 'tong-quan': 'tom-tat', 'giong-dieu': 'muc-2', 'thi-truong': 'muc-4', 'du-lieu': 'muc-1' }
 
 const fromHash = () => {
-  const [page, mkt] = window.location.hash.replace('#', '').split('/')
-  return { page: PAGES.some((p) => p.id === page) ? page : 'tong-quan', mkt: mkt === 'us' ? 'us' : 'vn' }
+  const [page, mkt, sec] = window.location.hash.replace('#', '').split('/')
+  const m = mkt === 'us' ? 'us' : 'vn'
+  if (OLD[page]) return { page: 'bao-cao', mkt: m, sec: OLD[page] }
+  return { page: PAGES.some((p) => p.id === page) ? page : 'bao-cao', mkt: m, sec }
 }
 
 export default function App() {
-  const [{ page, mkt }, setRoute] = useState(fromHash)
+  const [{ page, mkt, sec }, setRoute] = useState(fromHash)
   const [theme, setTheme] = useState(() => { const t = initialTheme(); applyTheme(t); return t })
   const changeTheme = (t) => { applyTheme(t); setTheme(t) }
   useEffect(() => {
@@ -53,11 +51,14 @@ export default function App() {
           </div>
         </div>
         <nav className="nav" aria-label="Các trang">
-          {PAGES.map(({ id, label, hint, icon: Icon }) => (
-            <button key={id} className={`nav-item ${page === id ? 'on' : ''}`} onClick={() => go(id)} aria-current={page === id ? 'page' : undefined}>
-              <Icon size={18} aria-hidden />
-              <span className="nav-text"><span className="nav-label">{label}</span><span className="nav-hint">{hint}</span></span>
-            </button>
+          {PAGES.map(({ id, label, hint, icon: Icon }, i) => (
+            <Fragment key={id}>
+              {i === 1 && <div className="nav-group">Công cụ tương tác</div>}
+              <button className={`nav-item ${page === id ? 'on' : ''}`} onClick={() => go(id)} aria-current={page === id ? 'page' : undefined}>
+                <Icon size={18} aria-hidden />
+                <span className="nav-text"><span className="nav-label">{label}</span><span className="nav-hint">{hint}</span></span>
+              </button>
+            </Fragment>
           ))}
         </nav>
         <div className="sidebar-foot">
@@ -72,12 +73,9 @@ export default function App() {
       </aside>
 
       <main className="main" aria-label={current.label}>
-        {page === 'tong-quan' && <Overview {...props} />}
-        {page === 'giong-dieu' && <Tone {...props} />}
-        {page === 'thi-truong' && <Market {...props} />}
+        {page === 'bao-cao' && <Report {...props} sec={sec} />}
         {page === 'tra-cuu' && <Explorer {...props} />}
         {page === 'thu-cau' && <TryIt {...props} />}
-        {page === 'du-lieu' && <Data {...props} />}
       </main>
     </div>
   )

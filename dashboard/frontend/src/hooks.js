@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 // Màu biểu đồ lấy từ token CSS (:root) để sáng/tối dùng chung một nguồn; cập nhật khi người dùng đổi chế độ hệ thống.
-const KEYS = ['--neg', '--pos', '--neutral', '--noise', '--accent', '--text', '--text-2', '--muted', '--grid', '--surface', '--band']
+const KEYS = ['--neg', '--pos', '--neutral', '--noise', '--unc', '--vn', '--us', '--accent', '--text', '--text-2', '--muted', '--grid', '--surface', '--band']
 
 function read() {
   const cs = getComputedStyle(document.documentElement)
@@ -52,4 +52,27 @@ export function applyTheme(t) {
   else el.dataset.theme = t
   try { localStorage.setItem('theme', t) } catch { /* không lưu được thì thôi */ }
   window.dispatchEvent(new Event('themechange'))
+}
+
+// ---------------------------------------------------------------- trang Báo cáo: cuộn tới mục, mục đang đọc
+export const scrollToId = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+
+// mục đang đọc = mục cuối cùng đã cuộn qua mép trên màn hình
+export function useActiveSection(ids) {
+  const [active, setActive] = useState(ids[0])
+  useEffect(() => {
+    const on = () => {
+      let cur = ids[0]
+      for (const id of ids) {
+        const el = document.getElementById(id)
+        if (el && el.getBoundingClientRect().top <= 120) cur = id
+      }
+      setActive(cur)
+    }
+    on()
+    window.addEventListener('scroll', on, { passive: true })
+    return () => window.removeEventListener('scroll', on)
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- danh sách mục cố định
+  }, [ids.join()])
+  return active
 }

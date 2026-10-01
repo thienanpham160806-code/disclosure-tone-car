@@ -22,8 +22,17 @@ export default function NewsPanel({ docId }) {
       subtitle="Mọi tin CafeF đăng về mã này trong 10 phiên trước và sau T = 0 – để thấy nhà đầu tư còn nhận được thông tin gì cùng lúc với BCTN.">
       <Status state={st}>
         {d && !d.available && <Note>Chưa có dữ liệu tin tức. Chạy <code>python src/vn/v05_news.py</code> để thu thập từ CafeF.</Note>}
-        {d?.available && (
+        {d?.available && !d.event && (
+          <Note>Văn bản này không có trong mẫu nghiên cứu sự kiện (thiếu ngày công bố T = 0 hoặc không đủ dữ liệu giá để tính CAR), nên không có cửa sổ để đặt tin tức.</Note>
+        )}
+        {d?.available && d.event && (
           <>
+            {d.cafef_gap && (
+              <Note kind="warn">
+                Cửa sổ của sự kiện này rơi vào giai đoạn kho tin CafeF bị hổng (tháng {d.gap_months.map((m) => m.split('-').reverse().join('/')).join(', ')}).
+                Ít tin hoặc không có tin ở đây <b>không có nghĩa</b> là không có thông tin – CafeF không lưu tin giai đoạn đó.
+              </Note>
+            )}
             <div className="toolbar">
               <Segmented value={kind} onChange={setKind} label="Loại tin" options={[
                 { value: 'all', label: 'Tất cả' }, { value: 'cbtt', label: 'Công bố thông tin' }, { value: 'bai_bao', label: 'Bài báo' },

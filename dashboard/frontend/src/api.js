@@ -15,6 +15,7 @@ async function req(path, opts) {
 }
 
 export const api = {
+  report: () => req('/report'),
   overview: () => req('/overview'),
   toneByYear: (m) => req(`/${m}/tone_by_year`),
   misclassified: (m) => req(`/${m}/misclassified`),

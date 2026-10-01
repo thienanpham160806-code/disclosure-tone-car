@@ -17,15 +17,13 @@ trình duyệt ở http://127.0.0.1:8000. Dừng bằng `Ctrl + C`.
 
 | Trang | Dùng để |
 |---|---|
-| **Tổng quan** | Câu hỏi nghiên cứu, câu trả lời ngắn cho Việt Nam và Mỹ, kết luận, thuật ngữ |
-| **Giọng điệu** (Mục tiêu 1–2) | Tỷ lệ từ tiêu cực / tích cực theo năm; các từ bị từ điển tổng quát gán nhãn sai |
-| **Phản ứng thị trường** (Mục tiêu 3) | Đường CAAR theo nhóm tone; hệ số + khoảng tin cậy 95% ở từng cửa sổ; CAR theo nhóm |
-| **Tra cứu văn bản** | Chọn công ty – năm: văn bản với từng từ được đếm được tô màu, tone, ngày T = 0, CAR của sự kiện; (VN) tin tức CafeF trong [T−10, T+10] phiên, có link bài gốc; Sửa OCR bằng AI |
+| **Báo cáo kết quả** | Trình bày RESULTS.md dưới dạng trực quan, đọc từ trên xuống: Tóm tắt → 1 Dữ liệu → 2–4 ba mục tiêu → 5 Chất lượng văn bản VN → 6 Tin tức CafeF → 7 So sánh Mỹ–VN → 8 Hạn chế → 9 Hàm ý → Phụ lục. Mỗi hình/bảng đánh số, có *Cách đọc*, chú thích và tên file nguồn trong `outputs/`; mục lục bên phải; nút **In / lưu PDF** |
+| **Tra cứu văn bản** | Chọn công ty – năm: văn bản với từng từ được đếm được tô màu, tone, ngày T = 0, CAR của sự kiện; (VN) tin tức CafeF trong [T−10, T+10] phiên, có link bài gốc và cảnh báo nếu sự kiện rơi vào giai đoạn kho tin CafeF bị hổng; Sửa OCR bằng AI |
 | **Thử một câu** | Gõ câu bất kỳ, so sánh từ điển tài chính với từ điển tổng quát (có câu mẫu) |
-| **Dữ liệu & chất lượng** | Phễu mẫu hai thị trường, độ chính xác OCR, thống kê tầng AI |
 
-Nút **Việt Nam / Mỹ** ở góc phải chuyển thị trường; nút **Giao diện** (Tự động / Sáng / Tối) ở cuối thanh bên – nên chọn
-**Sáng** khi chiếu máy chiếu. Đường dẫn giữ trang đang xem (vd `http://127.0.0.1:8000/#thi-truong/us`).
+Trang báo cáo hiển thị Việt Nam và Mỹ cạnh nhau; nút **Việt Nam / Mỹ** ở trang Tra cứu chuyển thị trường. Nút **Giao diện**
+(Tự động / Sáng / Tối) ở cuối thanh bên – nên chọn **Sáng** khi chiếu máy chiếu hoặc in. Đường dẫn giữ trang đang xem
+(vd `http://127.0.0.1:8000/#tra-cuu/us`); đường dẫn của bản cũ (`#thi-truong`, `#giong-dieu`…) tự chuyển tới mục tương ứng của báo cáo.
 
 Trang *Tra cứu văn bản* dùng văn bản đã trích (`data/*/interim/text`, có trong git). Mục *Sửa OCR bằng AI* cần thêm PDF gốc
 (`data/vn/raw`, không có trong git) nên chỉ chạy được trên máy có dữ liệu.
@@ -41,7 +39,7 @@ npm --prefix dashboard/frontend run dev               # giao diện ở :5173, /
 
 | Thư mục | Nội dung |
 |---|---|
-| `backend/main.py` | FastAPI: các endpoint `/api/...`, phục vụ `frontend/dist` khi đã build |
-| `frontend/src/pages/` | 6 trang |
-| `frontend/src/components/` | `charts.jsx` (biểu đồ), `ToneResult.jsx` (văn bản tô màu + so sánh từ điển), `ui.jsx` |
+| `backend/main.py` | FastAPI: các endpoint `/api/...` (`/api/report` gom mọi số liệu của trang báo cáo từ `outputs/`), phục vụ `frontend/dist` khi đã build |
+| `frontend/src/pages/` | `Report.jsx` (báo cáo), `Explorer.jsx` (tra cứu), `TryIt.jsx` (thử một câu) |
+| `frontend/src/components/` | `charts.jsx` (biểu đồ), `report.jsx` (mục, hình/bảng có chú thích, mục lục), `ToneResult.jsx` (văn bản tô màu + so sánh từ điển), `NewsPanel.jsx`, `OcrFix.jsx`, `ui.jsx` |
 | `frontend/src/index.css` | Token màu sáng/tối và toàn bộ bố cục |

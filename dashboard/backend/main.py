@@ -337,7 +337,12 @@ def news(doc_id: str = Query(...)):
     topics = [c for c in ("kqkd", "dhdcd", "co_tuc", "bctn", "nhan_su", "gd_noi_bo", "chung_quyen") if c in df]
     items = [{"offset": int(r.offset), "published_at": r.published_at, "kind": r.kind, "title": r.title, "url": r.url,
               "topics": [t for t in topics if bool(getattr(r, t))]} for r in d.itertuples()]
+    ev = _csv("outputs", "vn", "news_event_counts.csv")
+    hit = ev[ev.doc_id == doc_id] if ev is not None and "cafef_gap" in ev else pd.DataFrame()
+    cov = _csv("outputs", "vn", "news_coverage_monthly.csv")
+    gaps = cov.loc[cov.hong.astype(bool), "thang"].tolist() if cov is not None else []
     return {"available": True, "items": items, "day0": None if d.empty else str(d.day0.iloc[0]),
+            "event": not hit.empty, "cafef_gap": bool(hit.iloc[0].cafef_gap) if not hit.empty else False, "gap_months": gaps,
             "crawled_at": None if df.empty else str(df.crawled_at.max()), "source": "CafeF – cafef.vn (mục Tin tức của mã)"}
 
 
@@ -555,6 +560,99 @@ def quality():
             "llm": {"pages_total": pick("Trang thuộc thư"), "pages_sent": pick("Trang gửi AI"),
                     "pages_used": pick("Trang nhận bản AI"), "docs_used": pick("Văn bản có ≥ 1 trang"),
                     "cost_usd": pick("Tổng chi phí")}}
+
+
+# ----------------------------------------------------------------------------- trang Báo cáo: gom số liệu từ outputs/
+def _kv(*parts) -> dict:
+    """File 2 cột (chỉ số, giá trị) → dict; khóa đã bỏ khoảng trắng đầu dòng."""
+    df = _csv(*parts)
+    if df is None:
+        return {}
+    df.columns = ["k", "v"]
+    out = {}
+    for k, v in zip(df.k.astype(str).str.strip(), df.v):
+        try:
+            out[k] = float(v)
+        except (TypeError, ValueError):
+            out[k] = v
+    return out
+
+
+def _coef_cell(s):
+    """'−0.0005 (0.0016)' / '0.0025* (0.0015)' → {coef, se, stars}."""
+    m = re.match(r"\s*(-?[\d.]+)(\**)\s*\((-?[\d.]+)\)", str(s))
+    return {"coef": float(m.group(1)), "stars": m.group(2), "se": float(m.group(3))} if m else None
+
+
+def _corr(mkt):
+    p = ROOT / "outputs" / mkt / "dictionary_comparison.txt"
+    m = re.search(r"fin_neg\s+1\.000\s+([\d.]+)", p.read_text(encoding="utf-8")) if p.exists() else None
+    return float(m.group(1)) if m else None
+
+
+def _effect(name):
+    """outputs/vn/{llm_ocr_effect,page_fix_effect}.csv: hệ số trước/sau cho các mô hình chính."""
+    df = _csv("outputs", "vn", name)
+    if df is None:
+        return []
+    keep = [("M2 fin_neg", "fin_neg_z"), ("M3 gen_neg", "gen_neg_z"), ("M5 net+unc", "fin_unc_z"), ("CAR[0,5]", "fin_neg_z"),
+            ("CAR[0,10]", "fin_neg_z"), ("Placebo −60 phiên", "fin_neg_z")]
+    rows = [df[(df.mo_hinh == m) & (df.bien == b)] for m, b in keep]
+    return _records(pd.concat([r for r in rows if len(r)]))
+
+
+@app.get("/api/report")
+def report():
+    """Mọi con số cho trang Báo cáo – đọc từ outputs/ (cùng nguồn với RESULTS.md), không tính lại kết quả."""
+    out = {"overview": overview(), "markets": {}}
+    for mkt in MARKETS:
+        desc = _csv("outputs", mkt, "tone_descriptive.csv")
+        desc = {r[0]: {"mean": r.mean, "std": r.std} for r in desc.rename(columns={desc.columns[0]: "v"}).itertuples(index=False)} if desc is not None else {}
+        em = _csv("outputs", mkt, "economic_magnitude.csv")
+        m4 = {}
+        if em is not None:
+            for r in em[em.mo_hinh == "M4 đối đầu"].itertuples():
+                m4[r.bien] = {"coef": r.he_so, "se": r.se, "stars": r.sao if isinstance(r.sao, str) else ""}
+        ct = _csv("outputs", mkt, "car_tests.csv")
+        asm = _kv("outputs", mkt, "assumption_tests.csv")
+        out["markets"][mkt] = {
+            "funnel": _records(_csv("outputs", mkt, "sample_funnel.csv")),
+            "coverage": _records(_csv("outputs", mkt, "coverage_by_year.csv")),
+            "tone_desc": desc,
+            "tone_by_year": _records(_csv("outputs", mkt, "tone_by_year.csv")),
+            "noise_pct": _noise_pct(mkt), "corr_fin_gen": _corr(mkt),
+            "misclassified": _records(_csv("outputs", mkt, "misclassified_general_neg.csv").head(10)[["word", "share_pct", "in_fin_negative"]]),
+            "m4": m4,
+            "n_reg": overview().get(mkt, {}).get("n_reg"),
+            "car_tests": _records(ct),
+            "car_by_tone": car_by_tone(mkt),
+            "caar": caar(mkt),
+            "coefficients": coefficients(mkt),
+            "diag": _kv("outputs", mkt, "event_study_diag.csv"),
+            "assumptions": asm,
+        }
+    # Mỹ: 10-K trùng công bố KQKD (kiểm tra bổ sung)
+    eo = _csv("outputs", "us", "earnings_overlap.csv")
+    rx = _csv("outputs", "us", "regression_excl_earnings.csv")
+    if eo is not None:
+        ov = eo.overlap.astype(bool)
+        out["markets"]["us"]["earnings"] = {
+            "n": int(len(eo)), "n_overlap": int(ov.sum()),
+            "abs_car_overlap_pct": 100 * eo.car_0_3[ov].abs().mean(), "abs_car_other_pct": 100 * eo.car_0_3[~ov].abs().mean(),
+            "excl": _coef_cell(rx.set_index(rx.columns[0]).loc["fin_neg_z"].iloc[2]) if rx is not None else None}
+    # VN: tầng AI sửa OCR, rà trang, độ chính xác OCR, tin tức CafeF
+    ev = _csv("outputs", "vn", "ocr_eval.csv")
+    tone_dev = _csv("outputs", "vn", "ocr_eval_tone.csv")
+    out["vn_extra"] = {
+        "llm": _kv("outputs", "vn", "llm_ocr_summary.csv"),
+        "ocr_eval": _records(ev[ev.page.astype(str).str.startswith("GỘP")]) if ev is not None else [],
+        "ocr_tone": _records(tone_dev[tone_dev.mae_fin_net.notna()][["method", "mae_fin_net", "n_pages"]]) if tone_dev is not None else [],
+        "llm_effect": _effect("llm_ocr_effect.csv"),
+        "page_fix": _effect("page_fix_effect.csv"),
+        "news": _kv("outputs", "vn", "news_summary.csv"),
+        "news_monthly": _records(_csv("outputs", "vn", "news_coverage_monthly.csv")),
+    }
+    return out
 
 
 # ----------------------------------------------------------------------------- phục vụ giao diện đã build

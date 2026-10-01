@@ -23,44 +23,13 @@ function TipBox({ title, rows }) {
   )
 }
 
-// ------------------------------------------------------------------ xu hướng một chỉ số theo năm (1 series)
-// mốc trục tròn: ≤ 1 → bước 0,25; còn lại bước 1
-function niceTop(max) {
-  if (max <= 1) { const top = Math.ceil(max * 4) / 4; return { top, ticks: [...Array(top * 4 + 1).keys()].map((i) => i / 4), d: 2 } }
-  const top = Math.ceil(max); return { top, ticks: [...Array(top + 1).keys()], d: 0 }
-}
-
-export function YearTrend({ rows, dataKey, color, unit = '%', digits = 2 }) {
-  const c = useChartColors()
-  const { top, ticks, d } = niceTop(Math.max(...rows.map((r) => r[dataKey]), 0.01))
-  return (
-    <div className="chart" style={{ height: 230 }}>
-      <ResponsiveContainer>
-        <LineChart data={rows} margin={{ top: 12, right: 16, bottom: 4, left: -8 }}>
-          <CartesianGrid stroke={c.grid} vertical={false} />
-          <XAxis dataKey="year" {...axisProps(c)} />
-          <YAxis {...axisProps(c)} domain={[0, top]} ticks={ticks} tickFormatter={(v) => fmt(v, d)} width={44} />
-          <Tooltip cursor={{ stroke: c.muted }} content={({ active, payload, label }) => active && payload?.length ? (
-            <TipBox title={`Năm ${label}`} rows={[{ label: 'Giá trị', color, value: `${fmt(payload[0].value, digits)}${unit}` }]} />
-          ) : null} />
-          <Line type="monotone" dataKey={dataKey} stroke={color} strokeWidth={2} dot={{ r: 3, fill: color, strokeWidth: 0 }}
-            activeDot={{ r: 5, stroke: c.surface, strokeWidth: 2 }} isAnimationActive={false} />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
-  )
-}
-
 // ------------------------------------------------------------------ từ bị từ điển tổng quát gắn "tiêu cực"
-export function MisclassifiedBars({ words }) {
+export function MisclassifiedBars({ words, legend = true }) {
   const c = useChartColors()
   const data = words.map((w) => ({ ...w, label: w.word }))
   return (
     <>
-      <Legend items={[
-        { label: 'Không tiêu cực trong tài chính (gán sai)', color: c.noise, box: true },
-        { label: 'Tiêu cực thật (có trong từ điển tài chính)', color: c.accent, box: true },
-      ]} />
+      {legend && <MisclassifiedLegend />}
       <div className="chart" style={{ height: 36 + data.length * 30 }}>
         <ResponsiveContainer>
           <BarChart data={data} layout="vertical" margin={{ top: 4, right: 56, bottom: 4, left: 8 }} barCategoryGap={6}>
@@ -81,6 +50,16 @@ export function MisclassifiedBars({ words }) {
         </ResponsiveContainer>
       </div>
     </>
+  )
+}
+
+export function MisclassifiedLegend() {
+  const c = useChartColors()
+  return (
+    <Legend items={[
+      { label: 'Không tiêu cực trong tài chính (gán sai)', color: c.noise, box: true },
+      { label: 'Tiêu cực thật (có trong từ điển tài chính)', color: c.accent, box: true },
+    ]} />
   )
 }
 
@@ -199,5 +178,87 @@ export function SimpleBars({ items, max, unit = '', digits = 0, color }) {
         </li>
       ))}
     </ul>
+  )
+}
+
+// ------------------------------------------------------------------ 2 thị trường cùng một chỉ số theo năm (cùng đơn vị → 1 trục)
+export function MarketYearLines({ vn, us, dataKey, unit = '%', digits = 2, height = 300 }) {
+  const c = useChartColors()
+  const years = [...new Set([...vn, ...us].map((r) => r.year))].sort((a, b) => a - b)
+  const get = (rows, y) => rows.find((r) => r.year === y)
+  const data = years.map((y) => ({ year: y, vn: get(vn, y)?.[dataKey] ?? null, us: get(us, y)?.[dataKey] ?? null, nvn: get(vn, y)?.N, nus: get(us, y)?.N }))
+  const max = Math.max(...data.flatMap((d) => [d.vn ?? 0, d.us ?? 0]))
+  const top = Math.ceil(max * 2) / 2
+  const ticks = [...Array(Math.round(top * 2) + 1).keys()].map((i) => i / 2)
+  const series = [{ key: 'vn', label: 'Việt Nam', color: c.vn }, { key: 'us', label: 'Mỹ', color: c.us }]
+  const lastOf = (k) => [...data].reverse().find((d) => d[k] != null)
+  return (
+    <>
+      <Legend items={series.map((s) => ({ label: s.label, color: s.color }))} />
+      <div className="chart" style={{ height }}>
+        <ResponsiveContainer>
+          <LineChart data={data} margin={{ top: 12, right: 72, bottom: 4, left: -8 }}>
+            <CartesianGrid stroke={c.grid} vertical={false} />
+            <XAxis dataKey="year" {...axisProps(c)} />
+            <YAxis {...axisProps(c)} domain={[0, top]} ticks={ticks} tickFormatter={(v) => `${fmt(v, 1)}${unit}`} width={52} />
+            <Tooltip cursor={{ stroke: c.muted }} content={({ active, payload, label }) => active && payload?.length ? (
+              <TipBox title={`Năm ${label}`} rows={payload.filter((p) => p.value != null).map((p) => ({
+                label: `${p.dataKey === 'vn' ? 'Việt Nam' : 'Mỹ'} (${p.payload[p.dataKey === 'vn' ? 'nvn' : 'nus']} văn bản)`,
+                color: p.dataKey === 'vn' ? c.vn : c.us, value: `${fmt(p.value, digits)}${unit}`,
+              }))} />
+            ) : null} />
+            {series.map((s) => (
+              <Line key={s.key} dataKey={s.key} stroke={s.color} strokeWidth={2} connectNulls={false} isAnimationActive={false}
+                dot={{ r: 3.5, fill: s.color, strokeWidth: 0 }} activeDot={{ r: 5.5, stroke: c.surface, strokeWidth: 2 }} />
+            ))}
+            {series.map((s) => { const l = lastOf(s.key); return l && (
+              <ReferenceDot key={s.key} x={l.year} y={l[s.key]} r={0} ifOverflow="visible"
+                label={{ value: s.label, position: 'right', fill: c.text, fontSize: 12, fontWeight: 600 }} />
+            ) })}
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+    </>
+  )
+}
+
+// ------------------------------------------------------------------ độ phủ kho tin CafeF theo tháng (tô tháng hổng)
+export function NewsCoverageChart({ rows, threshold, exclude }) {
+  const c = useChartColors()
+  const data = rows.filter((r) => r.so_ma >= 10 && r.thang !== exclude)
+  const firstOfYear = data.filter((r) => r.thang.endsWith('-01')).map((r) => r.thang)
+  const gaps = data.filter((r) => r.hong).map((r) => r.thang)
+  return (
+    <>
+      <Legend items={[
+        { label: 'Tháng bình thường', color: c.accent, box: true },
+        { label: 'Tháng kho tin bị hổng', color: c.neg, box: true },
+        { label: 'Ngưỡng hổng (25% trung vị)', color: c.muted, dashed: true },
+      ]} />
+      <div className="chart" style={{ height: 260 }}>
+        <ResponsiveContainer>
+          <BarChart data={data} margin={{ top: 8, right: 12, bottom: 4, left: -12 }} barCategoryGap={1}>
+            <CartesianGrid stroke={c.grid} vertical={false} />
+            <XAxis dataKey="thang" ticks={firstOfYear} tickFormatter={(v) => v.slice(0, 4)} {...axisProps(c)} interval={0} />
+            <YAxis {...axisProps(c)} width={44} tickFormatter={(v) => fmt(v, 0)} />
+            <Tooltip cursor={{ fill: c.band }} content={({ active, payload }) => active && payload?.length ? (
+              <TipBox title={`Tháng ${payload[0].payload.thang.split('-').reverse().join('/')}`} rows={[
+                { label: 'Tin / mã', color: payload[0].payload.hong ? c.neg : c.accent, value: fmt(payload[0].payload.tin_moi_ma, 1) },
+                { label: 'Tổng số tin', color: 'transparent', value: fmt(payload[0].payload.so_tin, 0) },
+                { label: 'Số mã đã thu thập', color: 'transparent', value: fmt(payload[0].payload.so_ma, 0) },
+              ]} />
+            ) : null} />
+            {threshold != null && <ReferenceLine y={threshold} stroke={c.muted} strokeDasharray="5 4" />}
+            {gaps.length > 0 && (
+              <ReferenceArea x1={gaps[0]} x2={gaps[gaps.length - 1]} fill={c.neg} fillOpacity={0.12} ifOverflow="extendDomain"
+                label={{ value: `Hổng ${gaps.map((g) => g.slice(5)).join('–')}/${gaps[0].slice(0, 4)}`, position: 'insideTop', fill: c.text, fontSize: 11, fontWeight: 600 }} />
+            )}
+            <Bar dataKey="tin_moi_ma" isAnimationActive={false} radius={[2, 2, 0, 0]}>
+              {data.map((d) => <Cell key={d.thang} fill={d.hong ? c.neg : c.accent} />)}
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    </>
   )
 }
