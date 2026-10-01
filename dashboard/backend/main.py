@@ -312,7 +312,7 @@ def _junk_line(s: str) -> bool:
 
 def readable_view(text: str, lang: str):
     hidden = _xbrl_ranges(text) if lang == "en" else []
-    chars, scrambled = list(text), False
+    chars = list(text)
     if lang == "vi":
         pos, lines = 0, []
         for ln in text.split("\n"):
@@ -324,23 +324,17 @@ def readable_view(text: str, lang: str):
             elif ln.strip() and run:
                 hidden.append([run[0][0], min(run[-1][1] + 1, len(text)), f"{len(run)} dòng nhiễu OCR"])
                 run = []
-        # PDF nhiều cột: lớp chữ đọc theo hàng ngang nên dòng của các cột xen kẽ nhau → nhiều "đoạn" bắt đầu bằng chữ thường.
-        paras = [p.strip() for p in re.split(r"\n\s*\n", text) if len(p.strip()) > 20]
-        low = sum(bool(re.match(r"[a-zà-ỹđ]", p)) for p in paras) / max(len(paras), 1)
-        scrambled = len(paras) >= 8 and low > 0.3
-        # nối dòng bị ngắt giữa câu: giữ xuống dòng sau dấu kết câu + dòng sau viết hoa, và sau dòng tiêu đề in hoa.
-        # Dòng cách nhau bởi dòng trống chỉ nối khi dòng sau bắt đầu bằng chữ thường (và văn bản không bị xen cột).
+        # nối dòng bị ngắt giữa câu (kể cả khi PDF tách mỗi dòng thành một khối, cách nhau dòng trống): giữ xuống dòng
+        # sau dấu kết câu + dòng sau viết hoa, và sau dòng tiêu đề in hoa. Thứ tự cột đã được sửa tận gốc ở v03 (#65).
         body = [(s, e, ln) for s, e, ln in lines if ln.strip() and not _junk_line(ln)]
         for (s1, e1, a), (s2, e2, b) in zip(body, body[1:]):
             heading = a.strip().upper() == a.strip() and len(WORD2.findall(a)) <= 12
             if heading or (LINE_END.search(a) and LINE_START.match(b)):
                 continue
-            gap = text[e1:s2]
-            if gap.count("\n") == 1 or (not scrambled and re.match(r"\s*[a-zà-ỹđ]", b)):
-                for k in range(e1, s2):
-                    chars[k] = " "
+            for k in range(e1, s2):
+                chars[k] = " "
     hidden.sort()
-    return {"text": "".join(chars), "hidden": hidden, "scrambled": scrambled}
+    return {"text": "".join(chars), "hidden": hidden}
 
 
 def _read_text(mkt, name):
@@ -709,6 +703,9 @@ def report():
             "n": int(len(eo)), "n_overlap": int(ov.sum()),
             "abs_car_overlap_pct": 100 * eo.car_0_3[ov].abs().mean(), "abs_car_other_pct": 100 * eo.car_0_3[~ov].abs().mean(),
             "excl": _coef_cell(rx.set_index(rx.columns[0]).loc["fin_neg_z"].iloc[2]) if rx is not None else None}
+    # Mỹ: bỏ khối XBRL khỏi toàn văn 10-K (#64) – hệ số trước/sau và độ thay đổi của biến tone
+    out["markets"]["us"]["xbrl_fix"] = _records(_csv("outputs", "us", "xbrl_fix_effect.csv"))
+    out["markets"]["us"]["xbrl_fix_tone"] = _records(_csv("outputs", "us", "xbrl_fix_tone.csv"))
     # VN: tầng AI sửa OCR, rà trang, độ chính xác OCR, tin tức CafeF
     ev = _csv("outputs", "vn", "ocr_eval.csv")
     tone_dev = _csv("outputs", "vn", "ocr_eval_tone.csv")
@@ -718,6 +715,10 @@ def report():
         "ocr_tone": _records(tone_dev[tone_dev.mae_fin_net.notna()][["method", "mae_fin_net", "n_pages"]]) if tone_dev is not None else [],
         "llm_effect": _effect("llm_ocr_effect.csv"),
         "page_fix": _effect("page_fix_effect.csv"),
+        "goc_fix": _effect("goc_fix_effect.csv"),            # #65: thứ tự cột + AI mọi trang OCR + rà 134 thư
+        "goc_fix_tone": _records(_csv("outputs", "vn", "goc_fix_tone.csv")),
+        "extra": _records(_csv("outputs", "vn", "extra_results.csv")),   # #66: phân tích bổ sung đăng ký trước
+        "extra_summary": _kv("outputs", "vn", "extra_summary.csv"),
         "news": _kv("outputs", "vn", "news_summary.csv"),
         "news_monthly": _records(_csv("outputs", "vn", "news_coverage_monthly.csv")),
     }

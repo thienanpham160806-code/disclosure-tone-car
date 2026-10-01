@@ -102,8 +102,11 @@ function Body({ d, go }) {
   // ---- số dùng nhiều lần
   const nWin = V.coefficients.filter((r) => !r.placebo).length
   const alpha = 0.05 / nWin
-  const pf = (mo) => X.page_fix.find((r) => r.mo_hinh === mo)
-  const p05 = pf('CAR[0,5]')?.p_sau, p010 = pf('CAR[0,10]')?.p_sau, pMain = pf('M2 fin_neg')?.p_sau
+  const fx = X.goc_fix?.length ? X.goc_fix : X.page_fix          // bảng trước/sau mới nhất (#65), dự phòng bảng #55
+  const pf = (mo) => fx.find((r) => r.mo_hinh === mo)
+  const p05 = pf('CAR[0,5]')?.p_sau, p010 = pf('CAR[0,10]')?.p_sau, pMain = pf('M2 fin_neg')?.p_sau, pPlc = pf('Placebo −60 phiên')?.p_sau
+  const pass05 = p05 != null && p05 < alpha
+  const genStars = U.m4.gen_neg_z?.stars || ''
   const vnFound = fun(V, 'Tìm được'), vnNotFound = fun(V, 'không tìm thấy'), vnPdf = fun(V, 'Mã–năm có BCTN')
   const vnT0 = fun(V, 'Có ngày sự kiện'), vnCar = fun(V, 'Có CAR (đủ'), vnCar03 = fun(V, 'Có CAR[0,3]')
   const vnManual = vnPdf - vnFound - vnNotFound
@@ -140,7 +143,9 @@ function Body({ d, go }) {
               không có ý nghĩa; kết luận giữ nguyên trong mọi phép kiểm tra độ vững (MD&amp;A, tf-idf, FinBERT, bỏ 10-K trùng KQKD).</li>
             <li><b>Việt Nam:</b> ở cửa sổ chính [0, 3] hệ số đúng dấu kỳ vọng ({fmtSigned(O.vn.main.pp_per_sd, 2)} điểm %) nhưng không có ý nghĩa (p = {p3(pMain)}).
               Ở [0, 5] hệ số có ý nghĩa ({fmtSigned(O.vn.car05.pp_per_sd, 2)} điểm %, p = {p3(p05)}) – gợi ý thị trường phản ứng chậm –
-              nhưng <b>không qua</b> hiệu chỉnh Bonferroni cho {nWin} cửa sổ (ngưỡng {fmt(alpha, 4)}), nên chỉ là bằng chứng yếu.</li>
+              {pass05
+                ? <> và <b>qua</b> hiệu chỉnh Bonferroni cho {nWin} cửa sổ (ngưỡng {fmt(alpha, 4)}); tuy vậy p đã dao động quanh ngưỡng qua các bước làm sạch dữ liệu và các phân tích bổ sung đăng ký trước không xác nhận thêm, nên vẫn là bằng chứng chưa vững.</>
+                : <> nhưng <b>không qua</b> hiệu chỉnh Bonferroni cho {nWin} cửa sổ (ngưỡng {fmt(alpha, 4)}), nên chỉ là bằng chứng yếu.</>}</li>
             <li><b>Từ điển tổng quát dùng sai chỗ:</b> {fmt(U.noise_pct, 1)}% (Harvard GI, Mỹ) và {fmt(V.noise_pct, 1)}% (VietSentiWordNet, VN) số lần
               gắn nhãn “tiêu cực” rơi vào từ không hề tiêu cực trong tài chính – như TAX, COST hay “thương” trong “thương mại”.</li>
           </ul>
@@ -280,10 +285,11 @@ function Body({ d, go }) {
             </tbody>
           </table>
         </Figure>
-        <Callout kind="warn" title="Một kết quả “có ý nghĩa” nhưng vô lý">
-          Ở Mỹ, thước đo tổng quát cho hệ số <b>dương</b> và có ý nghĩa: đọc theo nghĩa đen là “văn bản càng tiêu cực, giá càng tăng”. Giải thích hợp lý là gen_neg
+        <Callout kind="warn" title="Thước đo tổng quát cho dấu vô lý">
+          Ở Mỹ, thước đo tổng quát cho hệ số <b>dương</b>{genStars ? ` (mức ${genStars === '*' ? '10%' : genStars === '**' ? '5%' : '1%'} trong M4)` : ''}: đọc theo nghĩa đen là “văn bản càng tiêu cực, giá càng tăng”. Giải thích hợp lý là gen_neg
           chủ yếu đo mật độ TAX, COST, CAPITAL… tức đặc điểm ngành và cấu trúc 10-K, không phải tin xấu. Đây đúng là kiểu suy luận sai mà Loughran &amp; McDonald (2011)
-          cảnh báo khi dùng từ điển tổng quát cho văn bản tài chính.
+          cảnh báo khi dùng từ điển tổng quát cho văn bản tài chính. Trước khi bỏ khối dữ liệu máy XBRL khỏi toàn văn 10-K (mục 5), hệ số này lớn và có ý nghĩa hơn,
+          vì khối XBRL chứa các tên mục như LAWSUIT, COMPLAINT mà Harvard GI đếm là tiêu cực.
         </Callout>
       </Section>
 
@@ -348,15 +354,50 @@ function Body({ d, go }) {
             <CoefPlot rows={M.coefficients} />
           </Figure>
         ))}
-        <Callout kind="warn" title={`Vì sao không coi kết quả CAR[0, 5] ở Việt Nam là bằng chứng chắc chắn?`}>
+        <Callout kind="warn" title={`Vì sao chưa coi kết quả CAR[0, 5] ở Việt Nam là bằng chứng chắc chắn?`}>
           <ul>
-            <li><b>Kiểm định nhiều lần:</b> có {nWin} cửa sổ được thử. Theo hiệu chỉnh Bonferroni, ngưỡng là 0,05 / {nWin} ≈ <N>{fmt(alpha, 4)}</N>; p của [0, 5] là <N>{p3(p05)}</N> → không qua.</li>
+            <li><b>Kiểm định nhiều lần:</b> có {nWin} cửa sổ được thử. Theo hiệu chỉnh Bonferroni, ngưỡng là 0,05 / {nWin} ≈ <N>{fmt(alpha, 4)}</N>; p của [0, 5] là <N>{p3(p05)}</N> → {pass05 ? 'qua, nhưng sát ngưỡng' : 'không qua'}.</li>
             <li><b>Không nhất quán:</b> cửa sổ dài hơn [0, 10] không có ý nghĩa (p = {p3(p010)}).</li>
-            <li><b>Placebo:</b> CAR placebo trung bình cũng âm có ý nghĩa (mục 4.1).</li>
-            <li><b>Nhạy với làm sạch dữ liệu:</b> p dao động quanh ngưỡng qua các bước sửa văn bản (mục 5).</li>
+            <li><b>Placebo:</b> CAR placebo trung bình cũng âm có ý nghĩa (mục 4.1); hệ số placebo có p = {p3(pPlc)}.</li>
+            <li><b>Nhạy với làm sạch dữ liệu:</b> p của [0, 5] dao động quanh ngưỡng qua các bước sửa văn bản (mục 5).</li>
+            <li><b>Phân tích bổ sung đăng ký trước</b> (mục 4.4): không kiểm định chính nào có ý nghĩa.</li>
           </ul>
           Kết luận đúng mực: tone tiêu cực ở VN <b>có thể</b> đi kèm phản ứng chậm trong khoảng một tuần, nhưng bằng chứng còn yếu.
         </Callout>
+        {X.extra?.length > 0 && (
+          <>
+            <Sub id="muc-4-4" no="4.4">Phân tích bổ sung đã đăng ký trước: ngày công bố thật, thay đổi tone, bỏ sự kiện trùng tin</Sub>
+            <Callout kind="method" title="Đăng ký trước – chốt cách làm trước khi xem kết quả">
+              Ba hướng tăng độ nhạy được ghi vào nhật ký (CHANGELOG #66) và đưa lên GitHub <b>trước khi chạy</b>, để không thể chọn cách làm sau khi đã thấy kết quả.
+              CAR[0, 3] vẫn là biến phụ thuộc chính; 4 kiểm định chính nên ngưỡng Bonferroni là 0,05 / 4 = <N>{fmt(X.extra_summary['Ngưỡng Bonferroni (4 kiểm định chính)'], 4)}</N>; CAR[0, 5] chỉ để mô tả.
+              <ul>
+                <li><b>S1 – ngày công bố thật:</b> T = 0 là ngày CafeF đăng tin “Báo cáo thường niên năm …” ({fmtInt(X.extra_summary['Sự kiện có ngày CafeF và CAR'])} sự kiện có tin). So với ngày hoàn thiện PDF, tin công bố muộn hơn trung vị {fmt(X.extra_summary['Ngày CafeF − ngày ModDate (phiên): trung vị'], 0)} phiên.</li>
+                <li><b>S2 – thay đổi tone:</b> tone năm nay trừ tone năm trước của chính công ty ({fmtInt(X.extra_summary['Sự kiện có thư năm trước (Δtone)'])} sự kiện).</li>
+                <li><b>S3 – bỏ sự kiện trùng tin:</b> loại {fmtInt(X.extra_summary['Sự kiện trùng tin KQKD/ĐHĐCĐ trong [0,3] (T=0 ModDate)'])} sự kiện có tin KQKD hoặc ĐHĐCĐ trong [T, T+3].</li>
+                <li><b>S4:</b> kết hợp cả ba ({fmtInt(X.extra_summary['Mẫu S4'])} sự kiện).</li>
+              </ul>
+            </Callout>
+            <Figure kind="Bảng" no="5b" title="Kết quả các phân tích bổ sung đã đăng ký trước (Việt Nam)"
+              read="Mỗi dòng: hệ số tone (đã chuẩn hóa) → CAR, kèm p. Ô in đậm = qua ngưỡng Bonferroni của 4 kiểm định chính. Dòng “đối chiếu” chạy mô hình cũ trên cùng mẫu để so sánh."
+              caption="Không kiểm định chính nào qua ngưỡng. Chuyển sang ngày công bố thật làm hệ số trên cùng nhóm sự kiện đổi từ dương sang âm (đúng hướng kỳ vọng) nhưng mẫu nhỏ nên sai số lớn; bỏ sự kiện trùng tin làm hệ số [0, 5] lớn hơn."
+              source={['outputs/vn/extra_results.csv', 'outputs/vn/extra_summary.csv', 'outputs/vn/extra_dates.csv']}>
+              <div className="table-wrap">
+                <table className="table">
+                  <thead><tr><th>Mô hình</th><th>Mẫu</th><th>Biến phụ thuộc</th><th className="num">N</th><th className="num">Điểm % khi +1 SD</th><th className="num">p</th></tr></thead>
+                  <tbody>
+                    {X.extra.map((r) => (
+                      <tr key={r.mo_hinh + r.bien_phu_thuoc} className={r.mo_hinh.startsWith('Đối chiếu') ? 'row-main' : ''}>
+                        <td>{r.mo_hinh}</td><td className="muted-cell">{r.mau}</td><td>{r.bien_phu_thuoc === 'car_0_3' ? 'CAR[0, 3]' : 'CAR[0, 5] (mô tả)'}</td>
+                        <td className="num">{fmtInt(r.N)}</td><td className="num">{fmtSigned(r.diem_pct_khi_tang_1SD, 2)}</td>
+                        <td className={`num ${r.vuot_bonferroni === true ? 'sig' : ''}`}>{p3(r.p)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </Figure>
+          </>
+        )}
         {eo && (
           <Callout kind="method" title="Mỹ – kiểm tra thêm: 10-K trùng ngày công bố kết quả kinh doanh">
             {fmtInt(eo.n_overlap)}/{fmtInt(eo.n)} hồ sơ 10-K ({fmt(100 * eo.n_overlap / eo.n, 1)}%) nộp trong vòng ±3 ngày quanh thông cáo KQKD (8-K mục 2.02);
@@ -368,15 +409,15 @@ function Body({ d, go }) {
       </Section>
 
       {/* ======================================================= 5. CHẤT LƯỢNG VĂN BẢN VN */}
-      <Section id="muc-5" no="5" title="Chất lượng văn bản Việt Nam: AI sửa OCR và rà lại trang" kicker="Độ vững">
+      <Section id="muc-5" no="5" title="Chất lượng văn bản: AI sửa OCR, thứ tự cột, rà trang, bỏ dữ liệu máy" kicker="Độ vững">
         <P>
           Nhiều BCTN là bản scan hoặc chữ trên nền màu, nên phải đọc bằng OCR (Tesseract) – và OCR tiếng Việt hay sai dấu. Sai số đo lường kéo hệ số về 0
-          (attenuation bias), nên chúng tôi thêm một <b>tầng AI có kiểm soát</b>: chỉ trang có điểm chất lượng chữ dưới 0,85 mới gửi ảnh cho Gemini để
-          <b> chép nguyên văn</b> (temperature = 0), và chỉ nhận bản AI khi chất lượng không giảm.
+          (attenuation bias), nên chúng tôi thêm một <b>tầng AI có kiểm soát</b>: trang có điểm chất lượng chữ dưới 0,85 – và từ bản sửa tận gốc, <b>mọi trang phải OCR</b> – được gửi ảnh cho Gemini để
+          <b> chép nguyên văn</b> (temperature = 0), và chỉ nhận bản AI khi chất lượng không giảm. Trang nhiều cột được đọc theo thứ tự cột.
         </P>
         <div className="kpis">
           <Kpi value={fmtInt(pick(llm, 'Trang thuộc thư'))} label="trang thuộc thư lãnh đạo" />
-          <Kpi value={fmtInt(pick(llm, 'Trang gửi AI'))} label="trang dưới ngưỡng, gửi AI" />
+          <Kpi value={fmtInt(pick(llm, 'Trang gửi AI'))} label="trang gửi AI (dưới ngưỡng hoặc phải OCR)" />
           <Kpi value={fmtInt(pick(llm, 'Trang nhận bản AI'))} label="trang nhận bản AI" />
           <Kpi value={`≈ ${fmt(pick(llm, 'Tổng chi phí'), 2)} USD`} label="chi phí nếu trả phí (gói miễn phí: 0 đồng)" />
         </div>
@@ -388,15 +429,36 @@ function Body({ d, go }) {
             items={ocr.map((o) => ({ label: OCR_NAME[o.method] || o.method, value: 100 * o.cer, color: o.method === 'llm_vision' ? c.accent : c.muted }))} />
         </Figure>
         <P>
-          Ngoài ra, trang thư được <b>rà lại bằng ảnh PDF</b> cho 104 thư (thư bị cắt ở trần 6 trang, thư không có lời chào / câu kết) – nhiều trường hợp bước trích
-          tự động bắt nhầm trang mục lục. Bảng 5 cho thấy kết quả chính qua từng bước làm sạch:
+          Ngoài ra, trang thư được <b>rà lại bằng ảnh PDF</b> trong ba đợt – 104 thư (bị cắt ở trần 6 trang, không có lời chào / câu kết) và 134 thư trong đợt sửa tận gốc
+          (lẫn mục lục, bìa chương, thư TGĐ; thiếu trang cuối). Bảng 5 cho thấy kết quả chính qua từng bước làm sạch:
         </P>
-        <Figure kind="Bảng" no="5" title="Hệ số qua ba bước làm sạch văn bản Việt Nam"
+        <Figure kind="Bảng" no="5" title="Hệ số qua các bước làm sạch văn bản Việt Nam"
           read="Mỗi ô: hệ số (p). Nếu kết luận vững, dấu và độ lớn phải gần như không đổi giữa các cột."
-          caption="Hệ số giữ dấu và tăng nhẹ về độ lớn sau tầng AI – đúng hướng của việc giảm sai số đo lường. Kết luận cho CAR[0, 3] không đổi. CAR[0, 5] dao động quanh ngưỡng Bonferroni: đây là lý do coi nó là bằng chứng yếu."
-          source={['outputs/vn/llm_ocr_effect.csv', 'outputs/vn/page_fix_effect.csv']}>
-          <EffectTable llm={X.llm_effect} fix={X.page_fix} alpha={alpha} />
+          caption="Hệ số giữ dấu qua mọi bước – kết luận cho CAR[0, 3] không đổi. CAR[0, 5] dao động quanh ngưỡng Bonferroni (ô in đậm = qua ngưỡng): kết quả này nhạy với chất lượng trích văn bản."
+          source={['outputs/vn/llm_ocr_effect.csv', 'outputs/vn/page_fix_effect.csv', 'outputs/vn/goc_fix_effect.csv']}>
+          <EffectTable llm={X.llm_effect} fix={X.page_fix} goc={X.goc_fix} alpha={alpha} />
         </Figure>
+        {U.xbrl_fix?.length > 0 && (
+          <Figure kind="Bảng" no="5c" title="Mỹ: bỏ khối dữ liệu máy XBRL lọt vào toàn văn 10-K"
+            read="Mỗi ô: hệ số (p) trước và sau khi bỏ khối XBRL. Tone tài chính gần như không đổi; thước đo tổng quát đổi nhiều hơn vì khối XBRL chứa các tên mục như LAWSUIT, COMPLAINT."
+            caption={`Tương quan trước/sau theo hồ sơ: ${(U.xbrl_fix_tone || []).filter((t) => ['fin_neg', 'gen_neg', 'fin_net'].includes(t.bien)).map((t) => `${t.bien} ${fmt(t.tuong_quan, 4)}`).join(' · ')}.`}
+            source={['outputs/us/xbrl_fix_effect.csv', 'outputs/us/xbrl_fix_tone.csv']}>
+            <div className="table-wrap">
+              <table className="table">
+                <thead><tr><th>Mô hình → biến</th><th>Biến phụ thuộc</th><th className="num">Trước</th><th className="num">Sau (hiện tại)</th></tr></thead>
+                <tbody>
+                  {U.xbrl_fix.filter((r) => ['M2 fin_neg', 'M3 gen_neg', 'M4 đối đầu', 'M8 FinBERT', 'CAR[0,5]', 'Placebo −60 phiên'].includes(r.mo_hinh)).map((r) => (
+                    <tr key={r.mo_hinh + r.bien} className={r.mo_hinh === 'M2 fin_neg' ? 'row-main' : ''}>
+                      <td>{r.mo_hinh} · <code>{r.bien}</code></td><td>{r.bien_phu_thuoc}</td>
+                      <td className="num">{fmtSigned(r.he_so_truoc, 4)} <span className="muted-cell">({p3(r.p_truoc)})</span></td>
+                      <td className="num">{fmtSigned(r.he_so_sau, 4)} <span className="muted-cell">({p3(r.p_sau)})</span></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Figure>
+        )}
       </Section>
 
       {/* ======================================================= 6. TIN TỨC */}
@@ -451,7 +513,7 @@ function Body({ d, go }) {
                 <tr><td>Giọng điệu văn bản</td><td>Tiêu cực, mang tính pháp lý (tone ròng {fmtSigned(tdU.fin_net.mean, 2)})</td><td>Rất tích cực, mang tính quan hệ cổ đông ({fmtSigned(tdV.fin_net.mean, 2)})</td></tr>
                 <tr><td>CAR[0, 3] trung bình</td><td>{fmtSigned(car03U.mean_pct, 2)}% (p = {p3(car03U.p_t)}) ≈ 0</td><td>{fmtSigned(car03V.mean_pct, 2)}% (p = {p3(car03V.p_t)}) ≈ 0</td></tr>
                 <tr><td>Tone → CAR[0, 3]</td><td><Mark ok={false} /> Không</td><td><Mark ok={false} /> Đúng dấu, không có ý nghĩa</td></tr>
-                <tr><td>Tone → CAR dài hơn</td><td><Mark ok={false} /> Không</td><td><Mark ok /> Có ý nghĩa ở [0, 5] – nhưng không qua Bonferroni, chưa vững</td></tr>
+                <tr><td>Tone → CAR dài hơn</td><td><Mark ok={false} /> Không</td><td><Mark ok /> Có ý nghĩa ở [0, 5] (p = {p3(p05)}) – {pass05 ? 'qua Bonferroni nhưng sát ngưỡng' : 'không qua Bonferroni'}, chưa vững</td></tr>
                 <tr><td>Tỷ lệ phiên lợi suất = 0 (trung vị)</td><td>{fmt(100 * U.diag.zero_ret_share_trung_vi, 1)}%</td><td>{fmt(100 * V.diag.zero_ret_share_trung_vi, 1)}%</td></tr>
               </tbody>
             </table>
@@ -478,7 +540,7 @@ function Body({ d, go }) {
           <Limit no="4" title="Sự kiện trùng thời điểm">BCTN ở VN ra sát ĐHĐCĐ và mùa KQKD quý 1: {fmtInt(news["Sự kiện có tin 'dhdcd' trong [0, 5]"])} sự kiện có tin ĐHĐCĐ và {fmtInt(news["Sự kiện có tin 'kqkd' trong [0, 5]"])} có tin KQKD trong [T, T+5] (mục 6). Cửa sổ dài có thể lẫn các tin này.</Limit>
           <Limit no="5" title="Trích văn bản và OCR">Mẫu QC 10% cho tỷ lệ sai trang khoảng 17% (chủ yếu lẫn mục lục); các thư nhóm rủi ro cao đã rà bằng ảnh, phần còn lại chưa. Bản AI có thể chép sai hay bỏ sót dòng dù đã khóa temperature = 0.</Limit>
           <Limit no="6" title="Dữ liệu giá VN">Giá điều chỉnh của CafeF có vài bước nhảy nghi chưa điều chỉnh sự kiện doanh nghiệp (MWG, BSR, VTP); không bước nào rơi vào cửa sổ sự kiện.</Limit>
-          <Limit no="7" title="Kiểm định nhiều lần">{nWin} cửa sổ × nhiều mô hình. Kết quả đơn lẻ có ý nghĩa (VN [0, 5]) không qua ngưỡng Bonferroni và từng qua rồi lại không qua qua các bước làm sạch.</Limit>
+          <Limit no="7" title="Kiểm định nhiều lần">{nWin} cửa sổ × nhiều mô hình. Kết quả đơn lẻ có ý nghĩa (VN [0, 5], p = {p3(p05)}) {pass05 ? 'hiện qua' : 'không qua'} ngưỡng Bonferroni, nhưng đã lần lượt qua rồi không qua qua các bước làm sạch dữ liệu.</Limit>
           <Limit no="8" title="Mỹ">Biến chính chỉ dùng file 10-K chính, không gồm exhibit; công ty để MD&amp;A ở Exhibit 13 (IBM, WFC…) có văn bản ngắn hơn hẳn.</Limit>
         </div>
       </Section>
@@ -602,15 +664,19 @@ function CarTestTable({ rows, V, U }) {
   )
 }
 
+function GocCell({ g, alpha, cellOf }) {
+  return <td className={`num ${g && g.p_sau < alpha ? 'sig' : ''}`}>{g ? cellOf(g.he_so_sau, g.p_sau) : '–'}</td>
+}
+
 const EFFECT_NAME = { 'M2 fin_neg': 'fin_neg_z → CAR[0, 3]', 'M3 gen_neg': 'gen_neg_z → CAR[0, 3]', 'M5 net+unc': 'fin_unc_z → CAR[0, 3]',
   'CAR[0,5]': 'fin_neg_z → CAR[0, 5]', 'CAR[0,10]': 'fin_neg_z → CAR[0, 10]', 'Placebo −60 phiên': 'fin_neg_z → Placebo' }
 
-function EffectTable({ llm, fix, alpha }) {
+function EffectTable({ llm, fix, goc = [], alpha }) {
   const cellOf = (b, p) => <>{fmtSigned(b, 4)} <span className="muted-cell">({p3(p)})</span></>
   return (
     <div className="table-wrap">
       <table className="table">
-        <thead><tr><th>Hệ số → biến phụ thuộc</th><th className="num">OCR thuần</th><th className="num">+ AI sửa OCR</th><th className="num">+ rà lại trang (hiện tại)</th></tr></thead>
+        <thead><tr><th>Hệ số → biến phụ thuộc</th><th className="num">OCR thuần</th><th className="num">+ AI sửa OCR</th><th className="num">+ rà 104 thư</th>{goc.length > 0 && <th className="num">+ sửa tận gốc (hiện tại)</th>}</tr></thead>
         <tbody>
           {fix.map((f) => {
             const l = llm.find((r) => r.mo_hinh === f.mo_hinh && r.bien === f.bien)
@@ -620,10 +686,11 @@ function EffectTable({ llm, fix, alpha }) {
                 <td className="num">{l ? cellOf(l.he_so_truoc, l.p_truoc) : '–'}</td>
                 <td className="num">{cellOf(f.he_so_truoc, f.p_truoc)}</td>
                 <td className={`num ${f.p_sau < alpha ? 'sig' : ''}`}>{cellOf(f.he_so_sau, f.p_sau)}</td>
+                {goc.length > 0 && <GocCell g={goc.find((r) => r.mo_hinh === f.mo_hinh && r.bien === f.bien)} alpha={alpha} cellOf={cellOf} />}
               </tr>
             )
           })}
-          <tr><td>N (CAR[0, 3])</td><td className="num">{fmtInt(llm[0]?.N_truoc)}</td><td className="num">{fmtInt(fix[0]?.N_truoc)}</td><td className="num">{fmtInt(fix[0]?.N_sau)}</td></tr>
+          <tr><td>N (CAR[0, 3])</td><td className="num">{fmtInt(llm[0]?.N_truoc)}</td><td className="num">{fmtInt(fix[0]?.N_truoc)}</td><td className="num">{fmtInt(fix[0]?.N_sau)}</td>{goc.length > 0 && <td className="num">{fmtInt(goc[0]?.N_sau)}</td>}</tr>
         </tbody>
       </table>
     </div>

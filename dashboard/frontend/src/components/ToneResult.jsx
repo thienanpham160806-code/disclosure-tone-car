@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { fmt, fmtSigned, fmtInt } from '../api'
-import { Legend, Note, Segmented } from './ui'
+import { Legend, Segmented } from './ui'
 
 const PRIORITY = ['negative', 'positive', 'uncertainty', 'litigious']
 const NAMES = { negative: 'Tiêu cực', positive: 'Tích cực', uncertainty: 'Bất định', litigious: 'Pháp lý' }
@@ -127,14 +127,8 @@ export default function ToneResult({ result }) {
           <b>Bản đọc</b> chỉ đổi cách hiển thị: nối các dòng bị ngắt giữa câu
           {rd.hidden.length ? `, thu gọn ${fmtInt(rd.hidden.length)} khối không phải chữ (${result.lang === 'en' ? 'dữ liệu máy XBRL' : 'ký tự lẻ, số trang, mảnh hình do OCR'})` : ''}.
           Số đếm phía trên vẫn tính trên văn bản đầy đủ.
-          {result.lang === 'vi' ? ' Lỗi chính tả do OCR (vd “cồ đồng”) là chữ thật trong dữ liệu đã chấm nên vẫn giữ nguyên.' : ' Văn bản 10-K được viết hoa toàn bộ theo quy ước đếm từ của Loughran–McDonald.'}
+          {result.lang === 'vi' ? ' Chữ hiển thị đúng như văn bản đã chấm: nếu còn lỗi chính tả do OCR thì đó là lỗi thật trong dữ liệu, không được sửa riêng cho phần hiển thị.' : ' Văn bản 10-K được viết hoa toàn bộ theo quy ước đếm từ của Loughran–McDonald.'}
         </p>
-      )}
-      {reading && rd.scrambled && (
-        <Note kind="warn">
-          Thư này in nhiều cột; lớp chữ của PDF được đọc theo hàng ngang nên các dòng của hai cột <b>xen kẽ nhau</b> – đọc sẽ thấy câu bị nhảy.
-          Đây là thứ tự trong dữ liệu đã trích, không phải lỗi hiển thị. Phép đếm từ (túi từ) gần như không bị ảnh hưởng bởi thứ tự dòng.
-        </Note>
       )}
       <Highlighted text={reading ? rd.text : result.text} spans={spans} mode={mode} hidden={reading ? rd.hidden : []} reading={reading} />
     </div>
