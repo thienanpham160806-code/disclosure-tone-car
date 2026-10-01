@@ -1,0 +1,13 @@
+﻿mo_hinh,mau,bien,bien_phu_thuoc,N,he_so,se,p,diem_pct_khi_tang_1SD,vuot_bonferroni
+"Đối chiếu: M2, T=0 ModDate",toàn mẫu,fin_neg,car_0_3,505,-0.0016,0.0019,0.3916,-0.16,False
+"S1 đối chiếu: M2, T=0 ModDate",chỉ sự kiện có ngày CafeF,fin_neg,car_0_3,166,0.0022,0.0028,0.442,0.22,False
+"S1: M2, T=0 CafeF",chỉ sự kiện có ngày CafeF,fin_neg,car_0_3,181,-0.0048,0.0034,0.161,-0.48,False
+"S1: M2, T=0 CafeF",chỉ sự kiện có ngày CafeF,fin_neg,car_0_5,180,-0.0065,0.004,0.1062,-0.65,
+"S2: Δfin_neg, T=0 ModDate",có thư năm trước,d_fin_neg,car_0_3,367,0.0,0.0027,0.9981,0.0,False
+"S2: Δfin_neg, T=0 ModDate",có thư năm trước,d_fin_neg,car_0_5,367,-0.0033,0.0027,0.2265,-0.33,
+"S2 phụ: Δfin_net, T=0 ModDate",có thư năm trước,d_fin_net,car_0_3,367,0.0003,0.0025,0.9028,0.03,False
+"S3: M2, bỏ sự kiện trùng tin KQKD/ĐHĐCĐ","không trùng tin trong [0,3]",fin_neg,car_0_3,291,-0.0023,0.0025,0.3424,-0.23,False
+"S3: M2, bỏ sự kiện trùng tin KQKD/ĐHĐCĐ","không trùng tin trong [0,3]",fin_neg,car_0_5,291,-0.0084,0.0035,0.016,-0.84,
+S3 độ nhạy: bỏ thêm sự kiện chạm tháng hổng,"không trùng tin, không chạm tháng hổng",fin_neg,car_0_3,268,-0.0025,0.0025,0.3193,-0.25,False
+"S4: Δfin_neg, T=0 CafeF, bỏ trùng tin",S1 ∩ S2 ∩ S3,d_fin_neg,car_0_3,72,-0.0076,0.0067,0.255,-0.76,False
+"S4: Δfin_neg, T=0 CafeF, bỏ trùng tin",S1 ∩ S2 ∩ S3,d_fin_neg,car_0_5,72,-0.0071,0.0084,0.3973,-0.71,

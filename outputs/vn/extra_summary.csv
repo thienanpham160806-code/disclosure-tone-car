@@ -1,0 +1,14 @@
+﻿chi_so,gia_tri
+Sự kiện có T=0 ModDate và CAR,508.0
+Sự kiện có ngày CafeF và CAR,182.0
+Ngày CafeF − ngày ModDate (phiên): trung vị,1.0
+  p10,0.0
+  p90,2.0
+  trùng phiên (lệch 0),38.0
+  CafeF muộn hơn,119.0
+  CafeF sớm hơn,11.0
+Sự kiện có thư năm trước (Δtone),370.0
+"Sự kiện trùng tin KQKD/ĐHĐCĐ trong [0,3] (T=0 ModDate)",215.0
+Sự kiện còn lại sau S3,293.0
+Mẫu S4,72.0
+Ngưỡng Bonferroni (4 kiểm định chính),0.0125
