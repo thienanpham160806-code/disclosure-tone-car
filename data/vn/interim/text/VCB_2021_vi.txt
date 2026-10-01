@@ -1,81 +1,6 @@
-Chương
-
-VƯỢT TRỘI NHỜ
-NỀN TẢNG VỮNG CHÃI
-
-Giới thiệu
-Vietcombank
-
-Thông điệp của Chủ tịch HĐQT
-và Tổng Giám đốc
-
-8
-
-Thông tin khái quát
-
-12
-
-Giới thiệu Vietcombank
-
-14
-
-Lịch sử hình thành và phát triển
-
-15
-
-Ngành nghề và địa bàn kinh doanh
-
-17
-
-10 dấu ấn tiêu biểu của
-Vietcombank năm 2021
-
-20
-
-Mô hình quản trị và cơ cấu
-bộ máy quản lý
-
-26
-
-Các chỉ số tài chính cơ bản
-
-30
-
-Định hướng phát triển
-
-34
-
-Giải thưởng Vietcombank năm 2021
-
-36
-
-Vietcombank - Báo cáo thường niên 2021
-Chương 1 - Giới thiệu Vietcombank 
-6
-7
-
 THÔNG ĐIỆP CỦA CHỦ TỊCH HĐQT
 VÀ PHÓ TỔNG GIÁM ĐỐC PHỤ TRÁCH 
 BAN ĐIỀU HÀNH
-
-Năm 2021, thế giới tiếp tục chứng kiến sự hoành hành của đại 
-dịch COVID-19 với nhiều biến chủng nguy hiểm, gây tổn thất 
-nặng nề về con người và kinh tế xã hội. Tại Việt Nam, nhiều địa 
-phương phải áp dụng giãn cách, phong tỏa kéo dài làm gián đoạn 
-sản xuất, đứt gẫy chuỗi cung ứng. Tuy nhiên, với sự điều hành 
-quyết liệt, linh hoạt, nhạy bén của Chính phủ, sự nỗ lực của doanh 
-nghiệp và người dân, Việt Nam đã từng bước thích ứng với dịch 
-bệnh và có sự phục hồi kinh tế mạnh mẽ trong Quý IV. GDP cả 
-năm tăng 2,58%; kim ngạch xuất nhập khẩu đạt 668,5 tỷ USD, 
-tăng 22,6% so với năm 2021; xuất siêu đạt 4 tỷ USD; lạm phát ở 
-mức 1,84% - mức thấp nhất kể từ năm 2016. 
-
-Vietcombank đã trích lập 100% dự phòng rủi ro cho dư nợ cơ cấu, 
-sớm trước 2 năm so với thời hạn quy định của Ngân hàng Nhà 
-nước. Tỉ lệ dự phòng bao nợ xấu đạt mức cao nhất trong ngành 
-ngân hàng (424%). Kết quả kinh doanh vượt trội đó đã được thị 
-trường đón nhận một cách tích cực với mức vốn hóa của ngân 
-hàng đạt khoảng 16,7 tỷ đô la Mỹ khi khép lại năm 2021. 
 
 Trong bối cảnh phải đối diện 
 với những khó khăn, thách 
@@ -90,15 +15,17 @@ của Vietcombank năm 2021
 đạt 27.389 tỷ đồng, tăng 19% 
 so với năm 2020
 
-Bên cạnh hoạt động kinh doanh, Vietcombank cũng chủ động 
-tích cực tham gia các hoạt động an sinh vì cộng đồng, thể hiện 
-rõ trách nhiệm xã hội của một thương hiệu lớn. Trong năm 2021, 
-Vietcombank đã thực hiện các chương trình an sinh xã hội với 
-tổng số tiền cam kết ~ 662 tỷ đồng, trong đó ủng hộ phòng 
-chống dịch bệnh COVID-19 số tiền ~ 381 tỷ đồng. Vietcombank 
-đã triển khai một loạt các chương trình, hoạt động ủng hộ, ưu 
-đãi, tri ân các lực lượng trên tuyến đầu chống dịch đặc biệt là đội 
-ngũ y bác sĩ. 
+Năm 2021, thế giới tiếp tục chứng kiến sự hoành hành của đại 
+dịch COVID-19 với nhiều biến chủng nguy hiểm, gây tổn thất 
+nặng nề về con người và kinh tế xã hội. Tại Việt Nam, nhiều địa 
+phương phải áp dụng giãn cách, phong tỏa kéo dài làm gián đoạn 
+sản xuất, đứt gẫy chuỗi cung ứng. Tuy nhiên, với sự điều hành 
+quyết liệt, linh hoạt, nhạy bén của Chính phủ, sự nỗ lực của doanh 
+nghiệp và người dân, Việt Nam đã từng bước thích ứng với dịch 
+bệnh và có sự phục hồi kinh tế mạnh mẽ trong Quý IV. GDP cả 
+năm tăng 2,58%; kim ngạch xuất nhập khẩu đạt 668,5 tỷ USD, 
+tăng 22,6% so với năm 2021; xuất siêu đạt 4 tỷ USD; lạm phát ở 
+mức 1,84% - mức thấp nhất kể từ năm 2016. 
 
 Trong bối cảnh phải đối diện với những khó khăn, thách thức 
 chung chưa từng có tiền lệ, Vietcombank đã hoàn thành xuất sắc 
@@ -109,6 +36,23 @@ tăng 19% so với năm 2020. Huy động vốn, tín dụng đều tăng
 trưởng vượt kế hoạch, góp phần tích cực cho quá trình phục hồi và 
 phát triển kinh tế xã hội của đất nước. Chất lượng tín dụng được 
 kiểm soát chặt chẽ, tỷ lệ nợ xấu rất thấp (0,63%).
+
+Vietcombank đã trích lập 100% dự phòng rủi ro cho dư nợ cơ cấu, 
+sớm trước 2 năm so với thời hạn quy định của Ngân hàng Nhà 
+nước. Tỉ lệ dự phòng bao nợ xấu đạt mức cao nhất trong ngành 
+ngân hàng (424%). Kết quả kinh doanh vượt trội đó đã được thị 
+trường đón nhận một cách tích cực với mức vốn hóa của ngân 
+hàng đạt khoảng 16,7 tỷ đô la Mỹ khi khép lại năm 2021. 
+
+Bên cạnh hoạt động kinh doanh, Vietcombank cũng chủ động 
+tích cực tham gia các hoạt động an sinh vì cộng đồng, thể hiện 
+rõ trách nhiệm xã hội của một thương hiệu lớn. Trong năm 2021, 
+Vietcombank đã thực hiện các chương trình an sinh xã hội với 
+tổng số tiền cam kết ~ 662 tỷ đồng, trong đó ủng hộ phòng 
+chống dịch bệnh COVID-19 số tiền ~ 381 tỷ đồng. Vietcombank 
+đã triển khai một loạt các chương trình, hoạt động ủng hộ, ưu 
+đãi, tri ân các lực lượng trên tuyến đầu chống dịch đặc biệt là đội 
+ngũ y bác sĩ. 
 
 Chủ tịch HĐQT
 PHẠM QUANG DŨNG
@@ -121,15 +65,6 @@ Vietcombank - Báo cáo thường niên 2021
 THÔNG ĐIỆP CỦA CHỦ TỊCH HĐQT
 VÀ PHÓ TỔNG GIÁM ĐỐC PHỤ TRÁCH 
 BAN ĐIỀU HÀNH
-
-Bước sang năm 2022 với thời cơ và thách thức đan xen, để hiện 
-thực hóa tầm nhìn và các mục tiêu chiến lược, Vietcombank sẽ 
-tập trung: 
-
-đáp ứng sớm Basel II theo phương pháp tiêu chuẩn, Vietcombank 
-hướng đến là ngân hàng đầu tiên tại Việt Nam đáp ứng Basel II 
-theo phương pháp nâng cao và nghiên cứu triển khai các chuẩn 
-mực quản trị rủi ro cao hơn. 
 
 Để hoàn thành thắng lợi các 
 mục tiêu, định hướng chiến 
@@ -144,12 +79,34 @@ ngày càng bền chặt của hàng
 triệu quý khách hàng, hàng vạn 
 quý cổ đông.
 
+Phó Tổng Giám đốc
+phụ trách Ban điều hành
+NGUYỄN THANH TÙNG
+
+Bước sang năm 2022 với thời cơ và thách thức đan xen, để hiện 
+thực hóa tầm nhìn và các mục tiêu chiến lược, Vietcombank sẽ 
+tập trung: 
+
 Chuyển đổi toàn diện hoạt động ngân hàng bán lẻ với định hướng 
 xuyên suốt lấy khách hàng làm trọng tâm. Vietcombank tiếp tục 
 thực hiện chuyển đổi mô hình hoạt động bán lẻ một cách mạnh 
 mẽ, bền vững để mang đến các sản phẩm dịch vụ vượt trội trên 
 nền tảng công nghệ mới, đáp ứng tối đa nhu cầu của khách hàng, 
 phù hợp với đặc thù của từng phân khúc.
+
+Tập trung triển khai quyết liệt lộ trình chuyển đổi số với mục tiêu 
+dẫn đầu. Với những đổi mới số hóa mang tính đột phá trong 
+các năm gần đây, Vietcombank đã được vinh danh là “Ngân 
+hàng chuyển đổi số tiêu biểu của Việt Nam”. Trong năm 2022, 
+Vietcombank tiếp tục đẩy mạnh triển khai chương trình chuyển 
+đổi số; không ngừng đổi mới, sáng tạo, ứng dụng các thành tựu 
+công nghệ nổi bật nhằm gia tăng tiện ích, tối đa hóa trải nghiệm 
+và sự hài lòng của khách hàng.
+
+đáp ứng sớm Basel II theo phương pháp tiêu chuẩn, Vietcombank 
+hướng đến là ngân hàng đầu tiên tại Việt Nam đáp ứng Basel II 
+theo phương pháp nâng cao và nghiên cứu triển khai các chuẩn 
+mực quản trị rủi ro cao hơn. 
 
 Để hoàn thành thắng lợi các mục tiêu, định hướng chiến lược đã 
 đề ra, Ban lãnh đạo Vietcombank mong muốn và tin tưởng sẽ 
@@ -160,15 +117,6 @@ hàng vạn quý cổ đông. Đó chính là “nguồn vốn” quan trọng g
 Vietcombank tiếp tục phát triển nhanh, mạnh, bền vững, an toàn 
 và hiệu quả, từng bước vươn tầm khu vực và thế giới.
  
-
-Tập trung triển khai quyết liệt lộ trình chuyển đổi số với mục tiêu 
-dẫn đầu. Với những đổi mới số hóa mang tính đột phá trong 
-các năm gần đây, Vietcombank đã được vinh danh là “Ngân 
-hàng chuyển đổi số tiêu biểu của Việt Nam”. Trong năm 2022, 
-Vietcombank tiếp tục đẩy mạnh triển khai chương trình chuyển 
-đổi số; không ngừng đổi mới, sáng tạo, ứng dụng các thành tựu 
-công nghệ nổi bật nhằm gia tăng tiện ích, tối đa hóa trải nghiệm 
-và sự hài lòng của khách hàng.
 
 Vietcombank, chung niềm tin - vững tương lai.
 
@@ -184,68 +132,7 @@ NGUYỄN THANH TÙNG
 Chủ tịch HĐQT
 PHẠM QUANG DŨNG
 
-Phó Tổng Giám đốc
-phụ trách Ban điều hành
-NGUYỄN THANH TÙNG
-
 Chương 1 - Giới thiệu Vietcombank 
 11
 Vietcombank - Báo cáo thường niên 2021
 10
-
-THÔNG TIN KHÁI QUÁT
-
-TÊN GIAO DỊCH
-
-Tên công ty bằng tiếng Việt:
-NGÂN HÀNG THƯƠNG MẠI CỔ PHẦN
-NGOẠI THƯƠNG VIỆT NAM. 
-
-Tên công ty bằng tiếng Anh:
-JOINT STOCK COMMERCIAL BANK FOR
-FOREIGN TRADE OF VIET NAM.
-
-Tên giao dịch: VIETCOMBANK
-
-Tên viết tắt: VIETCOMBANK
-
-Giấy phép thành lập và hoạt động số 138/GP-
-NHNN do Ngân hàng Nhà nước Việt Nam cấp ngày 
-23/05/2008.
-
-GIẤY CHỨNG NHẬN ĐĂNG KÝ DOANH NGHIỆP:
-
-Mã số doanh nghiệp: 0100112437
-
-Giấy chứng nhận đăng ký kinh doanh số 0103024468 
-do Sở Kế hoạch và Đầu tư TP. Hà Nội cấp ngày 
-02/06/2008 (đăng ký lần đầu) Đăng ký thay đổi lần 
-thứ 14 ngày 06/09/2021.
-
-VỐN ĐIỀU LỆ (VỐN ĐẦU TƯ CỦA CHỦ SỞ HỮU):
-
-37.088.774.480.000 ĐỒNG
-
-Bằng chữ: Ba mươi bảy nghìn không trăm tám mươi
-tám tỷ, bảy trăm bảy mươi bốn triệu bốn trăm tám 
-mươi nghìn đồng.
-
-MÃ CỔ PHIẾU: VCB
-
-Mệnh giá cổ phần: 10.000 đồng
-
-Tổng số cổ phần: 3.708.877.448
-
-Địa chỉ: 198 Trần Quang Khải, Phường Lý Thái Tổ,
-Quận Hoàn Kiếm, TP. Hà Nội, Việt Nam
-
-Số điện thoại: 84 - 24 - 3934 3137
-
-Fax: 84 - 24 - 3826 9067
-
-Website: www.vietcombank.com.vn
-
-Vietcombank - Báo cáo thường niên 2021
-Chương 1 - Giới thiệu Vietcombank 
-12
-13

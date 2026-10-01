@@ -1,15 +1,15 @@
 ﻿bang,mo_hinh,bien,he_so,se,sao,thay_doi_CAR_diem_pct_khi_tang_1SD
-regression_main.csv,M2 fin_neg,fin_neg_z,-0.0017,0.002,,-0.17
-regression_main.csv,M3 gen_neg,gen_neg_z,-0.0002,0.0023,,-0.02
-regression_main.csv,M4 đối đầu,fin_neg_z,-0.002,0.0022,,-0.2
-regression_main.csv,M4 đối đầu,gen_neg_z,0.0006,0.0025,,0.06
-regression_main.csv,M5 net+unc,fin_net_z,0.0015,0.0025,,0.15
-regression_main.csv,M5 net+unc,fin_unc_z,-0.003,0.002,,-0.3
-regression_main.csv,M6 tf-idf,fin_neg_tfidf_z,-0.0008,0.0023,,-0.08
-regression_robustness.csv,Market-adjusted,fin_neg_z,-0.0013,0.002,,-0.13
-regression_robustness.csv,BHAR (LM 2011),fin_neg_z,-0.0015,0.0019,,-0.15
-regression_robustness.csv,Placebo −60 phiên,fin_neg_z,0.0025,0.0017,,0.25
-regression_robustness.csv,"CAR[0,1]",fin_neg_z,0.001,0.0014,,0.1
-regression_robustness.csv,"CAR[-1,1]",fin_neg_z,0.0012,0.0017,,0.12
-regression_robustness.csv,"CAR[0,5]",fin_neg_z,-0.0062,0.0023,***,-0.62
-regression_robustness.csv,"CAR[0,10]",fin_neg_z,-0.0051,0.0031,,-0.51
+regression_main.csv,M2 fin_neg,fin_neg_z,-0.0016,0.0019,,-0.16
+regression_main.csv,M3 gen_neg,gen_neg_z,-0.0006,0.0022,,-0.06
+regression_main.csv,M4 đối đầu,fin_neg_z,-0.0017,0.0022,,-0.17
+regression_main.csv,M4 đối đầu,gen_neg_z,0.0001,0.0025,,0.01
+regression_main.csv,M5 net+unc,fin_net_z,0.001,0.0025,,0.1
+regression_main.csv,M5 net+unc,fin_unc_z,-0.0028,0.0021,,-0.28
+regression_main.csv,M6 tf-idf,fin_neg_tfidf_z,-0.0005,0.0024,,-0.05
+regression_robustness.csv,Market-adjusted,fin_neg_z,-0.0016,0.0019,,-0.16
+regression_robustness.csv,BHAR (LM 2011),fin_neg_z,-0.0018,0.0018,,-0.18
+regression_robustness.csv,Placebo −60 phiên,fin_neg_z,0.0032,0.0018,*,0.32
+regression_robustness.csv,"CAR[0,1]",fin_neg_z,0.0012,0.0014,,0.12
+regression_robustness.csv,"CAR[-1,1]",fin_neg_z,0.0019,0.0018,,0.19
+regression_robustness.csv,"CAR[0,5]",fin_neg_z,-0.0068,0.0024,***,-0.68
+regression_robustness.csv,"CAR[0,10]",fin_neg_z,-0.0048,0.0031,,-0.48

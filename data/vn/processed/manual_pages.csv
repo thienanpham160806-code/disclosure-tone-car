@@ -143,3 +143,137 @@ VPI,2017,3,3,0,"Rà thư không có lời chào (#55): regex lấy p2-4 (mục l
 VCB,2017,4,5,0,Rà thư không có lời chào (#55): thông điệp Chủ tịch HĐQT & TGĐ p4-5 (ký cả hai); regex lấy lố p6 (thông tin chung)
 MBB,2018,4,4,0,Rà thư không có lời chào (#55): thông điệp Chủ tịch HĐQT 1 trang đôi p4 (ký Lê Hữu Đức); regex lấy lố p5-7 (dấu ấn 2018)
 MBB,2020,4,4,0,Rà thư không có lời chào (#55): thông điệp Chủ tịch HĐQT 1 trang đôi p4 (ký Lưu Trung Thái); regex lấy thêm p3 (bìa chương) và p5-7 (điểm nổi bật)
+NLG,2016,6,6,0,"#65 rà ảnh: p3 mục lục, p4-5 giới thiệu công ty; thư ở p6 (p7 là báo cáo TGĐ)"
+GMD,2025,7,7,0,#65 rà ảnh: p6 trang bìa chương kèm mục lục; thư ở p7
+TPB,2019,7,7,0,#65 rà ảnh: p6 mục lục; thư ở p7
+FRT,2025,7,8,0,"#65 rà ảnh: p5 bìa chương + mục lục, p6 chỉ tiêu kinh doanh; thư p7-8"
+GMD,2024,6,6,0,#65 rà ảnh: p5 bìa chương + mục lục; thư ở p6
+HCM,2024,4,4,0,#65 rà ảnh: p3 ảnh bìa + mục lục; thư TGĐ ở p4
+HDB,2025,5,5,0,#65 rà ảnh: p4 bìa chương + mục lục; thư Chủ tịch ở p5 (p6 là thư TGĐ)
+HDB,2018,6,6,0,"#65 rà ảnh: p4 giới thiệu chung, p5 thư Phó Chủ tịch thường trực; theo quy tắc ưu tiên thư riêng Chủ tịch → p6"
+LPB,2022,3,3,0,"#65 rà ảnh: thư ở p3; p4 bìa chương, p5 thông tin khái quát, p6 mạng lưới"
+LPB,2023,4,4,0,#65 rà ảnh: p3 mục lục + danh mục viết tắt; thư ở p4
+NKG,2022,6,6,0,"#65 rà ảnh: p3 thông tin chung, p4 thông tin công ty, p5 triết lý kinh doanh; thư ở p6"
+NLG,2018,6,6,0,"#65 rà ảnh: p2 nội dung, p3-5 giới thiệu công ty; thư ở p6"
+PAN,2021,5,5,0,#65 rà ảnh: thư ở p5; p6 bìa chương
+PNJ,2019,5,5,0,"#65 rà ảnh: p3 nội dung + thông tin công ty, p4 tầm nhìn/sứ mệnh; thư ở p5"
+TCB,2023,6,6,0,"#65 rà ảnh: p3 mục lục, p4 giới thiệu, p5 bìa chương; thư ở p6"
+VCB,2021,6,7,0,#65 rà ảnh: p5 bìa chương; thư Chủ tịch + Phó TGĐ ở p6-7; p8 thông tin khái quát
+VCG,2025,5,5,0,"#65 rà ảnh: p3 bìa chương, p4 thông điệp của Ban biên tập (không phải lãnh đạo); thư Chủ tịch ở p5"
+VCG,2024,5,5,0,"#65 rà ảnh: p3 bìa chương, p4 thông điệp của Ban biên tập (không phải lãnh đạo); thư Chủ tịch ở p5"
+VHC,2023,4,4,0,"#65 rà ảnh: p2 thông tin khái quát + mục lục, p3 bìa chương; thư ở p4"
+VJC,2025,6,6,0,#65 rà ảnh: p5 bìa chương; thư ở p6
+VJC,2023,5,5,0,"#65 rà ảnh: p3 mục lục, p4 danh mục viết tắt; thư ở p5"
+VPI,2023,6,6,0,"#65 rà ảnh: p4 mục lục, p5 bìa chương; thư ở p6"
+ACB,2021,4,5,0,#65 rà ảnh: p3 mục lục
+ACB,2018,5,7,0,#65 rà ảnh: đoạn kết + chữ ký Chủ tịch ở p7
+ACB,2016,4,6,0,#65 rà ảnh: đoạn kết + chữ ký Chủ tịch ở p6
+BAF,2025,9,9,0,#65 rà ảnh: p6 giới thiệu chủ đề; p7-8 dấu ấn 2025; p10 thư TGĐ
+BID,2025,7,8,0,#65 rà ảnh: p6 bìa chương
+BID,2017,6,7,0,#65 rà ảnh: p4 tiêu điểm; p5 trang ảnh
+BID,2023,6,6,0,#65 rà ảnh: p5 bìa chương
+BSI,2025,6,6,0,#65 rà ảnh: p7 dấu ấn hoạt động
+BSR,2018,6,6,0,#65 rà ảnh: p3 nội dung; p4 chỉ số tài chính; p5 tầm nhìn
+BVH,2019,8,9,0,#65 rà ảnh: p2-7 chủ đề/điểm nhấn/báo cáo đảm bảo; thư Chủ tịch p8-9 (p10-11 thư TGĐ)
+CII,2025,6,8,0,#65 rà ảnh: thư kéo dài tới p8 (chữ ký + dấu); p9 chương 1
+CII,2021,4,6,0,#65 rà ảnh: thư kéo dài tới p6 (chữ ký + dấu)
+CII,2020,3,5,0,#65 rà ảnh: thư kéo dài tới p5 (chữ ký + dấu)
+CII,2019,3,4,0,#65 rà ảnh: thư kéo dài tới p4 (chữ ký + dấu)
+CII,2018,3,4,0,#65 rà ảnh: thư kéo dài tới p4
+CTG,2024,5,5,0,#65 rà ảnh: p6 bìa phần 1
+CTD,2018,4,4,0,#65 rà ảnh: p3 nội dung
+CTS,2024,5,5,0,#65 rà ảnh: p6 thư TGĐ (ưu tiên thư riêng Chủ tịch)
+CTS,2022,5,5,0,#65 rà ảnh: p6 thư TGĐ (ưu tiên thư riêng Chủ tịch)
+DBC,2022,4,4,0,#65 rà ảnh: p5 giới thiệu tập đoàn; p6 tầm nhìn
+DBC,2020,4,4,0,#65 rà ảnh: p5 giới thiệu; p6 kết quả; p7 tầm nhìn
+DBC,2019,5,5,0,#65 rà ảnh: p6 giới thiệu; p7 tầm nhìn
+DCM,2024,5,6,0,#65 rà ảnh: p3 nội dung; p4 thuật ngữ
+DGW,2020,3,3,0,#65 rà ảnh: p2 nội dung
+DPM,2021,4,5,0,#65 rà ảnh: p6 bìa chương
+FTS,2019,3,3,0,#65 rà ảnh: p4 tầm nhìn
+FTS,2024,6,6,0,#65 rà ảnh: p5 bìa chương
+GAS,2023,5,5,0,#65 rà ảnh: p4 bìa chương
+GAS,2022,8,8,0,#65 rà ảnh: p7 bìa chương
+GAS,2025,5,6,0,#65 rà ảnh: p3 thuật ngữ; p4 bìa chương
+GEE,2021,5,6,0,#65 rà ảnh: p4 bìa chương
+GEE,2025,12,12,0,#65 rà ảnh: p9 bìa chương; p10-11 trang ảnh
+GEX,2018,5,5,0,#65 rà ảnh: p4 bìa chương
+GEX,2019,5,6,0,#65 rà ảnh: p4 bìa chương
+GEX,2020,5,6,0,#65 rà ảnh: p4 bìa chương; thư kéo dài tới p6 (chữ ký)
+GMD,2023,6,6,0,#65 rà ảnh: p5 bìa chương
+GMD,2016,3,3,0,#65 rà ảnh: p4 tầm nhìn
+GVR,2024,6,7,0,#65 rà ảnh: p4 bìa chương; p5 sứ mệnh
+GVR,2025,8,9,0,#65 rà ảnh: p6 bìa chương; p7 tầm nhìn
+HAG,2021,3,3,0,#65 rà ảnh: p2 nội dung
+HDB,2024,5,5,0,#65 rà ảnh: p4 bìa chương
+HDB,2022,5,5,0,#65 rà ảnh: p4 bìa chương
+HHV,2025,5,5,0,#65 rà ảnh: p4 bìa chương
+HHV,2024,5,5,0,#65 rà ảnh: p4 bìa chương
+KDC,2019,4,5,0,#65 rà ảnh: p3 bìa chương; thư kéo dài tới p5 (tiếp theo + chữ ký)
+KDC,2016,4,5,0,#65 rà ảnh: p2 nội dung; p3 bìa chương
+MBB,2021,6,7,0,#65 rà ảnh: p8-9 thư Phó Chủ tịch kiêm TGĐ; p10 bìa
+MSB,2018,6,6,0,#65 rà ảnh: p3 nội dung; p4 cột mốc; p5 nhận diện thương hiệu
+MWG,2024,8,9,0,#65 rà ảnh: p5 mục lục; p6-7 viết tắt
+MWG,2021,3,5,0,#65 rà ảnh: p2 mục lục
+MWG,2022,7,8,0,#65 rà ảnh: p5 mục lục; p6 trang tiêu đề
+MWG,2020,5,7,0,#65 rà ảnh: thư kéo dài tới p7 (đoạn kết)
+NKG,2023,6,6,0,#65 rà ảnh: p3 quảng cáo sản phẩm; p4 thông tin công ty; p5 triết lý; p7 bìa
+NKG,2021,6,6,0,#65 rà ảnh: p2 mục lục; p3-5 thông tin chung/công ty/triết lý
+NLG,2021,5,5,0,#65 rà ảnh: p2 tầm nhìn + nội dung; p3 ảnh; p4 sự kiện
+NLG,2022,5,5,0,#65 rà ảnh: p2 nội dung; p3 bìa; p4 giải thưởng
+NLG,2020,6,6,0,#65 rà ảnh: p3 ảnh; p4 số liệu; p5 giải thưởng
+NLG,2017,4,4,0,#65 rà ảnh: p3 ảnh; p5-6 báo cáo TGĐ
+NVL,2017,23,23,0,#65 rà ảnh: p22 bìa thông điệp ban lãnh đạo
+NVL,2016,15,15,0,#65 rà ảnh: p14 bìa chương
+NVL,2018,5,5,0,#65 rà ảnh: p6 bìa chương
+PC1,2024,7,7,0,#65 rà ảnh: p6 bìa chương
+PC1,2021,9,9,0,#65 rà ảnh: p5 bìa; p6 tầm nhìn; p7 giải thưởng; p8 biểu đồ
+PC1,2016,8,8,0,#65 rà ảnh: p5 nội dung; p6 tầm nhìn; p7 sự kiện
+PNJ,2017,5,5,0,#65 rà ảnh: p4 bìa chương
+POW,2025,7,7,0,#65 rà ảnh: p8 bìa chương; p9 thông tin khái quát
+PVD,2022,6,7,0,#65 rà ảnh: p4 bìa chương; p5 tầm nhìn
+PVD,2021,5,6,0,#65 rà ảnh: p4 bìa chương
+PVD,2020,5,6,0,"#65 rà ảnh: p4 bìa chương; p7-8 mục ""Vươn cao khát vọng"""
+PVT,2025,4,5,0,#65 rà ảnh: p3 lời mở đầu (không phải thư lãnh đạo); thư Chủ tịch p4-5
+REE,2019,6,6,0,#65 rà ảnh: p3 nội dung; p4 thông tin doanh nghiệp; thư ở p6
+SAB,2024,5,5,0,#65 rà ảnh: p4 bìa chương
+SBT,2024,6,7,0,#65 rà ảnh: p5 bìa chương
+SBT,2022,7,7,0,#65 rà ảnh: p6 dấu ấn; p8 thư Phó Chủ tịch; p9 thư TGĐ
+SBT,2017,6,6,0,#65 rà ảnh: p5 bìa chương; p7 thư lãnh đạo khác
+SSB,2024,6,6,0,#65 rà ảnh: p2 giới thiệu; p3 mục lục; p4-5 viết tắt
+SSI,2022,5,5,0,#65 rà ảnh: p6 dấu ấn
+SSI,2021,4,4,0,#65 rà ảnh: p5 dấu ấn
+SSI,2019,3,4,0,#65 rà ảnh: p5-6 bìa
+TCB,2024,6,6,0,#65 rà ảnh: p5 bìa chương
+TCB,2022,5,5,0,#65 rà ảnh: p4 bìa chương
+TCB,2021,4,4,0,#65 rà ảnh: p3 bìa chương
+TCB,2020,5,5,0,#65 rà ảnh: p4 bìa chương
+TCX,2025,7,7,0,#65 rà ảnh: p5 bìa chương; p6 dấu ấn
+TPB,2025,5,5,0,#65 rà ảnh: p4 lời giới thiệu + mục lục
+TPB,2024,5,5,0,#65 rà ảnh: p4 lời giới thiệu + mục lục
+TPB,2017,8,8,0,#65 rà ảnh: p9 logo cổ đông
+VCG,2019,4,4,0,#65 rà ảnh: p5 thông tin chung; p6 lĩnh vực kinh doanh
+VCI,2022,4,4,0,#65 rà ảnh: p2 bìa; p3 nội dung
+VCK,2025,30,31,0,#65 rà ảnh: p28 bìa chương; p29 trang ảnh
+VGC,2016,7,8,0,#65 rà ảnh: p6 trang ảnh
+VHC,2025,4,4,0,#65 rà ảnh: p3 bìa chương
+VHC,2024,4,4,0,#65 rà ảnh: p3 bìa chương
+VHC,2021,4,4,0,#65 rà ảnh: p2 thông tin khái quát + mục lục; p3 bìa chương
+VHC,2016,9,9,0,#65 rà ảnh: p8 bìa chương
+VIB,2024,7,10,0,#65 rà ảnh: p6 trang tiêu đề
+VIB,2022,7,9,0,#65 rà ảnh: p6 trang tiêu đề
+VIB,2021,6,8,0,#65 rà ảnh: p5 trang tiêu đề
+VIC,2023,14,15,0,#65 rà ảnh: p1 là công văn gửi UBCK (không phải thư); thư TGĐ ở p14-15
+VNM,2018,7,7,0,#65 rà ảnh: p6 bìa chương
+VPB,2025,5,5,0,#65 rà ảnh: p4 bìa chương
+VPB,2024,6,6,0,#65 rà ảnh: p4 viết tắt; p5 bìa
+VPB,2019,4,4,0,#65 rà ảnh: p1 bìa; p2 mục lục + lời tựa; p3 điểm sáng
+VPB,2022,8,9,0,#65 rà ảnh: p6 ảnh; p7 bìa chương
+VPI,2025,5,6,0,#65 rà ảnh: p4 bìa chương; thư kéo dài tới p6 (chữ ký)
+VPI,2022,6,6,0,#65 rà ảnh: p5 bìa chương
+VPI,2021,6,6,0,#65 rà ảnh: p5 bìa chương
+VPI,2020,6,6,0,#65 rà ảnh: p4 mục lục; p5 bìa chương
+VPI,2019,6,6,0,#65 rà ảnh: p5 bìa chương
+VPI,2018,5,5,0,#65 rà ảnh: p4 bìa chương
+VRE,2025,6,7,0,#65 rà ảnh: p5 bìa chương
+VRE,2019,7,7,0,#65 rà ảnh: p3 bìa; p4 tầm nhìn; p5 điểm nhấn; p6 dấu ấn

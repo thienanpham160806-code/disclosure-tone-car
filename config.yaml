@@ -41,6 +41,7 @@ vn:
       model_claude: claude-haiku-4-5        # model Claude nhận temperature=0 (Opus 5/Sonnet 5 bỏ temperature → 400); $1/$5 per 1M
       mode: vision                  # vision: gửi ảnh trang, chép nguyên văn | text_fix: gửi text OCR + ảnh, chỉ sửa lỗi ký tự/dấu
       quality_threshold: 0.85       # trang có quality_score < ngưỡng → gửi AI
+      send_all_ocr_pages: true      # mọi trang phải OCR (không có lớp chữ dùng được) cũng gửi AI đọc ảnh, dù điểm ≥ ngưỡng (#65)
       similarity_min: 0.8           # text_fix: tương đồng ký tự với bản OCR < ngưỡng → coi là "viết lại", loại
       dpi: 200                      # độ phân giải ảnh trang gửi AI
       requests_per_minute: 10       # nhịp gọi tối đa (gói miễn phí Gemini; xem giới hạn thật ở AI Studio)

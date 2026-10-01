@@ -63,11 +63,38 @@ def quality(t):
     return ("garbled" if weird > 0.02 else "ok"), vn
 
 
+def _cut(bs, lo, hi):
+    """Khe trắng lớn nhất trên một trục: trả (độ rộng khe, nhóm trước khe, nhóm sau khe)."""
+    bs = sorted(bs, key=lambda b: b[lo])
+    best, k, end = 0.0, None, bs[0][hi]
+    for j in range(1, len(bs)):
+        gap = bs[j][lo] - end
+        if gap > best:
+            best, k = gap, j
+        end = max(end, bs[j][hi])
+    return (best, bs[:k], bs[k:]) if k else (0.0, bs, [])
+
+
+def reading_order(blocks, depth=0):
+    """Thứ tự đọc kiểu XY-cut (CHANGELOG_RUN #65): mỗi lần cắt đúng một khe trắng lớn nhất – khe dọc ≥ 8 pt tách cột,
+    khe ngang tách tiêu đề / đoạn trải nhiều cột – rồi đệ quy, nên đọc hết cột trái rồi mới sang cột phải.
+    (Trước đây sắp theo hàng ngang (round(y/20), x) → ở trang nhiều cột, dòng của các cột xen kẽ nhau.)"""
+    bs = [b for b in blocks if b[6] == 0 and b[4].strip()] if depth == 0 else blocks
+    if len(bs) <= 1 or depth > 60:
+        return sorted(bs, key=lambda b: (b[1], b[0]))
+    wx, x1, x2 = _cut(bs, 0, 2)
+    wy, y1, y2 = _cut(bs, 1, 3)
+    if wx >= 8 and wx >= wy:
+        return reading_order(x1, depth + 1) + reading_order(x2, depth + 1)
+    if wy > 0:
+        return reading_order(y1, depth + 1) + reading_order(y2, depth + 1)
+    return sorted(bs, key=lambda b: (b[1], b[0]))
+
+
 def page_text(doc, i, lang, force_ocr=False):
     """Lấy text trang i; tự OCR nếu rỗng/rác. Trả về (text, method)."""
     pg = doc[i]
-    blocks = sorted(pg.get_text("blocks"), key=lambda b: (round(b[1] / 20), b[0]))  # trên→dưới, trái→phải
-    t = "\n".join(b[4] for b in blocks if b[6] == 0)
+    t = "\n".join(b[4] for b in reading_order(pg.get_text("blocks")))
     q, vn = quality(t)
     if q == "ok" and (lang == "en" or vn > 0.04) and not force_ocr:
         return t, "text"
@@ -133,7 +160,10 @@ def refine_doc(row, client, force_ocr=False, dry=False, page_log=None):
         t, how = page_text(doc, i, row["lang"], force_ocr=force_ocr)
         qb = quality_score(t); new, qa, m = t, qb, how
         rec = dict(ticker=row["ticker"], year=row["year"], page=i + 1, source=how, q_before=qb, mode=mode)
-        if qb < thr and sent < L.get("max_pages_per_doc", 6):
+        # trang dưới ngưỡng, và (send_all_ocr_pages) MỌI trang phải đọc bằng OCR: Tesseract sai ~31% ký tự trên trang chuẩn
+        # so với ~2,9% của AI đọc ảnh (outputs/vn/ocr_eval.csv) → lỗi chính tả còn cả ở trang có điểm ≥ ngưỡng (#65)
+        want = qb < thr or (L.get("send_all_ocr_pages") and how == "ocr")
+        if want and sent < L.get("max_pages_per_doc", 6):
             sent += 1
             if dry:
                 rec["decision"] = "would_send"
@@ -340,11 +370,14 @@ def main(workers=4, only_new=False):
           f"data/vn/processed/manual_pages.csv (ticker,year,start_page,end_page) rồi chạy lại với --manual")
 
 
-def apply_manual():
-    """Human-in-the-loop: trích lại các file đã được người kiểm tra ghi trang thủ công."""
+def apply_manual(only=None):
+    """Human-in-the-loop: trích lại các file đã được người kiểm tra ghi trang thủ công. only: tập (ticker, year) cần áp."""
     man = pd.read_csv(D("vn", "processed", "manual_pages.csv"))
     if "force_ocr" not in man:        # cột tùy chọn: 1 = bỏ lớp chữ (font mã hóa sai một phần), OCR lại (CHANGELOG_RUN #26)
         man["force_ocr"] = 0
+    man["force_ocr"] = man.force_ocr.fillna(0)
+    if only:
+        man = man[[(t, y) in only for t, y in zip(man.ticker, man.year)]]
     lm = pd.read_csv(D("vn", "processed", "letters_meta.csv"))
     for r in man.itertuples():
         row = lm[(lm.ticker == r.ticker) & (lm.year == r.year)].iloc[0]
@@ -393,4 +426,4 @@ if __name__ == "__main__":
     if a.llm or a.llm_dry:
         run_llm(dry=a.llm_dry, only=only)
     else:
-        apply_manual() if a.manual else main(a.workers, a.new)
+        apply_manual(only) if a.manual else main(a.workers, a.new)

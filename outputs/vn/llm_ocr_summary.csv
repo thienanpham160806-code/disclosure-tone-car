@@ -1,31 +1,30 @@
 ﻿chi_so,gia_tri
-Trang thuộc thư (605 văn bản),1090
-Trang có quality_score < 0.85,82
-Trang gửi AI,82
-  chế độ vision,80
-  chế độ text_fix(recitation),2
-Trang nhận bản AI,73
-  trong đó điểm chất lượng tăng,46
-  trong đó trang gần như trống (< 20 token cả trước và sau),26
-Trang loại bản AI,9
-  lý do: quality_not_improved,6
-  lý do: llm_empty,3
-Điểm chất lượng TB các trang nhận bản AI – trước,0.418
-Điểm chất lượng TB các trang nhận bản AI – sau,0.626
-Văn bản có ≥ 1 trang dùng bản AI,54
-Điểm chất lượng TB (theo token) các văn bản đó – trước,0.914
-Điểm chất lượng TB (theo token) các văn bản đó – sau,0.971
-Văn bản theo method: text,367
-Văn bản theo method: manual,119
-Văn bản theo method: ocr,65
-Văn bản theo method: llm_vision,52
-Văn bản theo method: ocr+llm_fix,2
+Trang thuộc thư (605 văn bản),893
+Trang có quality_score < 0.85,36
+Trang gửi AI,194
+  chế độ vision,182
+  chế độ text_fix(recitation),12
+Trang nhận bản AI,189
+  trong đó điểm chất lượng tăng,169
+  trong đó trang gần như trống (< 20 token cả trước và sau),13
+Trang loại bản AI,5
+  lý do: quality_not_improved,5
+Điểm chất lượng TB các trang nhận bản AI – trước,0.876
+Điểm chất lượng TB các trang nhận bản AI – sau,0.923
+Văn bản có ≥ 1 trang dùng bản AI,109
+Điểm chất lượng TB (theo token) các văn bản đó – trước,0.944
+Điểm chất lượng TB (theo token) các văn bản đó – sau,0.991
+Văn bản theo method: text,296
+Văn bản theo method: manual,198
+Văn bản theo method: llm_vision,105
+Văn bản theo method: ocr+llm_fix,4
+Văn bản theo method: ocr,2
 gemini-3.1-flash-lite: số phản hồi trong cache,1
 gemini-3.1-flash-lite: token đầu vào,1392
 gemini-3.1-flash-lite: token đầu ra,402
 gemini-3.1-flash-lite: chi phí ước tính nếu trả phí (USD),0.001
-gemini-3.5-flash-lite: số phản hồi trong cache,153
-gemini-3.5-flash-lite: token đầu vào,231862
-gemini-3.5-flash-lite: token đầu ra,63076
-gemini-3.5-flash-lite: chi phí ước tính nếu trả phí (USD),0.2272
-Tổng chi phí ước tính nếu trả phí (USD),0.2282
+gemini-3.5-flash-lite: số phản hồi trong cache,341
+gemini-3.5-flash-lite: token đầu vào,503935
+gemini-3.5-flash-lite: token đầu ra,204813
+gemini-3.5-flash-lite: chi phí ước tính nếu trả phí (USD),0.6632
+Tổng chi phí ước tính nếu trả phí (USD),0.6642
